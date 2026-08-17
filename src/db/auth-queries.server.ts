@@ -87,6 +87,7 @@ export async function registerCaregiverAccount(input: RegisterInput): Promise<Re
         district: input.district || null,
         about: input.about || null,
         yearsOfExperience: input.yearsOfExperience,
+        primaryPhotoUrl: input.photoDataUrl ?? null,
         approvalStatus: "PENDING",
         publicVisibility: false,
         profileCompletionPercentage: input.about ? 60 : 45,
