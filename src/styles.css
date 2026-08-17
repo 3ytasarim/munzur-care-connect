@@ -5,6 +5,13 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
+ * MunzurDestek design system.
+ * Brand: Munzur green #57B614 (primary), warm yellow #FFDE58 (accent).
+ * Surfaces stay neutral (off-white / white) so the UI feels premium and calm.
+ */
+
+
+/*
  * Design system definition.
  *
  * The @theme inline block maps CSS custom properties to Tailwind utility
