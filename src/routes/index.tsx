@@ -3,7 +3,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, Search, ShieldCheck } from "lucide-react";
 
 import { CaregiverCard } from "@/components/caregiver-card";
+import { Reveal } from "@/components/reveal";
 import { ServiceIcon } from "@/components/service-icon";
+
 
 import { Button } from "@/components/ui/button";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
@@ -46,34 +48,42 @@ function Index() {
   return (
     <main>
       {/* Hero */}
-      <section className="border-b border-border bg-card">
-        <div className="container-page grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
+      <section className="relative overflow-hidden border-b border-border bg-card">
+        <div
+          className="animate-float-slow pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-brand/10 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="animate-float-slow pointer-events-none absolute -bottom-32 left-1/4 size-72 rounded-full bg-highlight/25 blur-3xl [animation-delay:-3s]"
+          aria-hidden
+        />
+        <div className="container-page relative grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1.5 text-xs font-semibold text-brand-strong">
+            <span className="animate-fade-up inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1.5 text-xs font-semibold text-brand-strong">
               <ShieldCheck className="size-4" aria-hidden />
               Belge ve referans kontrolü yapılmış adaylar
             </span>
-            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.1] text-foreground sm:text-5xl">
+            <h1 className="animate-fade-up mt-6 font-display text-4xl font-bold leading-[1.1] text-foreground [animation-delay:100ms] sm:text-5xl">
               Ailenize <span className="text-brand">güvenle</span> bakım desteği
             </h1>
-            <p className="mt-5 max-w-lg text-lg leading-relaxed text-muted-foreground">
+            <p className="animate-fade-up mt-5 max-w-lg text-lg leading-relaxed text-muted-foreground [animation-delay:200ms]">
               Yaşlı, bebek, çocuk ve hasta bakımı için deneyimli adayları inceleyin; size uygun
               olanla doğrudan iletişime geçin.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg">
+            <div className="animate-fade-up mt-8 flex flex-wrap gap-3 [animation-delay:300ms]">
+              <Button asChild size="lg" className="hover-lift">
                 <Link to="/bakicilar">
                   <Search className="size-4" aria-hidden />
                   Bakıcı Ara
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="outline" className="hover-lift">
                 <Link to="/bakicilar" search={{}}>
                   Hizmetleri İncele
                 </Link>
               </Button>
             </div>
-            <dl className="mt-12 grid max-w-md grid-cols-3 gap-6">
+            <dl className="animate-fade-up mt-12 grid max-w-md grid-cols-3 gap-6 [animation-delay:400ms]">
               {[
                 { label: "Hizmet alanı", value: options.services.length },
                 { label: "Çalışma şekli", value: options.workingTypes.length },
@@ -87,9 +97,12 @@ function Index() {
             </dl>
           </div>
 
-          <div className="relative">
-            <div className="absolute -left-6 -top-6 size-24 rounded-2xl bg-highlight/70" aria-hidden />
-            <div className="relative rounded-2xl border border-border bg-background p-8 shadow-soft">
+          <div className="animate-fade-up relative [animation-delay:250ms]">
+            <div
+              className="animate-float-slow absolute -left-6 -top-6 size-24 rounded-2xl bg-highlight/70"
+              aria-hidden
+            />
+            <div className="hover-lift relative rounded-2xl border border-border bg-background p-8 shadow-soft">
               <h2 className="font-display text-lg font-semibold">Nasıl çalışır?</h2>
               <ol className="mt-6 space-y-6">
                 {[
@@ -108,9 +121,12 @@ function Index() {
                     title: "İletişime geçin",
                     text: "Aday kodu ile WhatsApp üzerinden hızlıca bilgi alın.",
                   },
-                ].map((step) => (
-                  <li key={step.title} className="flex gap-4">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand-strong">
+                ].map((step, i) => (
+                  <li key={step.title} className="group flex gap-4">
+                    <span
+                      className="animate-fade-up flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand-strong transition-transform duration-300 group-hover:scale-110"
+                      style={{ animationDelay: `${400 + i * 120}ms` }}
+                    >
                       <step.icon className="size-5" aria-hidden />
                     </span>
                     <div>
@@ -125,45 +141,53 @@ function Index() {
         </div>
       </section>
 
+
       {/* Services from the database */}
       <section className="container-page py-20">
-        <h2 className="font-display text-3xl font-bold text-foreground">Bakım hizmetleri</h2>
-        <p className="mt-2 text-muted-foreground">
-          Hizmet kategorileri yönetim panelinden düzenlenebilir.
-        </p>
+        <Reveal>
+          <h2 className="font-display text-3xl font-bold text-foreground">Bakım hizmetleri</h2>
+          <p className="mt-2 text-muted-foreground">
+            Hizmet kategorileri yönetim panelinden düzenlenebilir.
+          </p>
+        </Reveal>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {options.services.map((s) => (
-            <li key={s.id}>
+          {options.services.map((s, i) => (
+            <Reveal as="li" key={s.id} delay={i * 70} className="h-full">
               <Link
                 to="/bakicilar"
-                className="flex h-full flex-col justify-between rounded-xl border border-border bg-card p-6 shadow-card transition-colors hover:border-brand"
+                className="group hover-lift flex h-full flex-col justify-between rounded-xl border border-border bg-card p-6 shadow-card hover:border-brand"
               >
                 <span className="flex items-start gap-3">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand-strong">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand-strong transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                     <ServiceIcon slug={s.slug} className="size-5" />
                   </span>
                   <span className="font-display text-base font-semibold text-foreground">{s.name}</span>
                 </span>
-                <span className="mt-4 text-sm font-medium text-brand-strong">Adayları gör →</span>
+                <span className="mt-4 text-sm font-medium text-brand-strong">
+                  Adayları gör
+                  <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
               </Link>
-
-            </li>
+            </Reveal>
           ))}
         </ul>
       </section>
 
+
       {/* Featured caregivers straight from Neon */}
       <section className="container-page pb-20">
-        <div className="flex items-end justify-between gap-4">
+        <Reveal className="flex items-end justify-between gap-4">
           <h2 className="font-display text-3xl font-bold text-foreground">Öne çıkan adaylar</h2>
           <Button asChild variant="outline">
             <Link to="/bakicilar">Tümünü gör</Link>
           </Button>
-        </div>
+        </Reveal>
 
         <div className="mt-8">
           {featured.isPending ? (
-            <p className="text-sm text-muted-foreground">Adaylar yükleniyor…</p>
+            <p className="animate-fade-soft text-sm text-muted-foreground">Adaylar yükleniyor…</p>
           ) : featured.isError ? (
             <p className="text-sm text-muted-foreground">
               Şu anda veriler yüklenemiyor. Lütfen tekrar deneyin.
@@ -176,13 +200,16 @@ function Index() {
             </div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {featured.data.items.map((c) => (
-                <CaregiverCard key={c.id} caregiver={c} />
+              {featured.data.items.map((c, i) => (
+                <Reveal key={c.id} delay={i * 90} className="h-full">
+                  <CaregiverCard caregiver={c} />
+                </Reveal>
               ))}
             </div>
           )}
         </div>
       </section>
+
     </main>
   );
 }
