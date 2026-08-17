@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BakicilarRouteImport } from './routes/bakicilar'
 import { Route as GirisRouteImport } from './routes/giris'
+import { Route as KayitRouteImport } from './routes/kayit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const GirisRoute = GirisRouteImport.update({
   path: '/giris',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KayitRoute = KayitRouteImport.update({
+  id: '/kayit',
+  path: '/kayit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bakicilar': typeof BakicilarRoute
   '/giris': typeof GirisRoute
+  '/kayit': typeof KayitRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bakicilar': typeof BakicilarRoute
   '/giris': typeof GirisRoute
+  '/kayit': typeof KayitRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bakicilar': typeof BakicilarRoute
   '/giris': typeof GirisRoute
+  '/kayit': typeof KayitRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bakicilar' | '/giris'
+  fullPaths: '/' | '/bakicilar' | '/giris' | '/kayit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bakicilar' | '/giris'
-  id: '__root__' | '/' | '/bakicilar' | '/giris'
+  to: '/' | '/bakicilar' | '/giris' | '/kayit'
+  id: '__root__' | '/' | '/bakicilar' | '/giris' | '/kayit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BakicilarRoute: typeof BakicilarRoute
   GirisRoute: typeof GirisRoute
+  KayitRoute: typeof KayitRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GirisRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/kayit': {
+      id: '/kayit'
+      path: '/kayit'
+      fullPath: '/kayit'
+      preLoaderRoute: typeof KayitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BakicilarRoute: BakicilarRoute,
   GirisRoute: GirisRoute,
+  KayitRoute: KayitRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
