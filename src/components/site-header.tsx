@@ -4,6 +4,7 @@ import { Phone } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 import { Button } from "@/components/ui/button";
 import { useSiteSettings } from "@/lib/site-settings";
+import { useSession } from "@/lib/session";
 
 const NAV = [
   { to: "/", label: "Ana Sayfa" },
@@ -12,6 +13,7 @@ const NAV = [
 
 export function SiteHeader() {
   const { contact } = useSiteSettings();
+  const { user } = useSession();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur">
@@ -43,8 +45,17 @@ export function SiteHeader() {
               {contact.phone}
             </a>
           ) : null}
+          {user ? (
+            <Button asChild size="sm" variant="outline">
+              <Link to="/panel">Panelim</Link>
+            </Button>
+          ) : (
+            <Button asChild size="sm" variant="outline">
+              <Link to="/giris">Giriş Yap</Link>
+            </Button>
+          )}
           <Button asChild size="sm">
-            <Link to="/bakicilar">Bakıcı Ara</Link>
+            <Link to="/kayit">Aday Ol</Link>
           </Button>
         </div>
       </div>
