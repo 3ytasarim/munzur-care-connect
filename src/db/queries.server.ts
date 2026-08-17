@@ -140,15 +140,15 @@ export async function loadFilterOptions(): Promise<FilterOptions> {
 }
 
 export type CaregiverSearchInput = {
-  serviceSlugs?: string[];
-  workingTypeSlugs?: string[];
-  skillSlugs?: string[];
-  city?: string;
-  district?: string;
-  minExperience?: number;
-  featuredOnly?: boolean;
-  page?: number;
-  pageSize?: number;
+  serviceSlugs?: string[] | undefined;
+  workingTypeSlugs?: string[] | undefined;
+  skillSlugs?: string[] | undefined;
+  city?: string | undefined;
+  district?: string | undefined;
+  minExperience?: number | undefined;
+  featuredOnly?: boolean | undefined;
+  page?: number | undefined;
+  pageSize?: number | undefined;
 };
 
 export type CaregiverCard = {
