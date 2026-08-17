@@ -3,7 +3,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, Search, ShieldCheck } from "lucide-react";
 
 import { CaregiverCard } from "@/components/caregiver-card";
+import { Reveal } from "@/components/reveal";
 import { ServiceIcon } from "@/components/service-icon";
+
 
 import { Button } from "@/components/ui/button";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
