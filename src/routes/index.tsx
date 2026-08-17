@@ -136,9 +136,15 @@ function Index() {
                 to="/bakicilar"
                 className="flex h-full flex-col justify-between rounded-xl border border-border bg-card p-6 shadow-card transition-colors hover:border-brand"
               >
-                <span className="font-display text-base font-semibold text-foreground">{s.name}</span>
+                <span className="flex items-start gap-3">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand-strong">
+                    <ServiceIcon slug={s.slug} className="size-5" />
+                  </span>
+                  <span className="font-display text-base font-semibold text-foreground">{s.name}</span>
+                </span>
                 <span className="mt-4 text-sm font-medium text-brand-strong">Adayları gör →</span>
               </Link>
+
             </li>
           ))}
         </ul>
