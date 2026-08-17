@@ -129,30 +129,37 @@ function Index() {
 
       {/* Services from the database */}
       <section className="container-page py-20">
-        <h2 className="font-display text-3xl font-bold text-foreground">Bakım hizmetleri</h2>
-        <p className="mt-2 text-muted-foreground">
-          Hizmet kategorileri yönetim panelinden düzenlenebilir.
-        </p>
+        <Reveal>
+          <h2 className="font-display text-3xl font-bold text-foreground">Bakım hizmetleri</h2>
+          <p className="mt-2 text-muted-foreground">
+            Hizmet kategorileri yönetim panelinden düzenlenebilir.
+          </p>
+        </Reveal>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {options.services.map((s) => (
-            <li key={s.id}>
+          {options.services.map((s, i) => (
+            <Reveal as="li" key={s.id} delay={i * 70} className="h-full">
               <Link
                 to="/bakicilar"
-                className="flex h-full flex-col justify-between rounded-xl border border-border bg-card p-6 shadow-card transition-colors hover:border-brand"
+                className="group hover-lift flex h-full flex-col justify-between rounded-xl border border-border bg-card p-6 shadow-card hover:border-brand"
               >
                 <span className="flex items-start gap-3">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand-strong">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand-strong transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                     <ServiceIcon slug={s.slug} className="size-5" />
                   </span>
                   <span className="font-display text-base font-semibold text-foreground">{s.name}</span>
                 </span>
-                <span className="mt-4 text-sm font-medium text-brand-strong">Adayları gör →</span>
+                <span className="mt-4 text-sm font-medium text-brand-strong">
+                  Adayları gör
+                  <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
               </Link>
-
-            </li>
+            </Reveal>
           ))}
         </ul>
       </section>
+
 
       {/* Featured caregivers straight from Neon */}
       <section className="container-page pb-20">
