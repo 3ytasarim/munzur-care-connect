@@ -8,6 +8,13 @@
       "when": 1787010196082,
       "tag": "0000_init_munzurdestek",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1787010196083,
+      "tag": "0001_candidate_code_and_seed",
+      "breakpoints": true
     }
   ]
 }
