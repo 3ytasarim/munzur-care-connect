@@ -12,15 +12,16 @@ export function CaregiverCard({ caregiver }: { caregiver: CaregiverCardData }) {
   );
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-shadow hover:shadow-soft">
+    <article className="hover-lift group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card hover:border-brand/40">
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
         {caregiver.primaryPhotoUrl ? (
           <img
             src={caregiver.primaryPhotoUrl}
             alt={`${caregiver.displayName} profil fotoğrafı`}
             loading="lazy"
-            className="size-full object-cover"
+            className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
+
         ) : (
           <div className="flex size-full items-center justify-center text-muted-foreground">
             <User className="size-12" aria-hidden />
