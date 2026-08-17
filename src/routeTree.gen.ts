@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BakicilarRouteImport } from './routes/bakicilar'
+import { Route as GirisRouteImport } from './routes/giris'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const BakicilarRoute = BakicilarRouteImport.update({
   path: '/bakicilar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GirisRoute = GirisRouteImport.update({
+  id: '/giris',
+  path: '/giris',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bakicilar': typeof BakicilarRoute
+  '/giris': typeof GirisRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bakicilar': typeof BakicilarRoute
+  '/giris': typeof GirisRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bakicilar': typeof BakicilarRoute
+  '/giris': typeof GirisRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bakicilar'
+  fullPaths: '/' | '/bakicilar' | '/giris'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bakicilar'
-  id: '__root__' | '/' | '/bakicilar'
+  to: '/' | '/bakicilar' | '/giris'
+  id: '__root__' | '/' | '/bakicilar' | '/giris'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BakicilarRoute: typeof BakicilarRoute
+  GirisRoute: typeof GirisRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BakicilarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/giris': {
+      id: '/giris'
+      path: '/giris'
+      fullPath: '/giris'
+      preLoaderRoute: typeof GirisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BakicilarRoute: BakicilarRoute,
+  GirisRoute: GirisRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
