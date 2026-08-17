@@ -154,16 +154,16 @@ function Index() {
 
       {/* Featured caregivers straight from Neon */}
       <section className="container-page pb-20">
-        <div className="flex items-end justify-between gap-4">
+        <Reveal className="flex items-end justify-between gap-4">
           <h2 className="font-display text-3xl font-bold text-foreground">Öne çıkan adaylar</h2>
           <Button asChild variant="outline">
             <Link to="/bakicilar">Tümünü gör</Link>
           </Button>
-        </div>
+        </Reveal>
 
         <div className="mt-8">
           {featured.isPending ? (
-            <p className="text-sm text-muted-foreground">Adaylar yükleniyor…</p>
+            <p className="animate-fade-soft text-sm text-muted-foreground">Adaylar yükleniyor…</p>
           ) : featured.isError ? (
             <p className="text-sm text-muted-foreground">
               Şu anda veriler yüklenemiyor. Lütfen tekrar deneyin.
@@ -176,13 +176,16 @@ function Index() {
             </div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {featured.data.items.map((c) => (
-                <CaregiverCard key={c.id} caregiver={c} />
+              {featured.data.items.map((c, i) => (
+                <Reveal key={c.id} delay={i * 90} className="h-full">
+                  <CaregiverCard caregiver={c} />
+                </Reveal>
               ))}
             </div>
           )}
         </div>
       </section>
+
     </main>
   );
 }
