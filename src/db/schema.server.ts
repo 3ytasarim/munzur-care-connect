@@ -18,6 +18,7 @@ import {
   uniqueIndex,
   index,
 } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 /* ------------------------------------------------------------------ enums */
 
@@ -125,7 +126,9 @@ export const caregiverProfiles = pgTable(
     userId: uuid("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    candidateCode: varchar("candidate_code", { length: 16 }).notNull(),
+    candidateCode: varchar("candidate_code", { length: 16 })
+      .notNull()
+      .default(sql`'MD-' || nextval('candidate_code_seq')`),
     firstName: varchar("first_name", { length: 80 }).notNull(),
     lastName: varchar("last_name", { length: 80 }).notNull(),
     publicDisplayName: varchar("public_display_name", { length: 120 }),
