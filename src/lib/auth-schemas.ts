@@ -23,6 +23,11 @@ export const registerSchema = z
     district: z.string().trim().max(80).optional().default(""),
     yearsOfExperience: z.coerce.number().int().min(0).max(60).default(0),
     about: z.string().trim().max(2000).optional().default(""),
+    photoDataUrl: z
+      .string()
+      .max(2_500_000, "Fotoğraf çok büyük.")
+      .regex(/^data:image\/(jpeg|png|webp);base64,/, "Geçersiz fotoğraf.")
+      .optional(),
     serviceIds: z.array(z.string().uuid()).min(1, "En az bir hizmet alanı seçin."),
     workingTypeIds: z.array(z.string().uuid()).default([]),
     kvkkAccepted: z.literal(true, {
