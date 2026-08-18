@@ -4,8 +4,6 @@ import { useServerFn } from "@tanstack/react-start";
 import { queryOptions } from "@tanstack/react-query";
 import { BadgeCheck, Clock, ShieldCheck } from "lucide-react";
 
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { getCurrentUser, logoutUser } from "@/lib/auth.functions";
 
@@ -62,9 +60,7 @@ function PanelPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <SiteHeader />
-      <main className="container-page flex-1 py-12">
+    <main className="container-page py-12">
         {!user ? (
           <div className="mx-auto max-w-md rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
             <h1 className="text-xl font-semibold text-foreground">Giriş yapmanız gerekiyor</h1>
@@ -139,8 +135,6 @@ function PanelPage() {
             </div>
           </div>
         )}
-      </main>
-      <SiteFooter />
-    </div>
+    </main>
   );
 }

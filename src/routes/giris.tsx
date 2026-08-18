@@ -4,8 +4,6 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -71,10 +69,8 @@ function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <SiteHeader />
-      <main className="container-page flex flex-1 items-center justify-center py-16">
-        <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-sm">
+    <main className="container-page flex min-h-[70vh] items-center justify-center py-16">
+      <div className="animate-fade-up w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-soft">
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">Giriş Yap</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Aday panelinize veya yönetim panelinize erişmek için giriş yapın.
@@ -113,9 +109,7 @@ function LoginPage() {
               Aday olarak kayıt olun
             </Link>
           </p>
-        </div>
-      </main>
-      <SiteFooter />
-    </div>
+      </div>
+    </main>
   );
 }
