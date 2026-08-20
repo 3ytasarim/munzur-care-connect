@@ -228,7 +228,27 @@ function AdminDashboard({ email, displayName }: { email: string; displayName: st
         <StatBox icon={ShieldCheck} label="Toplam kayıt" value={stats?.total ?? 0} />
       </section>
 
+      <nav className="flex flex-wrap gap-2 border-b border-border pb-3">
+        {TABS.map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            onClick={() => setTab(t.id)}
+            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+              tab === t.id
+                ? "bg-brand text-brand-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+            }`}
+          >
+            <t.icon className="size-4" /> {t.label}
+          </button>
+        ))}
+      </nav>
+
+      {tab === "candidates" ? (
+        <>
       <div className="flex flex-wrap gap-2">
+
         {FILTERS.map((f) => (
           <button
             key={f}
