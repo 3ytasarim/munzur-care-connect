@@ -19,7 +19,7 @@ async function connectWorkers(host: string, port: number): Promise<SmtpSocket | 
     null;
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mod: any = await import(/* @vite-ignore */ "cloudflare:sockets");
+    const mod: any = await import(/* @vite-ignore */ ("cloudflare:sockets" as string));
     connect = mod.connect;
   } catch {
     return null;
@@ -184,7 +184,7 @@ export async function sendSmtpMail(input: {
   to: string;
   subject: string;
   html: string;
-  text?: string;
+  text?: string | undefined;
 }) {
   const host = input.host ?? "smtp.gmail.com";
   const port = input.port ?? 587;
