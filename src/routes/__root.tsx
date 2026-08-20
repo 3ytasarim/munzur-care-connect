@@ -15,6 +15,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CtaCallback } from "@/components/cta-callback";
+import { FloatingContact } from "@/components/floating-contact";
 import { DynamicFavicon } from "@/components/dynamic-favicon";
 import { Toaster } from "@/components/ui/sonner";
 import { siteSettingsQueryOptions } from "@/lib/site-settings";
@@ -152,6 +153,7 @@ function RootComponent() {
         </div>
         {showCta ? <CtaCallback /> : null}
         <SiteFooter />
+        <FloatingContact />
         <DynamicFavicon />
       </div>
       <Toaster />

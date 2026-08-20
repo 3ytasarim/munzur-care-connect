@@ -188,6 +188,9 @@ export type AdminSettings = {
     instagramUrl: string;
     facebookUrl: string;
     linkedinUrl: string;
+    youtubeUrl: string;
+    twitterUrl: string;
+    tiktokUrl: string;
   };
   bank: {
     bankName: string;
@@ -222,6 +225,9 @@ export async function loadAdminSettings(): Promise<AdminSettings> {
         instagramUrl: c?.instagramUrl ?? "",
         facebookUrl: c?.facebookUrl ?? "",
         linkedinUrl: c?.linkedinUrl ?? "",
+        youtubeUrl: c?.youtubeUrl ?? "",
+        twitterUrl: c?.twitterUrl ?? "",
+        tiktokUrl: c?.tiktokUrl ?? "",
       },
       bank: {
         bankName: b?.bankName ?? "",
