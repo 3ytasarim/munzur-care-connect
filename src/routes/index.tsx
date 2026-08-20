@@ -16,6 +16,10 @@ import { StatCard } from "@/components/ui/stat-card";
 import FaqSection, { type FaqData } from "@/components/ui/habit-faq-scroller";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 import { listBlogPosts } from "@/lib/blog.functions";
+import whatsappShareAsset from "@/assets/munzurdestek-whatsapp-share.jpg.asset.json";
+
+const SITE_ORIGIN = "https://id-preview--e5687aae-da5c-4ed7-bd40-2c5a18d70e10.lovable.app";
+const WHATSAPP_SHARE_IMAGE = `${SITE_ORIGIN}${whatsappShareAsset.url}`;
 
 const WHY_CARDS = [
   {
@@ -143,8 +147,17 @@ export const Route = createFileRoute("/")({
         content: "Onaylı bakıcı adaylarını inceleyin, ailenize uygun desteği güvenle bulun.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_ORIGIN },
+      { property: "og:image", content: WHATSAPP_SHARE_IMAGE },
+      { property: "og:image:secure_url", content: WHATSAPP_SHARE_IMAGE },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "MunzurDestek güvenilir bakıcı ve bakım hizmetleri" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: WHATSAPP_SHARE_IMAGE },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(filterOptionsQuery),
   component: Index,
