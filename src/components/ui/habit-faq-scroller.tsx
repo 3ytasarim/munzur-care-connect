@@ -67,7 +67,7 @@ const FaqSection = ({ data }: { data: FaqData }) => (
 
     <div className="z-10 flex w-full flex-col gap-6">
       {data.rows.map((row) => (
-        <HorizontalScroller key={row.id} speed={row.speed} direction={row.direction}>
+        <HorizontalScroller key={row.id} speed={row.speed ?? "40s"} direction={row.direction ?? "left"}>
           {row.faqItems.map((item) => (
             <FaqCard key={item.id} question={item.question} answer={item.answer} />
           ))}
