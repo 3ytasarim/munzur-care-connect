@@ -48,9 +48,13 @@ export function CaregiverCard({ caregiver }: { caregiver: CaregiverCardData }) {
         </div>
 
         {caregiver.city ? (
-          <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-            <MapPin className="size-4 text-brand" aria-hidden />
-            {[caregiver.city, caregiver.district].filter(Boolean).join(" / ")}
+          <p className="flex items-start gap-1.5 text-sm text-muted-foreground">
+            <MapPin className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden />
+            <span className="min-w-0">
+              {[caregiver.city, caregiver.district, caregiver.neighborhood]
+                .filter(Boolean)
+                .join(" / ")}
+            </span>
           </p>
         ) : null}
 
@@ -59,25 +63,47 @@ export function CaregiverCard({ caregiver }: { caregiver: CaregiverCardData }) {
           deneyim
         </p>
 
-        {caregiver.services.length ? (
-          <ul className="flex flex-wrap gap-1.5">
-            {caregiver.services.slice(0, 3).map((s) => (
-              <li
-                key={s}
-                className="rounded-md bg-brand-soft px-2 py-1 text-xs font-medium text-brand-strong"
-              >
-                {s}
-              </li>
-            ))}
-            {caregiver.workingTypes.slice(0, 2).map((w) => (
-              <li
-                key={w}
-                className="rounded-md bg-highlight-soft px-2 py-1 text-xs font-medium text-foreground"
-              >
-                {w}
-              </li>
-            ))}
-          </ul>
+        {caregiver.services.length ||
+        caregiver.workingTypes.length ||
+        caregiver.skills.length ? (
+          <div className="space-y-2 border-t border-border pt-3">
+            {caregiver.services.length ? (
+              <CriteriaRow title="Hizmet alanları">
+                {caregiver.services.map((s) => (
+                  <li
+                    key={s}
+                    className="rounded-md bg-brand-soft px-2 py-1 text-xs font-medium text-brand-strong"
+                  >
+                    {s}
+                  </li>
+                ))}
+              </CriteriaRow>
+            ) : null}
+            {caregiver.workingTypes.length ? (
+              <CriteriaRow title="Çalışma şekli">
+                {caregiver.workingTypes.map((w) => (
+                  <li
+                    key={w}
+                    className="rounded-md bg-highlight-soft px-2 py-1 text-xs font-medium text-foreground"
+                  >
+                    {w}
+                  </li>
+                ))}
+              </CriteriaRow>
+            ) : null}
+            {caregiver.skills.length ? (
+              <CriteriaRow title="Uzmanlıklar">
+                {caregiver.skills.map((k) => (
+                  <li
+                    key={k}
+                    className="rounded-md border border-border px-2 py-1 text-xs font-medium text-muted-foreground"
+                  >
+                    {k}
+                  </li>
+                ))}
+              </CriteriaRow>
+            ) : null}
+          </div>
         ) : null}
 
         <div className="mt-auto pt-2">
