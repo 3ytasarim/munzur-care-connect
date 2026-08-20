@@ -191,7 +191,7 @@ export function LiquidMetalButton({
           className="absolute inset-0 z-[10] rounded-full"
           style={{
             background:
-              "linear-gradient(120deg, var(--brand), var(--brand-accent), var(--brand))",
+              "linear-gradient(120deg, var(--brand), var(--highlight), var(--brand))",
             mixBlendMode: "color",
             pointerEvents: "none",
           }}
