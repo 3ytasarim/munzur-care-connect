@@ -19,6 +19,7 @@ const NAV: NavItem[] = [
 export function SiteHeader() {
   const { contact } = useSiteSettings();
   const { user } = useSession();
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
