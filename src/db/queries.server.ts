@@ -26,7 +26,7 @@ export const SITE_SETTINGS_FALLBACK: SiteSettingsMap = {
   logo_url: "",
   dark_logo_url: "",
   mobile_logo_url: "",
-  favicon_url: "/favicon.ico",
+  favicon_url: "/favicon.png",
   primary_color: "#57B614",
   secondary_color: "#FFDE58",
   company_name: "MunzurDestek",
