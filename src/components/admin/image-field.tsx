@@ -26,14 +26,35 @@ async function fileToResizedDataUrl(file: File, maxW: number, maxH: number) {
     el.src = dataUrl;
   });
   const ratio = Math.min(maxW / img.width, maxH / img.height, 1);
-  const w = Math.max(1, Math.round(img.width * ratio));
-  const h = Math.max(1, Math.round(img.height * ratio));
+  let w = Math.max(1, Math.round(img.width * ratio));
+  let h = Math.max(1, Math.round(img.height * ratio));
+
+  // Downscale progressively (halving) for a crisp result instead of one blurry pass.
+  let src: HTMLImageElement | HTMLCanvasElement = img;
+  let curW = img.width;
+  let curH = img.height;
+  while (curW / 2 > w) {
+    const step = document.createElement("canvas");
+    step.width = Math.max(w, Math.round(curW / 2));
+    step.height = Math.max(h, Math.round(curH / 2));
+    const sctx = step.getContext("2d");
+    if (!sctx) break;
+    sctx.imageSmoothingEnabled = true;
+    sctx.imageSmoothingQuality = "high";
+    sctx.drawImage(src, 0, 0, step.width, step.height);
+    src = step;
+    curW = step.width;
+    curH = step.height;
+  }
+
   const canvas = document.createElement("canvas");
   canvas.width = w;
   canvas.height = h;
   const ctx = canvas.getContext("2d");
   if (!ctx) return dataUrl;
-  ctx.drawImage(img, 0, 0, w, h);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(src, 0, 0, w, h);
   return canvas.toDataURL("image/png");
 }
 
