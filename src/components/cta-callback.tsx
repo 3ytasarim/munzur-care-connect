@@ -29,8 +29,8 @@ export function CtaCallback() {
           <div className="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
             {/* Sol: marka bloğu */}
             <div className="relative overflow-hidden bg-brand px-8 py-10 md:rounded-r-[3rem]">
-              <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/30 blur-2xl" />
-              <div className="pointer-events-none absolute -bottom-16 left-10 h-40 w-40 rounded-full bg-accent/20 blur-2xl" />
+              <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-highlight/30 blur-2xl" />
+              <div className="pointer-events-none absolute -bottom-16 left-10 h-40 w-40 rounded-full bg-highlight/20 blur-2xl" />
               <h2 className="relative text-2xl font-semibold text-brand-foreground md:text-3xl">
                 Bakıcı mı Arıyorsunuz?
               </h2>
@@ -38,7 +38,7 @@ export function CtaCallback() {
                 Aradığınız bakıcıyı bulmak için hemen sizi arayalım. Bilgilerinizi bırakın,
                 uzman ekibimiz en kısa sürede dönüş yapsın.
               </p>
-              <div className="relative mt-6 inline-flex items-center gap-2 rounded-full bg-accent/90 px-4 py-2 text-xs font-semibold text-foreground">
+              <div className="relative mt-6 inline-flex items-center gap-2 rounded-full bg-highlight px-4 py-2 text-xs font-semibold text-highlight-foreground">
                 <PhoneCall className="h-4 w-4" />
                 Ücretsiz ön görüşme
               </div>
@@ -83,7 +83,7 @@ export function CtaCallback() {
                       className="w-full border-0 border-b-2 border-border bg-transparent px-1 pb-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-brand"
                     />
                   </label>
-                  <Button3D type="submit" variant="brand" disabled={send.isPending}>
+                  <Button3D type="submit" variant="primary" disabled={send.isPending}>
                     {send.isPending ? (
                       <span className="inline-flex items-center gap-2">
                         <Loader2 className="h-4 w-4 animate-spin" /> Gönderiliyor
