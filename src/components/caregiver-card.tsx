@@ -121,3 +121,14 @@ export function CaregiverCard({ caregiver }: { caregiver: CaregiverCardData }) {
     </article>
   );
 }
+
+function CriteriaRow({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {title}
+      </p>
+      <ul className="flex flex-wrap gap-1.5">{children}</ul>
+    </div>
+  );
+}
