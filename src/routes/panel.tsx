@@ -125,11 +125,14 @@ function PanelPage() {
                     <ShieldCheck className="size-4 text-brand" /> Yönetim
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Yönetim modülleri (aday onayı, taksonomiler, site ayarları) bir sonraki adımda
-                    bu panele eklenecek.
+                    Aday onayı, taksonomiler, site ayarları ve işlem kayıtları yönetim panelinde.
                   </p>
+                  <Link to="/admin" className="mt-4 inline-block">
+                    <Button3D>Yönetim Paneline Git</Button3D>
+                  </Link>
                 </div>
               ) : null}
+
             </div>
           </div>
         )}
