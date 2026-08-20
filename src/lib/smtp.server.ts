@@ -175,6 +175,17 @@ function encodeHeader(value: string) {
   return /^[\x00-\x7F]*$/.test(value) ? value : `=?UTF-8?B?${base64(value)}?=`;
 }
 
+export type MailAttachment = {
+  filename: string;
+  contentType: string;
+  base64: string;
+  cid?: string | undefined;
+};
+
+function chunkBase64(value: string) {
+  return (value.match(/.{1,76}/g) ?? []).join("\r\n");
+}
+
 export async function sendSmtpMail(input: {
   host?: string;
   port?: number;
@@ -185,6 +196,7 @@ export async function sendSmtpMail(input: {
   subject: string;
   html: string;
   text?: string | undefined;
+  attachments?: MailAttachment[] | undefined;
 }) {
   const host = input.host ?? "smtp.gmail.com";
   const port = input.port ?? 587;
@@ -208,30 +220,61 @@ export async function sendSmtpMail(input: {
     await command(socket, `RCPT TO:<${input.to}>`, [250, 251]);
     await command(socket, "DATA", [354]);
 
-    const boundary = `md_${Math.random().toString(36).slice(2)}`;
+    const attachments = input.attachments ?? [];
+    const altBoundary = `md_alt_${Math.random().toString(36).slice(2)}`;
+    const relBoundary = `md_rel_${Math.random().toString(36).slice(2)}`;
+    const outerType = attachments.length
+      ? `multipart/related; boundary="${relBoundary}"; type="multipart/alternative"`
+      : `multipart/alternative; boundary="${altBoundary}"`;
+
     const headers = [
       `From: ${input.from}`,
       `To: ${input.to}`,
       `Subject: ${encodeHeader(input.subject)}`,
       `Date: ${new Date().toUTCString()}`,
       "MIME-Version: 1.0",
-      `Content-Type: multipart/alternative; boundary="${boundary}"`,
+      `Content-Type: ${outerType}`,
     ].join("\r\n");
 
-    const body = [
-      `--${boundary}`,
+    const alternative = [
+      `--${altBoundary}`,
       'Content-Type: text/plain; charset="UTF-8"',
       "Content-Transfer-Encoding: 8bit",
       "",
       input.text ?? input.html.replace(/<[^>]+>/g, " "),
-      `--${boundary}`,
+      `--${altBoundary}`,
       'Content-Type: text/html; charset="UTF-8"',
       "Content-Transfer-Encoding: 8bit",
       "",
       input.html,
-      `--${boundary}--`,
+      `--${altBoundary}--`,
       "",
     ].join("\r\n");
+
+    let body: string;
+    if (attachments.length) {
+      const parts = [
+        `--${relBoundary}`,
+        `Content-Type: multipart/alternative; boundary="${altBoundary}"`,
+        "",
+        alternative,
+      ];
+      for (const att of attachments) {
+        parts.push(`--${relBoundary}`);
+        parts.push(`Content-Type: ${att.contentType}; name="${att.filename}"`);
+        parts.push("Content-Transfer-Encoding: base64");
+        if (att.cid) parts.push(`Content-ID: <${att.cid}>`);
+        parts.push(
+          `Content-Disposition: ${att.cid ? "inline" : "attachment"}; filename="${att.filename}"`,
+        );
+        parts.push("");
+        parts.push(chunkBase64(att.base64));
+      }
+      parts.push(`--${relBoundary}--`, "");
+      body = parts.join("\r\n");
+    } else {
+      body = alternative;
+    }
 
     await socket.write(`${headers}\r\n\r\n${dotStuff(body)}\r\n.\r\n`);
     const sent = await readReply(socket);

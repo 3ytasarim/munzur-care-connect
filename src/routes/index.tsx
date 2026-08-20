@@ -246,9 +246,9 @@ function Index() {
           className="animate-float-slow pointer-events-none absolute -bottom-32 left-1/4 size-72 rounded-full bg-highlight/25 blur-3xl [animation-delay:-3s]"
           aria-hidden
         />
-        <div className="container-page relative grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
+        <div className="container-page relative grid items-center gap-12 pb-14 pt-3 sm:pt-6 lg:grid-cols-2 lg:py-28">
           <div>
-            <div className="animate-fade-up mb-6 overflow-hidden rounded-3xl border border-border/60 shadow-soft lg:hidden">
+            <div className="animate-fade-up mb-5 overflow-hidden rounded-3xl border border-border/60 shadow-soft lg:hidden">
               <img
                 src={heroMobileImage}
                 alt="Yaşlı bir kadına eşlik eden güler yüzlü bakıcı"

@@ -98,6 +98,7 @@ export type FilterOptions = {
   skills: FilterOption[];
   languages: FilterOption[];
   cities: string[];
+  locations: { city: string; district: string | null; neighborhood: string | null }[];
 };
 
 export async function loadFilterOptions(): Promise<FilterOptions> {
@@ -124,7 +125,11 @@ export async function loadFilterOptions(): Promise<FilterOptions> {
         .where(eq(languages.active, true))
         .orderBy(asc(languages.sortOrder)),
       db
-        .selectDistinct({ city: caregiverProfiles.city })
+        .selectDistinct({
+          city: caregiverProfiles.city,
+          district: caregiverProfiles.district,
+          neighborhood: caregiverProfiles.neighborhood,
+        })
         .from(caregiverProfiles)
         .where(
           and(
@@ -140,7 +145,14 @@ export async function loadFilterOptions(): Promise<FilterOptions> {
       workingTypes: wt,
       skills: sk,
       languages: lang,
-      cities: cityRows.map((r) => r.city).filter((c): c is string => Boolean(c)).sort(),
+      cities: Array.from(
+        new Set(cityRows.map((r) => r.city).filter((c): c is string => Boolean(c))),
+      ).sort((a, b) => a.localeCompare(b, "tr")),
+      locations: cityRows
+        .filter((r): r is { city: string; district: string | null; neighborhood: string | null } =>
+          Boolean(r.city),
+        )
+        .map((r) => ({ city: r.city, district: r.district, neighborhood: r.neighborhood })),
     };
   });
 }
@@ -151,6 +163,7 @@ export type CaregiverSearchInput = {
   skillSlugs?: string[] | undefined;
   city?: string | undefined;
   district?: string | undefined;
+  neighborhood?: string | undefined;
   minExperience?: number | undefined;
   featuredOnly?: boolean | undefined;
   page?: number | undefined;
@@ -163,6 +176,7 @@ export type CaregiverCard = {
   displayName: string;
   city: string | null;
   district: string | null;
+  neighborhood: string | null;
   yearsOfExperience: number;
   featured: boolean;
   availabilityStatus: string;
@@ -170,6 +184,7 @@ export type CaregiverCard = {
   primaryPhotoUrl: string | null;
   services: string[];
   workingTypes: string[];
+  skills: string[];
 };
 
 export type CaregiverSearchResult = {
@@ -198,6 +213,8 @@ export async function searchCaregivers(
 
     if (input.city) conditions.push(eq(caregiverProfiles.city, input.city));
     if (input.district) conditions.push(eq(caregiverProfiles.district, input.district));
+    if (input.neighborhood)
+      conditions.push(eq(caregiverProfiles.neighborhood, input.neighborhood));
     if (typeof input.minExperience === "number" && input.minExperience > 0) {
       conditions.push(gte(caregiverProfiles.yearsOfExperience, input.minExperience));
     }
@@ -240,6 +257,7 @@ export async function searchCaregivers(
           lastName: caregiverProfiles.lastName,
           city: caregiverProfiles.city,
           district: caregiverProfiles.district,
+          neighborhood: caregiverProfiles.neighborhood,
           yearsOfExperience: caregiverProfiles.yearsOfExperience,
           featured: caregiverProfiles.featured,
           availabilityStatus: caregiverProfiles.availabilityStatus,
@@ -251,6 +269,9 @@ export async function searchCaregivers(
           workingTypes: sql<string[]>`coalesce((select array_agg(wt.name order by wt.sort_order)
             from caregiver_working_types cwt join working_types wt on wt.id = cwt.working_type_id
             where cwt.caregiver_id = ${caregiverProfiles.id}), '{}')`,
+          skills: sql<string[]>`coalesce((select array_agg(sk.name order by sk.sort_order)
+            from caregiver_skills csk join skills sk on sk.id = csk.skill_id
+            where csk.caregiver_id = ${caregiverProfiles.id}), '{}')`,
         })
         .from(caregiverProfiles)
         .where(where)
@@ -271,6 +292,7 @@ export async function searchCaregivers(
         : `${r.firstName} ${r.lastName.slice(0, 1)}.`,
       city: r.city,
       district: r.district,
+      neighborhood: r.neighborhood,
       yearsOfExperience: r.yearsOfExperience,
       featured: r.featured,
       availabilityStatus: r.availabilityStatus,
@@ -278,6 +300,7 @@ export async function searchCaregivers(
       primaryPhotoUrl: r.primaryPhotoUrl,
       services: r.services ?? [],
       workingTypes: r.workingTypes ?? [],
+      skills: r.skills ?? [],
     }));
 
     const total = countRows[0]?.count ?? 0;

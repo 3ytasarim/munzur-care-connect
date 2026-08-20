@@ -14,6 +14,7 @@ import {
 } from "./schema.server";
 import {
   candidateRegisteredAdminEmail,
+  dataUrlToAttachment,
   getAdminNotifyAddress,
   sendMail,
 } from "@/lib/email.server";
@@ -145,19 +146,30 @@ export async function registerCaregiverAccount(input: RegisterInput): Promise<Re
               .where(inArray(workingTypesTable.id, input.workingTypeIds))
           ).map((r) => r.name)
         : [];
+      const photo = dataUrlToAttachment(
+        input.photoDataUrl,
+        `aday-${profile.candidateCode}`,
+        "candidate-photo",
+      );
       const mail = candidateRegisteredAdminEmail({
         fullName: `${input.firstName} ${input.lastName}`,
         candidateCode: profile.candidateCode,
         email: input.email,
         phone: input.phone,
         city: input.city,
-        district: [input.district, input.neighborhood].filter(Boolean).join(" / ") || null,
+        district: input.district || null,
+        neighborhood: input.neighborhood || null,
         yearsOfExperience: input.yearsOfExperience,
         services: serviceNames,
         workingTypes: workingTypeNames,
         about: input.about || null,
+        photoCid: photo ? "candidate-photo" : null,
       });
-      await sendMail({ to: getAdminNotifyAddress(), ...mail });
+      await sendMail({
+        to: getAdminNotifyAddress(),
+        ...mail,
+        ...(photo ? { attachments: [photo] } : {}),
+      });
     } catch (mailError) {
       console.error("[auth] admin notification mail failed", mailError);
     }
