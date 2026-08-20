@@ -1,6 +1,8 @@
 import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, Search, ShieldCheck } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 import { CaregiverCard } from "@/components/caregiver-card";
 import { Reveal } from "@/components/reveal";
