@@ -254,6 +254,15 @@
   animation: md-scroll-x var(--scroll-duration, 40s) linear infinite reverse;
 }
 
+@keyframes md-attention {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@utility animate-attention {
+  animation: md-attention 2.5s ease-in-out infinite;
+}
+
 @utility faq-scroller-mask {
   mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
