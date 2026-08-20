@@ -106,7 +106,7 @@ export function SiteFooter() {
           {contact.address ? (
             <p className="flex items-start gap-2 text-muted-foreground">
               <MapPin className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden />
-              {contact.address}
+              <span className="whitespace-pre-line">{formatAddress(contact.address)}</span>
             </p>
           ) : null}
           {!contact.phone && !contact.email && !contact.address ? (
