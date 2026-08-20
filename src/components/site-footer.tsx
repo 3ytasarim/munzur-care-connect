@@ -14,6 +14,18 @@ import {
 import { BrandMark } from "@/components/brand-mark";
 import { useSiteSettings } from "@/lib/site-settings";
 
+function formatAddress(address: string) {
+  const dashIndex = address.lastIndexOf("-");
+  if (dashIndex <= 0) return address;
+  const beforeDash = address.slice(0, dashIndex).trim();
+  const afterDash = address.slice(dashIndex + 1).trim();
+  const lastSpaceIndex = beforeDash.lastIndexOf(" ");
+  if (lastSpaceIndex <= 0) return address;
+  const mainPart = beforeDash.slice(0, lastSpaceIndex).trim();
+  const cityPrefix = beforeDash.slice(lastSpaceIndex + 1).trim();
+  return `${mainPart}\n${cityPrefix} - ${afterDash}`;
+}
+
 export function SiteFooter() {
   const { settings, contact } = useSiteSettings();
 
@@ -33,7 +45,7 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-24 border-t border-border bg-card">
-      <div className="container-page grid gap-2 py-14 lg:grid-cols-[auto_auto_auto_1fr] lg:justify-items-start">
+      <div className="container-page grid gap-6 py-14 lg:grid-cols-[auto_auto_auto_1fr] lg:justify-items-start">
         <div className="space-y-3">
           <div className="flex flex-col items-start">
             <BrandMark className="h-12" />
@@ -94,7 +106,7 @@ export function SiteFooter() {
           {contact.address ? (
             <p className="flex items-start gap-2 text-muted-foreground">
               <MapPin className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden />
-              {contact.address}
+              <span className="whitespace-pre-line">{formatAddress(contact.address)}</span>
             </p>
           ) : null}
           {!contact.phone && !contact.email && !contact.address ? (
