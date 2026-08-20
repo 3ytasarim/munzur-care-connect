@@ -125,7 +125,7 @@ export function SettingsPanel() {
               hint={f.hint}
               maxWidth={f.maxWidth}
               maxHeight={f.maxHeight}
-              dark={f.dark}
+              dark={f.dark ?? false}
               value={form.settings[f.key] ?? ""}
               onChange={(next) =>
                 setForm({ ...form, settings: { ...form.settings, [f.key]: next } })
