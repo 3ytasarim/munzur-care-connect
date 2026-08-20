@@ -324,6 +324,31 @@ function Index() {
 
       </section>
 
+      {/* Neden MunzurDestek? */}
+      <section className="border-y border-border bg-secondary/30 py-20">
+        <div className="container-page">
+          <Reveal className="text-center">
+            <h2 className="font-display text-3xl font-bold text-foreground">
+              Neden MunzurDestek?
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+              Aileleri doğru bakım desteğiyle buluştururken güven, şeffaflık ve takip edilebilirlik
+              önceliğimiz.
+            </p>
+          </Reveal>
+
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {WHY_CARDS.map((c, i) => (
+              <Reveal key={c.title} delay={i * 90} className="h-full">
+                <InfoCard image={getServiceImage(c.slug)} title={c.title} description={c.text} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+
 
       {/* Featured caregivers straight from Neon */}
       <section className="container-page pb-20">
