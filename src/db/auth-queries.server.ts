@@ -8,8 +8,16 @@ import {
   caregiverProfiles,
   caregiverServices,
   caregiverWorkingTypes,
+  serviceCategories,
   users,
+  workingTypes as workingTypesTable,
 } from "./schema.server";
+import {
+  candidateRegisteredAdminEmail,
+  getAdminNotifyAddress,
+  sendMail,
+} from "@/lib/email.server";
+import { inArray } from "drizzle-orm";
 import { hashPassword, verifyPassword } from "@/lib/password.server";
 import { logAudit, startSession } from "@/lib/auth.server";
 import type { LoginInput, RegisterInput } from "@/lib/auth-schemas";
@@ -118,6 +126,40 @@ export async function registerCaregiverAccount(input: RegisterInput): Promise<Re
       entityId: profile.id,
       newData: { candidateCode: profile.candidateCode, city: input.city },
     });
+
+    try {
+      const serviceNames = input.serviceIds.length
+        ? (
+            await db
+              .select({ name: serviceCategories.name })
+              .from(serviceCategories)
+              .where(inArray(serviceCategories.id, input.serviceIds))
+          ).map((r) => r.name)
+        : [];
+      const workingTypeNames = input.workingTypeIds.length
+        ? (
+            await db
+              .select({ name: workingTypesTable.name })
+              .from(workingTypesTable)
+              .where(inArray(workingTypesTable.id, input.workingTypeIds))
+          ).map((r) => r.name)
+        : [];
+      const mail = candidateRegisteredAdminEmail({
+        fullName: `${input.firstName} ${input.lastName}`,
+        candidateCode: profile.candidateCode,
+        email: input.email,
+        phone: input.phone,
+        city: input.city,
+        district: input.district || null,
+        yearsOfExperience: input.yearsOfExperience,
+        services: serviceNames,
+        workingTypes: workingTypeNames,
+        about: input.about || null,
+      });
+      await sendMail({ to: getAdminNotifyAddress(), ...mail });
+    } catch (mailError) {
+      console.error("[auth] admin notification mail failed", mailError);
+    }
 
     return { ok: true, candidateCode: profile.candidateCode };
   } catch (error) {
