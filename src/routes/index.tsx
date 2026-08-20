@@ -154,7 +154,7 @@ function Index() {
                 { label: "Çalışma şekli", value: options.workingTypes.length },
                 { label: "Uzmanlık", value: options.skills.length },
               ].map((s, i) => (
-                <StatCard key={s.label} value={s.value} label={s.label} delay={i * 120} />
+                <StatCard key={s.label} value={String(s.value)} label={s.label} delay={i * 120} />
               ))}
             </div>
 
