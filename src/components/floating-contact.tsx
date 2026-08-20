@@ -27,18 +27,15 @@ export function FloatingContact() {
   if (!tel && !wa) return null;
 
   return (
-    <div className="fixed right-0 top-1/2 z-40 flex -translate-y-1/2 flex-col gap-2">
+    <div className="fixed bottom-4 right-4 z-40 flex flex-col gap-3 sm:bottom-6 sm:right-6">
       {tel ? (
         <a
           href={`tel:${tel}`}
           aria-label="Telefon ile ara"
-          className="animate-attention group flex items-center gap-2 rounded-l-xl bg-highlight-strong py-3 pl-3 pr-4 text-highlight-foreground shadow-lg transition-all duration-300 hover:pr-5 hover:shadow-glow"
+          className="animate-attention group flex size-14 items-center justify-center rounded-full bg-highlight-strong text-highlight-foreground shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-glow"
           style={{ animationDelay: "0s" }}
         >
-          <Phone className="size-5 shrink-0" aria-hidden />
-          <span className="whitespace-nowrap text-sm font-semibold">
-            Bizi Arayın
-          </span>
+          <Phone className="size-6 shrink-0" aria-hidden />
         </a>
       ) : null}
       {wa ? (
@@ -47,13 +44,10 @@ export function FloatingContact() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp ile yazın"
-          className="animate-attention group flex items-center gap-2 rounded-l-xl bg-[#25D366] py-3 pl-3 pr-4 text-white shadow-lg transition-all duration-300 hover:pr-5 hover:shadow-glow"
+          className="animate-attention group flex size-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-glow"
           style={{ animationDelay: "0.5s" }}
         >
-          <WhatsAppIcon className="size-5 shrink-0" aria-hidden />
-          <span className="whitespace-nowrap text-sm font-semibold">
-            WhatsApp
-          </span>
+          <WhatsAppIcon className="size-6 shrink-0" aria-hidden />
         </a>
       ) : null}
     </div>
