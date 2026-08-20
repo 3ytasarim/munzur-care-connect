@@ -47,14 +47,12 @@ export function FloatingContact() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp ile yazın"
-          className="animate-attention group flex items-center gap-2 rounded-l-xl bg-[#25D366] py-2 pl-2 pr-4 text-white shadow-lg transition-all duration-300 hover:pr-5 hover:shadow-glow"
+          className="animate-attention group flex items-center gap-2 rounded-l-xl bg-[#25D366] py-3 pl-3 pr-4 text-white shadow-lg transition-all duration-300 hover:pr-5 hover:shadow-glow"
           style={{ animationDelay: "0.5s" }}
         >
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-[#25D366] shadow-sm">
-            <WhatsAppIcon className="size-6 shrink-0" aria-hidden />
-          </span>
+          <WhatsAppIcon className="size-5 shrink-0" aria-hidden />
           <span className="whitespace-nowrap text-sm font-semibold">
-            Bize Ulaşın
+            WhatsApp
           </span>
         </a>
       ) : null}
