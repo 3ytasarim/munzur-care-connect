@@ -268,17 +268,22 @@ function Index() {
               Yaşlı, bebek, çocuk ve hasta bakımı için deneyimli adayları inceleyin; size uygun
               olanla doğrudan iletişime geçin.
             </p>
-            <div className="animate-fade-up mt-8 flex flex-wrap gap-3 [animation-delay:300ms]">
-              <Button3D size="lg" onClick={() => navigate({ to: "/bakicilar" })}>
-                <Search className="size-4" aria-hidden />
-                Bakıcı Ara
+            <div className="animate-fade-up mt-8 flex flex-row gap-3 [animation-delay:300ms]">
+              <Button3D
+                size="md"
+                className="min-w-0 flex-1 sm:size-lg"
+                onClick={() => navigate({ to: "/bakicilar" })}
+              >
+                <Search className="size-4 shrink-0" aria-hidden />
+                <span className="truncate">Bakıcı Ara</span>
               </Button3D>
               <Button3D
-                size="lg"
+                size="md"
                 variant="outline"
+                className="min-w-0 flex-1 sm:size-lg"
                 onClick={() => navigate({ to: "/bakicilar", search: {} })}
               >
-                Hizmetleri İncele
+                <span className="truncate">Hizmetleri İncele</span>
               </Button3D>
             </div>
             <div className="mt-12 grid max-w-lg grid-cols-3 gap-3">
