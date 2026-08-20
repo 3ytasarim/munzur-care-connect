@@ -42,9 +42,11 @@ function readCookie(name: string): string | null {
 }
 
 function writeCookie(value: string, maxAgeSeconds: number) {
+  // SameSite=None is required because the app is also rendered inside the
+  // preview iframe (cross-site context), where Lax cookies are dropped.
   setResponseHeader(
     "set-cookie",
-    `${SESSION_COOKIE}=${encodeURIComponent(value)}; Path=/; HttpOnly; SameSite=Lax; Secure; Max-Age=${maxAgeSeconds}`,
+    `${SESSION_COOKIE}=${encodeURIComponent(value)}; Path=/; HttpOnly; SameSite=None; Secure; Partitioned; Max-Age=${maxAgeSeconds}`,
   );
 }
 
