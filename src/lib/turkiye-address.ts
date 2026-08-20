@@ -23,9 +23,10 @@ export async function fetchDistricts(provinceId: number): Promise<District[]> {
 }
 
 export async function fetchNeighborhoods(districtId: number): Promise<Neighborhood[]> {
-  const res = await fetch(`${BASE}/neighborhoods?districtId=${districtId}&limit=5000&fields=name,id`);
+  const res = await fetch(`${BASE}/neighborhoods?districtId=${districtId}&limit=1000&fields=name,id`);
   if (!res.ok) throw new Error("neighborhoods fetch failed");
-  const json = (await res.json()) as { data: Neighborhood[] };
+  const json = (await res.json()) as { data?: Neighborhood[]; status?: string };
+  if (!Array.isArray(json.data)) return [];
   const seen = new Set<string>();
   return json.data
     .filter((n) => (seen.has(n.name) ? false : (seen.add(n.name), true)))
