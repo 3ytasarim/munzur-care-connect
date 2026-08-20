@@ -133,8 +133,37 @@ export async function setCandidateStatus(input: {
     entityId: input.candidateId,
     newData: { approvalStatus: input.status },
   });
-  return { ok: true as const };
+
+  let emailSent = false;
+  if (approved) {
+    const recipient = await safeDb(async (db) => {
+      const rows = await db
+        .select({
+          email: users.email,
+          firstName: caregiverProfiles.firstName,
+          lastName: caregiverProfiles.lastName,
+          candidateCode: caregiverProfiles.candidateCode,
+        })
+        .from(caregiverProfiles)
+        .innerJoin(users, eq(users.id, caregiverProfiles.userId))
+        .where(eq(caregiverProfiles.id, input.candidateId))
+        .limit(1);
+      return rows[0] ?? null;
+    });
+
+    if (recipient?.email) {
+      const mail = candidateApprovedEmail({
+        fullName: `${recipient.firstName} ${recipient.lastName}`.trim(),
+        candidateCode: recipient.candidateCode,
+      });
+      const result = await sendMail({ to: recipient.email, ...mail });
+      emailSent = result.sent;
+    }
+  }
+
+  return { ok: true as const, emailSent };
 }
+
 
 export async function setCandidateFeatured(input: {
   adminUserId: string;
