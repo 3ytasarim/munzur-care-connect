@@ -144,6 +144,7 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
   const [kvkk, setKvkk] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [submittedCode, setSubmittedCode] = useState<string | null>(null);
 
   function set<K extends keyof FormState>(key: K, value: string) {
     setValues((prev) => ({ ...prev, [key]: value }));
