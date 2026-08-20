@@ -5,6 +5,8 @@ import { BadgeCheck, HeartHandshake, Search, ShieldCheck } from "lucide-react";
 import { CaregiverCard } from "@/components/caregiver-card";
 import { Reveal } from "@/components/reveal";
 import { ServiceIcon } from "@/components/service-icon";
+import { getServiceImage } from "@/components/service-image";
+
 
 
 import { Button } from "@/components/ui/button";
@@ -150,22 +152,38 @@ function Index() {
             Hizmet kategorileri yönetim panelinden düzenlenebilir.
           </p>
         </Reveal>
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {options.services.map((s, i) => (
             <Reveal as="li" key={s.id} delay={i * 70} className="h-full">
               <Link
                 to="/bakicilar"
-                className="group hover-lift flex h-full flex-col justify-between rounded-xl border border-border bg-card p-6 shadow-card hover:border-brand"
+                className="group hover-lift block h-full overflow-hidden rounded-2xl border border-border bg-card shadow-card hover:border-brand"
               >
-                <span className="flex items-start gap-3">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand-strong transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                    <ServiceIcon slug={s.slug} className="size-5" />
+                <span className="relative block aspect-[4/3] overflow-hidden bg-muted">
+                  <img
+                    src={getServiceImage(s.slug)}
+                    alt={`${s.name} hizmeti`}
+                    loading="lazy"
+                    width={768}
+                    height={576}
+                    className="size-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <span
+                    className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent"
+                    aria-hidden
+                  />
+                  <span className="absolute bottom-3 left-4 right-4 flex items-center gap-2">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-background/90 text-brand-strong backdrop-blur">
+                      <ServiceIcon slug={s.slug} className="size-4" />
+                    </span>
+                    <span className="font-display text-base font-semibold text-background drop-shadow">
+                      {s.name}
+                    </span>
                   </span>
-                  <span className="font-display text-base font-semibold text-foreground">{s.name}</span>
                 </span>
-                <span className="mt-4 text-sm font-medium text-brand-strong">
+                <span className="flex items-center justify-between px-4 py-3 text-sm font-medium text-brand-strong">
                   Adayları gör
-                  <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
+                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
                 </span>
@@ -173,6 +191,7 @@ function Index() {
             </Reveal>
           ))}
         </ul>
+
       </section>
 
 
