@@ -1,10 +1,11 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Home, Menu, Phone, Search, UserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { BrandMark } from "@/components/brand-mark";
 import { RegisterDialog } from "@/components/register-dialog";
 import { Button } from "@/components/ui/button";
+import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { NavBar, type NavItem } from "@/components/ui/tubelight-navbar";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useSession } from "@/lib/session";
