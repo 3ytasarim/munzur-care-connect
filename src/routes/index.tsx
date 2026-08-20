@@ -86,18 +86,15 @@ function Index() {
                 Hizmetleri İncele
               </Button3D>
             </div>
-            <dl className="animate-fade-up mt-12 grid max-w-md grid-cols-3 gap-6 [animation-delay:400ms]">
-              {[
+            <StatsSection
+              className="mt-12 max-w-lg"
+              stats={[
                 { label: "Hizmet alanı", value: options.services.length },
                 { label: "Çalışma şekli", value: options.workingTypes.length },
                 { label: "Uzmanlık", value: options.skills.length },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <dt className="text-xs text-muted-foreground">{stat.label}</dt>
-                  <dd className="font-display text-2xl font-bold text-foreground">{stat.value}</dd>
-                </div>
-              ))}
-            </dl>
+              ]}
+            />
+
           </div>
 
           <div className="animate-fade-up relative [animation-delay:250ms]">
