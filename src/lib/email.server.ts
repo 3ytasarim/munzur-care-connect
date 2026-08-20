@@ -1,7 +1,8 @@
 /**
- * Server-only e-posta gönderimi (Resend HTTP API).
- * RESEND_API_KEY tanımlı değilse gönderim sessizce atlanır; uygulama akışı bozulmaz.
+ * Server-only e-posta gönderimi (Gmail SMTP — uygulama şifresi ile).
+ * GMAIL_USER / GMAIL_APP_PASSWORD tanımlı değilse gönderim atlanır.
  */
+import { sendSmtpMail } from "./smtp.server";
 
 type SendResult = { sent: boolean; reason?: string };
 
@@ -11,39 +12,31 @@ export async function sendMail(input: {
   html: string;
   text?: string;
 }): Promise<SendResult> {
-  const apiKey = process.env["RESEND_API_KEY"];
-  if (!apiKey) {
-    console.warn("[email] RESEND_API_KEY yok, e-posta gönderilmedi:", input.subject);
-    return { sent: false, reason: "missing_api_key" };
+  const user = process.env["GMAIL_USER"];
+  const password = (process.env["GMAIL_APP_PASSWORD"] ?? "").replace(/\s+/g, "");
+  if (!user || !password) {
+    console.warn("[email] Gmail bilgileri yok, e-posta gönderilmedi:", input.subject);
+    return { sent: false, reason: "missing_credentials" };
   }
-  const from = process.env["MAIL_FROM"] ?? "MunzurDestek <bildirim@munzurdestek.com>";
+  const from = process.env["MAIL_FROM"] ?? `MunzurDestek <${user}>`;
 
   try {
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from,
-        to: [input.to],
-        subject: input.subject,
-        html: input.html,
-        text: input.text,
-      }),
+    await sendSmtpMail({
+      user,
+      password,
+      from,
+      to: input.to,
+      subject: input.subject,
+      html: input.html,
+      text: input.text,
     });
-    if (!response.ok) {
-      const body = await response.text();
-      console.error("[email] gönderim hatası", response.status, body);
-      return { sent: false, reason: `http_${response.status}` };
-    }
     return { sent: true };
   } catch (error) {
-    console.error("[email] gönderim istisnası", error);
-    return { sent: false, reason: "network_error" };
+    console.error("[email] gönderim hatası", error);
+    return { sent: false, reason: "smtp_error" };
   }
 }
+
 
 export function candidateApprovedEmail(input: { fullName: string; candidateCode: string }) {
   const subject = "Profiliniz aktif oldu — MunzurDestek";
