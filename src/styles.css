@@ -254,6 +254,17 @@
   animation: md-scroll-x var(--scroll-duration, 40s) linear infinite reverse;
 }
 
+@keyframes md-star-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(8px, -12px) rotate(12deg); }
+  50% { transform: translate(-6px, -6px) rotate(-8deg); }
+  75% { transform: translate(10px, 8px) rotate(6deg); }
+}
+
+@utility animate-star-drift {
+  animation: md-star-drift var(--duration, 10s) ease-in-out infinite;
+}
+
 @keyframes md-attention {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
