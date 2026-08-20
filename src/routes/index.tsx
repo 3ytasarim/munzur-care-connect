@@ -41,6 +41,67 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const steps = [
+  {
+    icon: Search,
+    title: "Filtreleyin",
+    text: "Hizmet, çalışma şekli, şehir ve deneyime göre arayın.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Profili inceleyin",
+    text: "Yalnızca ekibimiz tarafından onaylanan adaylar yayınlanır.",
+  },
+  {
+    icon: HeartHandshake,
+    title: "İletişime geçin",
+    text: "Aday kodu ile WhatsApp üzerinden hızlıca bilgi alın.",
+  },
+];
+
+function StepsFlow() {
+  return (
+    <ol className="relative mt-7 space-y-1">
+      {/* animated connecting line */}
+      <span
+        className="pointer-events-none absolute left-[27px] top-6 bottom-6 w-px origin-top animate-step-line bg-gradient-to-b from-brand via-highlight to-transparent"
+        aria-hidden
+      />
+      {/* travelling glow dot */}
+      <span
+        className="pointer-events-none absolute left-[27px] z-10 size-2 -translate-x-1/2 rounded-full bg-highlight shadow-[0_0_12px_var(--highlight)] animate-step-travel"
+        aria-hidden
+      />
+      {steps.map((step, i) => (
+        <li
+          key={step.title}
+          className="group animate-step-pop relative flex gap-4 rounded-2xl p-3 transition-colors duration-300 hover:bg-brand-soft/60"
+          style={{ animationDelay: `${450 + i * 180}ms` }}
+        >
+          <span className="relative flex size-11 shrink-0 items-center justify-center rounded-2xl border border-brand/15 bg-brand-soft text-brand-strong shadow-sm transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-brand/40">
+            <span
+              className="absolute inset-0 rounded-2xl bg-brand/20 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100"
+              aria-hidden
+            />
+            <step.icon className="relative size-5" aria-hidden />
+            <span className="absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-brand-foreground shadow-sm">
+              {i + 1}
+            </span>
+          </span>
+          <div className="pt-0.5">
+            <h3 className="text-sm font-semibold text-foreground transition-colors group-hover:text-brand-strong">
+              {step.title}
+            </h3>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              {step.text}
+            </p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 function Index() {
   const navigate = useNavigate();
   const { data: options } = useSuspenseQuery(filterOptionsQuery);
@@ -128,55 +189,7 @@ function Index() {
                   </div>
                 </div>
 
-                <ol className="relative mt-7 space-y-1">
-                  {/* connecting line */}
-                  <span
-                    className="pointer-events-none absolute left-[27px] top-6 bottom-6 w-px bg-gradient-to-b from-brand/40 via-brand/20 to-transparent"
-                    aria-hidden
-                  />
-                  {[
-                    {
-                      icon: Search,
-                      title: "Filtreleyin",
-                      text: "Hizmet, çalışma şekli, şehir ve deneyime göre arayın.",
-                    },
-                    {
-                      icon: BadgeCheck,
-                      title: "Profili inceleyin",
-                      text: "Yalnızca ekibimiz tarafından onaylanan adaylar yayınlanır.",
-                    },
-                    {
-                      icon: HeartHandshake,
-                      title: "İletişime geçin",
-                      text: "Aday kodu ile WhatsApp üzerinden hızlıca bilgi alın.",
-                    },
-                  ].map((step, i) => (
-                    <li
-                      key={step.title}
-                      className="group animate-fade-up relative flex gap-4 rounded-2xl p-3 transition-colors duration-300 hover:bg-brand-soft/60"
-                      style={{ animationDelay: `${400 + i * 140}ms` }}
-                    >
-                      <span className="relative flex size-11 shrink-0 items-center justify-center rounded-2xl border border-brand/15 bg-brand-soft text-brand-strong shadow-sm transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-brand/40">
-                        <span
-                          className="absolute inset-0 rounded-2xl bg-brand/20 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100"
-                          aria-hidden
-                        />
-                        <step.icon className="relative size-5" aria-hidden />
-                        <span className="absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-brand-foreground shadow-sm">
-                          {i + 1}
-                        </span>
-                      </span>
-                      <div className="pt-0.5">
-                        <h3 className="text-sm font-semibold text-foreground transition-colors group-hover:text-brand-strong">
-                          {step.title}
-                        </h3>
-                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                          {step.text}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                <StepsFlow />
               </div>
             </div>
           </div>

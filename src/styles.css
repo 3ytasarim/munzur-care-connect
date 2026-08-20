@@ -223,6 +223,24 @@
   100% { opacity: 0; }
 }
 
+@keyframes md-step-line {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes md-step-pop {
+  0% { opacity: 0; transform: scale(0.7) translateX(-12px); }
+  60% { opacity: 1; transform: scale(1.05) translateX(2px); }
+  100% { opacity: 1; transform: scale(1) translateX(0); }
+}
+
+@keyframes md-step-travel {
+  0% { top: 1.5rem; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: calc(100% - 1.5rem); opacity: 0; }
+}
+
 @utility animate-fade-up {
   animation: md-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -233,6 +251,19 @@
 
 @utility animate-float-slow {
   animation: md-float 7s ease-in-out infinite;
+}
+
+@utility animate-step-line {
+  animation: md-step-line 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: top;
+}
+
+@utility animate-step-pop {
+  animation: md-step-pop 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-step-travel {
+  animation: md-step-travel 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @utility hover-lift {
