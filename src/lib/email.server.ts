@@ -93,10 +93,12 @@ export function candidateRegisteredAdminEmail(input: {
   phone: string;
   city: string;
   district?: string | null;
+  neighborhood?: string | null;
   yearsOfExperience?: number | null;
   services: string[];
   workingTypes: string[];
   about?: string | null;
+  photoCid?: string | null;
 }) {
   const subject = `Aday Kaydı alındı - ${input.fullName}`;
   const rows: Array<[string, string]> = [
@@ -104,18 +106,22 @@ export function candidateRegisteredAdminEmail(input: {
     ["Ad Soyad", input.fullName],
     ["E-posta", input.email],
     ["Telefon", input.phone],
-    ["Şehir / İlçe", [input.city, input.district].filter(Boolean).join(" / ")],
+    ["İl / İlçe / Mahalle", [input.city, input.district, input.neighborhood].filter(Boolean).join(" / ")],
     ["Deneyim", `${input.yearsOfExperience ?? 0} yıl`],
     ["Hizmetler", input.services.join(", ") || "-"],
     ["Çalışma Şekli", input.workingTypes.join(", ") || "-"],
     ["Hakkında", input.about || "-"],
   ];
+  const photoBlock = input.photoCid
+    ? `<div style="margin:0 0 16px"><img src="cid:${escapeHtml(input.photoCid)}" alt="Aday fotoğrafı" width="160" style="width:160px;height:auto;border-radius:12px;border:1px solid #E5E7EB;display:block" /></div>`
+    : "";
   const html = `<!doctype html>
 <html lang="tr"><body style="margin:0;background:#FAFAF7;font-family:Arial,Helvetica,sans-serif;color:#1F2933">
   <div style="max-width:600px;margin:0 auto;padding:32px 24px">
     <div style="font-size:22px;font-weight:700"><span style="color:#57B614">Munzur</span><span style="color:#1F2933">Destek</span></div>
     <div style="margin-top:20px;background:#ffffff;border:1px solid #E5E7EB;border-radius:16px;padding:24px">
       <h1 style="margin:0 0 12px;font-size:20px">Yeni Aday Kaydı Alındı</h1>
+      ${photoBlock}
       <p style="margin:0 0 16px;line-height:1.6"><strong>${escapeHtml(input.fullName)}</strong> adlı aday başvuru formunu doldurdu. Panelden inceleyip onaylayabilirsiniz.</p>
       <table style="width:100%;border-collapse:collapse;font-size:14px">
         ${rows
