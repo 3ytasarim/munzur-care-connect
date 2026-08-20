@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface StatCardProps {
-  value: string | number;
+  value: string;
   label: string;
   className?: string;
   delay?: number;
@@ -16,64 +16,66 @@ export default function StatCard({
   className,
   delay = 0,
 }: StatCardProps) {
+  const d = delay / 1000;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
-      transition={{ duration: 0.5, delay: delay / 1000, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -4 }}
-      className={cn("group relative rounded-2xl p-px", className)}
+    <div
+      className={cn(
+        "relative h-[150px] w-full overflow-hidden rounded-xl bg-gradient-to-br from-brand/40 via-highlight/30 to-brand-strong/40 p-[2px]",
+        className,
+      )}
     >
-      {/* Moving halo (animated border) */}
+      {/* Moving halo */}
       <motion.div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-2xl opacity-70 transition-opacity duration-500 group-hover:opacity-100"
-        style={{
-          background:
-            "conic-gradient(from 0deg, transparent 0deg, var(--brand) 60deg, var(--highlight) 120deg, transparent 200deg, transparent 360deg)",
+        className="absolute h-12 w-12 rounded-full bg-highlight/40 blur-xl"
+        animate={{
+          top: ["10%", "10%", "75%", "75%", "10%"],
+          left: ["10%", "80%", "80%", "10%", "10%"],
         }}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 10, repeat: Infinity, ease: "linear", delay: d }}
       />
 
       {/* Inner Card */}
-      <div className="relative overflow-hidden rounded-2xl bg-background/95 px-5 py-4 backdrop-blur-xl">
-        {/* Rotating ray */}
-        <motion.span
-          aria-hidden
-          className="pointer-events-none absolute -inset-16 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{
-            background:
-              "conic-gradient(from 0deg, transparent 0deg, color-mix(in oklab, var(--highlight) 45%, transparent) 30deg, transparent 90deg)",
+      <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-[10px] border border-brand/15 bg-gradient-to-br from-background/90 to-brand-soft/70 backdrop-blur-md">
+        {/* Rotating Ray */}
+        <motion.div
+          className="absolute h-[50px] w-[220px] rounded-full bg-brand/15 blur-2xl"
+          animate={{ rotate: [0, 360] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+        />
+
+        {/* Value */}
+        <motion.div
+          className="bg-gradient-to-r from-brand-strong via-brand to-brand-strong bg-clip-text text-4xl font-extrabold text-transparent"
+          animate={{
+            textShadow: [
+              "0 0 10px var(--brand-soft)",
+              "0 0 2px var(--brand-soft)",
+              "0 0 10px var(--brand-soft)",
+            ],
           }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-        />
+          transition={{ duration: 4, repeat: Infinity, delay: d }}
+        >
+          {value}
+        </motion.div>
 
-        {/* Subtle moving lines */}
-        <motion.span
-          aria-hidden
-          className="pointer-events-none absolute left-0 top-0 h-px w-1/2 bg-gradient-to-r from-transparent via-brand to-transparent"
-          animate={{ x: ["-100%", "220%"] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: delay / 1000 }}
-        />
-        <motion.span
-          aria-hidden
-          className="pointer-events-none absolute bottom-0 right-0 h-px w-1/2 bg-gradient-to-r from-transparent via-highlight to-transparent"
-          animate={{ x: ["100%", "-220%"] }}
-          transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: delay / 1000 + 0.4 }}
-        />
-
-        <div className="relative">
-          <div className="text-2xl font-semibold tracking-tight text-foreground transition-colors duration-300 group-hover:text-brand-strong">
-            {value}
-          </div>
-          <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
-            {label}
-          </p>
+        {/* Label */}
+        <div className="mt-2 text-sm tracking-wide text-muted-foreground">
+          {label}
         </div>
+
+        {/* Subtle lines */}
+        <motion.div
+          className="absolute top-[12%] h-px w-[80%] bg-gradient-to-r from-brand/50 to-transparent"
+          animate={{ opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 6, repeat: Infinity, delay: d }}
+        />
+        <motion.div
+          className="absolute bottom-[12%] h-px w-[80%] bg-gradient-to-r from-transparent to-highlight/60"
+          animate={{ opacity: [1, 0.4, 1] }}
+          transition={{ duration: 6, repeat: Infinity, delay: d }}
+        />
       </div>
-    </motion.div>
+    </div>
   );
 }
