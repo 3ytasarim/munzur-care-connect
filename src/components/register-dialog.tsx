@@ -22,6 +22,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { registerSchema } from "@/lib/auth-schemas";
 import { registerCaregiver } from "@/lib/auth.functions";
 import { getFilterOptions } from "@/lib/caregivers.functions";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { fetchDistricts, fetchNeighborhoods, fetchProvinces } from "@/lib/turkiye-address";
 
 const filterOptionsQuery = queryOptions({
   queryKey: ["filter-options"],
@@ -137,6 +145,25 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const submit = useServerFn(registerCaregiver);
+  const [provinceId, setProvinceId] = useState<number | null>(null);
+  const [districtId, setDistrictId] = useState<number | null>(null);
+  const provinces = useQuery({
+    queryKey: ["tr-provinces"],
+    queryFn: fetchProvinces,
+    staleTime: Infinity,
+  });
+  const districts = useQuery({
+    queryKey: ["tr-districts", provinceId],
+    queryFn: () => fetchDistricts(provinceId as number),
+    enabled: provinceId != null,
+    staleTime: Infinity,
+  });
+  const neighborhoods = useQuery({
+    queryKey: ["tr-neighborhoods", districtId],
+    queryFn: () => fetchNeighborhoods(districtId as number),
+    enabled: districtId != null,
+    staleTime: Infinity,
+  });
 
   const [step, setStep] = useState(0);
   const [values, setValues] = useState<FormState>(EMPTY);
@@ -166,8 +193,14 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
       if (values.password !== values.passwordConfirm) return "Şifreler eşleşmiyor.";
     }
     if (index === 1) {
-      if (values.city.trim().length < 2) return "Şehrinizi girin.";
+      if (values.city.trim().length < 2) return "İl seçin.";
+      if (values.district.trim().length < 2) return "İlçe seçin.";
+      if (values.neighborhood.trim().length < 2) return "Mahalle seçin.";
       if (serviceIds.length === 0) return "En az bir hizmet alanı seçin.";
+    }
+    if (index === 2) {
+      if (!photo) return "Devam etmek için profil fotoğrafı ekleyin veya çekin.";
+      if (!kvkk) return "Devam etmek için KVKK metnini onaylayın.";
     }
     return null;
   }
@@ -192,6 +225,7 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
       workingTypeIds,
       kvkkAccepted: kvkk,
       photoDataUrl: photo ?? undefined,
+      neighborhood: values.neighborhood,
     });
     if (!parsed.success) {
       setError(parsed.error.issues[0]?.message ?? "Lütfen formu kontrol edin.");
@@ -354,26 +388,84 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
 
       {step === 1 ? (
         <div key="step-1" className="animate-fade-up space-y-5">
-          <div className="grid gap-4 sm:grid-cols-3">
-            <Field label="Şehir" id="city">
-              <Input
-                id="city"
-                list="register-city-options"
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="İl" id="city">
+              <Select
                 value={values.city}
-                onChange={(e) => set("city", e.target.value)}
-              />
-              <datalist id="register-city-options">
-                {(options.data?.cities ?? []).map((city) => (
-                  <option key={city} value={city} />
-                ))}
-              </datalist>
+                onValueChange={(name) => {
+                  const province = (provinces.data ?? []).find((p) => p.name === name);
+                  setProvinceId(province?.id ?? null);
+                  setDistrictId(null);
+                  setValues((prev) => ({ ...prev, city: name, district: "", neighborhood: "" }));
+                }}
+              >
+                <SelectTrigger id="city">
+                  <SelectValue placeholder={provinces.isLoading ? "Yükleniyor..." : "İl seçin"} />
+                </SelectTrigger>
+                <SelectContent className="max-h-72">
+                  {(provinces.data ?? []).map((p) => (
+                    <SelectItem key={p.id} value={p.name}>
+                      {p.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </Field>
             <Field label="İlçe" id="district">
-              <Input
-                id="district"
+              <Select
                 value={values.district}
-                onChange={(e) => set("district", e.target.value)}
-              />
+                disabled={provinceId == null || districts.isLoading}
+                onValueChange={(name) => {
+                  const district = (districts.data ?? []).find((d) => d.name === name);
+                  setDistrictId(district?.id ?? null);
+                  setValues((prev) => ({ ...prev, district: name, neighborhood: "" }));
+                }}
+              >
+                <SelectTrigger id="district">
+                  <SelectValue
+                    placeholder={
+                      provinceId == null
+                        ? "Önce il seçin"
+                        : districts.isLoading
+                          ? "Yükleniyor..."
+                          : "İlçe seçin"
+                    }
+                  />
+                </SelectTrigger>
+                <SelectContent className="max-h-72">
+                  {(districts.data ?? []).map((d) => (
+                    <SelectItem key={d.id} value={d.name}>
+                      {d.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+            <Field label="Mahalle" id="neighborhood">
+              <Select
+                value={values.neighborhood}
+                disabled={districtId == null || neighborhoods.isLoading}
+                onValueChange={(name) => set("neighborhood", name)}
+              >
+                <SelectTrigger id="neighborhood">
+                  <SelectValue
+                    placeholder={
+                      districtId == null
+                        ? "Önce ilçe seçin"
+                        : neighborhoods.isLoading
+                          ? "Yükleniyor..."
+                          : "Mahalle seçin"
+                    }
+                  />
+                </SelectTrigger>
+                <SelectContent className="max-h-72">
+                  {(neighborhoods.data ?? []).map((n) => (
+                    <SelectItem key={n.id} value={n.name}>
+                      {n.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </Field>
             <Field label="Deneyim (yıl)" id="yearsOfExperience">
               <Input
@@ -439,6 +531,7 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
             <p className="text-sm font-medium text-foreground">Profil fotoğrafı</p>
             <p className="text-sm text-muted-foreground">
               Telefonunuzdan anlık fotoğraf çekebilir veya galerinizden bir görsel seçebilirsiniz.
+              Fotoğraf eklemeden kaydınızı tamamlayamazsınız.
             </p>
           </div>
           <PhotoCapture value={photo} onChange={setPhoto} />
@@ -484,7 +577,7 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
               <ArrowRight className="size-4" aria-hidden />
             </Button3D>
           ) : (
-            <Button3D type="submit" disabled={pending}>
+            <Button3D type="submit" disabled={pending || !photo || !kvkk}>
               {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
               {pending ? "Kaydınız oluşturuluyor..." : "Kaydı Tamamla"}
             </Button3D>
