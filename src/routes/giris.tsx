@@ -98,9 +98,9 @@ function LoginPage() {
               </p>
             ) : null}
 
-            <Button type="submit" className="w-full" disabled={pending}>
+            <Button3D type="submit" className="w-full" disabled={pending}>
               {pending ? "Giriş yapılıyor..." : "Giriş Yap"}
-            </Button>
+            </Button3D>
           </form>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">

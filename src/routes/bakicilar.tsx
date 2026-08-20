@@ -169,9 +169,9 @@ function CaregiverSearchPage() {
               <p className="text-sm text-muted-foreground">
                 Şu anda veriler yüklenemiyor. Lütfen tekrar deneyin.
               </p>
-              <Button className="mt-4" onClick={() => results.refetch()}>
+              <Button3D className="mt-4" onClick={() => results.refetch()}>
                 Tekrar dene
-              </Button>
+              </Button3D>
             </div>
           ) : results.data.items.length === 0 ? (
             <div className="rounded-xl border border-dashed border-border bg-card p-12 text-center">

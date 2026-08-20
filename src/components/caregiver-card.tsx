@@ -82,15 +82,13 @@ export function CaregiverCard({ caregiver }: { caregiver: CaregiverCardData }) {
 
         <div className="mt-auto pt-2">
           {waLink ? (
-            <Button asChild className="w-full">
-              <a href={waLink} target="_blank" rel="noreferrer">
-                WhatsApp ile Bilgi Al
-              </a>
-            </Button>
+            <Button3D className="w-full" onClick={() => window.open(waLink, "_blank", "noreferrer")}>
+              WhatsApp ile Bilgi Al
+            </Button3D>
           ) : (
-            <Button className="w-full" disabled>
+            <Button3D className="w-full" disabled>
               İletişim numarası tanımlanmadı
-            </Button>
+            </Button3D>
           )}
         </div>
       </div>
