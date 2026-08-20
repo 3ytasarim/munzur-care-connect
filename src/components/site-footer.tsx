@@ -33,7 +33,7 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-24 border-t border-border bg-card">
-      <div className="container-page grid gap-10 py-14 lg:grid-cols-4">
+      <div className="container-page grid gap-6 py-14 lg:grid-cols-4">
         <div className="space-y-3">
           <div className="flex flex-col items-start">
             <BrandMark className="h-12" />
