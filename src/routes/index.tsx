@@ -16,11 +16,11 @@ import { StatCard } from "@/components/ui/stat-card";
 import FaqSection, { type FaqData } from "@/components/ui/habit-faq-scroller";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 import { listBlogPosts } from "@/lib/blog.functions";
-import whatsappShareImage from "@/assets/munzurdestek-whatsapp-share-v2.jpg";
+import whatsappShareImage from "@/assets/munzurdestek-whatsapp-share-v3.jpg.asset.json";
 import heroMobileImage from "@/assets/hero-mobile-bakici.jpg";
 
 const SITE_ORIGIN = "https://id-preview--e5687aae-da5c-4ed7-bd40-2c5a18d70e10.lovable.app";
-const WHATSAPP_SHARE_IMAGE = `${SITE_ORIGIN}${whatsappShareImage}?v=2`;
+const WHATSAPP_SHARE_IMAGE = `${SITE_ORIGIN}${whatsappShareImage.url}`;
 
 const WHY_CARDS = [
   {
@@ -154,7 +154,7 @@ export const Route = createFileRoute("/")({
       { property: "og:image:type", content: "image/jpeg" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "MunzurDestek güvenilir bakıcı ve bakım hizmetleri" },
+      { property: "og:image:alt", content: "MunzurDestek yuvarlak logo" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: WHATSAPP_SHARE_IMAGE },
     ],
