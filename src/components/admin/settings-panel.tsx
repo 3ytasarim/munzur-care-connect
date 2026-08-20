@@ -24,6 +24,8 @@ const LOGO_FIELDS: {
   hint: string;
   maxWidth: number;
   maxHeight: number;
+  minWidth?: number;
+  minHeight?: number;
   dark?: boolean;
 }[] = [
   {
@@ -32,6 +34,8 @@ const LOGO_FIELDS: {
     hint: "Sitede 240 × 64 px görünür. Net durması için 960 × 256 px (veya SVG), şeffaf arka planlı yükleyin.",
     maxWidth: 960,
     maxHeight: 256,
+    minWidth: 700,
+    minHeight: 190,
   },
   {
     key: "dark_logo_url",
@@ -39,6 +43,8 @@ const LOGO_FIELDS: {
     hint: "Sitede 240 × 64 px görünür. 960 × 256 px açık renkli/beyaz versiyon (veya SVG) yükleyin.",
     maxWidth: 960,
     maxHeight: 256,
+    minWidth: 700,
+    minHeight: 190,
     dark: true,
   },
   {
@@ -47,6 +53,8 @@ const LOGO_FIELDS: {
     hint: "Sitede 48 × 48 px görünür. 384 × 384 px kare amblem (veya SVG) yükleyin.",
     maxWidth: 384,
     maxHeight: 384,
+    minWidth: 192,
+    minHeight: 192,
   },
   {
     key: "favicon_url",
@@ -54,6 +62,8 @@ const LOGO_FIELDS: {
     hint: "256 × 256 px kare PNG yükleyin; tarayıcı sekmesinde ve paylaşımlarda kullanılır.",
     maxWidth: 256,
     maxHeight: 256,
+    minWidth: 128,
+    minHeight: 128,
   },
 ];
 
@@ -128,6 +138,8 @@ export function SettingsPanel() {
               hint={f.hint}
               maxWidth={f.maxWidth}
               maxHeight={f.maxHeight}
+              {...(f.minWidth === undefined ? {} : { minWidth: f.minWidth })}
+              {...(f.minHeight === undefined ? {} : { minHeight: f.minHeight })}
               dark={f.dark ?? false}
               value={form.settings[f.key] ?? ""}
               onChange={(next) =>
