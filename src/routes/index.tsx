@@ -11,7 +11,79 @@ import { getServiceImage } from "@/components/service-image";
 
 import { Button3D } from "@/components/ui/button-3d";
 import StatCard from "@/components/ui/stat-card";
+import FaqSection, { type FaqData } from "@/components/ui/habit-faq-scroller";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
+
+const FAQ_DATA: FaqData = {
+  mainTitle: "Sıkça Sorulan Sorular",
+  mainSubtitle:
+    "MunzurDestek hakkında en çok merak edilenleri derledik. Kartların üzerine gelerek akışı durdurabilirsiniz.",
+  rows: [
+    {
+      id: "row-1",
+      speed: "48s",
+      direction: "left",
+      faqItems: [
+        {
+          id: "f1",
+          question: "MunzurDestek'i neden tercih etmeliyim?",
+          answer:
+            "Tüm adaylar başvuru sonrası ekibimiz tarafından incelenir; yalnızca onaylanan profiller sitede yayınlanır.",
+        },
+        {
+          id: "f2",
+          question: "Bakıcılar sizin çalışanınız mı?",
+          answer:
+            "Hayır. MunzurDestek, aileler ile bakım desteği veren adayları buluşturan bir platformdur.",
+        },
+        {
+          id: "f3",
+          question: "Aradığım bakıcıyı nasıl bulabilirim?",
+          answer:
+            "Hizmet türü, çalışma şekli ve şehir filtreleriyle adayları listeleyip profil detaylarını inceleyebilirsiniz.",
+        },
+        {
+          id: "f4",
+          question: "Aday olmak ücretli mi?",
+          answer:
+            "Aday kaydı ücretsizdir. Formu doldurup onay sürecini tamamladığınızda profiliniz yayına alınır.",
+        },
+      ],
+    },
+    {
+      id: "row-2",
+      speed: "56s",
+      direction: "right",
+      faqItems: [
+        {
+          id: "f5",
+          question: "Bakıcı maaşları ne kadar?",
+          answer:
+            "Ücretler hizmet türü, deneyim ve çalışma şekline göre değişir; adayın profilinde beklentisini görebilirsiniz.",
+        },
+        {
+          id: "f6",
+          question: "Hangi alanlarda yardımcı bulabilirim?",
+          answer:
+            "Yaşlı bakımı, bebek ve çocuk bakımı, hasta refakati, ev yardımcısı ve temizlik desteği bulabilirsiniz.",
+        },
+        {
+          id: "f7",
+          question: "Bakıcı seçerken güveni nasıl sağlarım?",
+          answer:
+            "Referansları isteyin, tanışma görüşmesi yapın ve profildeki belge ile deneyim bilgilerini kontrol edin.",
+        },
+        {
+          id: "f8",
+          question: "Adaylarla nasıl iletişime geçerim?",
+          answer:
+            "Profil sayfasındaki iletişim adımlarını izleyerek ekibimiz üzerinden hızlıca görüşme planlayabilirsiniz.",
+        },
+      ],
+    },
+  ],
+};
+
 
 const filterOptionsQuery = queryOptions({
   queryKey: ["filter-options"],
