@@ -19,7 +19,7 @@ export function BrandMark({ className, variant = "default" }: Props) {
   const logo = variant === "mobile" ? settings["mobile_logo_url"] || settings["logo_url"] : settings["logo_url"];
 
   if (logo) {
-    return <img src={logo} alt={siteName} className={cn("h-12 w-auto bg-transparent object-contain", className)} />;
+    return <img src={logo} alt={siteName} className={cn("h-16 w-auto bg-transparent object-contain", className)} />;
   }
 
   const split = siteName.toLowerCase().startsWith("munzur") ? 6 : Math.ceil(siteName.length / 2);
