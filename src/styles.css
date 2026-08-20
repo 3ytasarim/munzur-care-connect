@@ -241,6 +241,25 @@
   100% { top: calc(100% - 1.5rem); opacity: 0; }
 }
 
+@keyframes md-scroll-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@utility animate-scroll-x {
+  animation: md-scroll-x var(--scroll-duration, 40s) linear infinite;
+}
+
+@utility animate-scroll-x-reverse {
+  animation: md-scroll-x var(--scroll-duration, 40s) linear infinite reverse;
+}
+
+@utility faq-scroller-mask {
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+
 @utility animate-fade-up {
   animation: md-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
