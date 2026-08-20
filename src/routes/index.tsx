@@ -62,52 +62,25 @@ const steps = [
 ];
 
 function StepsFlow() {
-  const ref = useRef<HTMLOListElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
-    <ol ref={ref} className="relative mt-7 space-y-1">
+    <ol className="relative mt-7 space-y-1">
       {/* animated connecting line */}
-      <motion.span
-        className="pointer-events-none absolute left-[27px] top-6 w-px origin-top bg-gradient-to-b from-brand via-highlight to-transparent"
+      <span
+        className="pointer-events-none absolute left-[27px] top-6 bottom-6 w-px origin-top animate-step-line bg-gradient-to-b from-brand via-highlight to-transparent"
         aria-hidden
-        initial={{ height: 0, opacity: 0 }}
-        animate={isInView ? { height: "78%", opacity: 1 } : { height: 0, opacity: 0 }}
-        transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 }}
       />
       {/* travelling glow dot */}
-      <motion.span
-        className="pointer-events-none absolute left-[27px] top-6 z-10 size-2 -translate-x-1/2 rounded-full bg-highlight shadow-[0_0_12px_var(--highlight)]"
+      <span
+        className="pointer-events-none absolute left-[27px] z-10 size-2 -translate-x-1/2 rounded-full bg-highlight shadow-[0_0_12px_var(--highlight)] animate-step-travel"
         aria-hidden
-        initial={{ top: "1.5rem", opacity: 0 }}
-        animate={isInView ? { top: "78%", opacity: [0, 1, 1, 0] } : { top: "1.5rem", opacity: 0 }}
-        transition={{ duration: 1.4, ease: "easeInOut", delay: 0.3 }}
       />
       {steps.map((step, i) => (
-        <motion.li
+        <li
           key={step.title}
-          className="group relative flex gap-4 rounded-2xl p-3 transition-colors duration-300 hover:bg-brand-soft/60"
-          initial={{ opacity: 0, x: -16 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -16 }}
-          transition={{
-            type: "spring",
-            stiffness: 260,
-            damping: 20,
-            delay: 0.5 + i * 0.22,
-          }}
+          className="group animate-step-pop relative flex gap-4 rounded-2xl p-3 transition-colors duration-300 hover:bg-brand-soft/60"
+          style={{ animationDelay: `${450 + i * 180}ms` }}
         >
-          <motion.span
-            className="relative flex size-11 shrink-0 items-center justify-center rounded-2xl border border-brand/15 bg-brand-soft text-brand-strong shadow-sm"
-            initial={{ scale: 0.6 }}
-            animate={isInView ? { scale: [0.6, 1.15, 1] } : { scale: 0.6 }}
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 12,
-              delay: 0.6 + i * 0.22,
-            }}
-            whileHover={{ scale: 1.08, y: -2 }}
-          >
+          <span className="relative flex size-11 shrink-0 items-center justify-center rounded-2xl border border-brand/15 bg-brand-soft text-brand-strong shadow-sm transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-brand/40">
             <span
               className="absolute inset-0 rounded-2xl bg-brand/20 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100"
               aria-hidden
@@ -116,7 +89,7 @@ function StepsFlow() {
             <span className="absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-brand-foreground shadow-sm">
               {i + 1}
             </span>
-          </motion.span>
+          </span>
           <div className="pt-0.5">
             <h3 className="text-sm font-semibold text-foreground transition-colors group-hover:text-brand-strong">
               {step.title}
@@ -125,7 +98,7 @@ function StepsFlow() {
               {step.text}
             </p>
           </div>
-        </motion.li>
+        </li>
       ))}
     </ol>
   );
