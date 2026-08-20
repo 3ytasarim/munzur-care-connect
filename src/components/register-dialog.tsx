@@ -220,9 +220,9 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
       : "rounded-full border border-border px-3 py-1.5 text-sm text-muted-foreground transition-all hover:border-brand hover:text-foreground";
 
   return (
-    <form className="space-y-6 px-6 py-6" onSubmit={onSubmit}>
+    <form className="flex min-h-0 flex-1 flex-col" onSubmit={onSubmit}>
       {/* Step indicator */}
-      <ol className="flex items-center gap-2">
+      <ol className="flex items-center gap-2 border-b border-border bg-muted/40 px-6 py-4">
         {STEPS.map((label, i) => (
           <li key={label} className="flex flex-1 items-center gap-2">
             <span
@@ -247,6 +247,9 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
           </li>
         ))}
       </ol>
+
+      <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-6 py-6">
+
 
       {step === 0 ? (
         <div key="step-0" className="animate-fade-up grid gap-4 sm:grid-cols-2">
