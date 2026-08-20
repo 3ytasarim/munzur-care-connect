@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -13,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { CtaCallback } from "@/components/cta-callback";
 import { DynamicFavicon } from "@/components/dynamic-favicon";
 import { Toaster } from "@/components/ui/sonner";
 import { siteSettingsQueryOptions } from "@/lib/site-settings";
@@ -133,8 +135,12 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+const HIDE_CTA = ["/admin", "/giris", "/kayit", "/panel"];
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const showCta = !HIDE_CTA.some((p) => pathname.startsWith(p));
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -144,6 +150,7 @@ function RootComponent() {
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </div>
+        {showCta ? <CtaCallback /> : null}
         <SiteFooter />
         <DynamicFavicon />
       </div>
