@@ -14,6 +14,18 @@ import {
 import { BrandMark } from "@/components/brand-mark";
 import { useSiteSettings } from "@/lib/site-settings";
 
+function formatAddress(address: string) {
+  const dashIndex = address.lastIndexOf("-");
+  if (dashIndex <= 0) return address;
+  const beforeDash = address.slice(0, dashIndex).trim();
+  const afterDash = address.slice(dashIndex + 1).trim();
+  const lastSpaceIndex = beforeDash.lastIndexOf(" ");
+  if (lastSpaceIndex <= 0) return address;
+  const mainPart = beforeDash.slice(0, lastSpaceIndex).trim();
+  const cityPrefix = beforeDash.slice(lastSpaceIndex + 1).trim();
+  return `${mainPart}\n${cityPrefix} - ${afterDash}`;
+}
+
 export function SiteFooter() {
   const { settings, contact } = useSiteSettings();
 
