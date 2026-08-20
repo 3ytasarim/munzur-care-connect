@@ -228,6 +228,7 @@ function CaregiverSearchPage() {
             </>
           )}
         </section>
+        </div>
       </div>
     </main>
   );
