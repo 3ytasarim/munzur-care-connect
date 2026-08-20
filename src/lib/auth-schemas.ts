@@ -19,15 +19,15 @@ export const registerSchema = z
       .regex(/^[0-9 +()-]+$/, "Telefon numarası yalnızca rakam içermelidir."),
     password: z.string().min(8, "Şifre en az 8 karakter olmalıdır.").max(128),
     passwordConfirm: z.string(),
-    city: z.string().trim().min(2, "Şehir seçin.").max(80),
-    district: z.string().trim().max(80).optional().default(""),
+    city: z.string().trim().min(2, "İl seçin.").max(80),
+    district: z.string().trim().min(2, "İlçe seçin.").max(80),
+    neighborhood: z.string().trim().min(2, "Mahalle seçin.").max(120),
     yearsOfExperience: z.coerce.number().int().min(0).max(60).default(0),
     about: z.string().trim().max(2000).optional().default(""),
     photoDataUrl: z
-      .string()
+      .string({ required_error: "Profil fotoğrafı zorunludur." })
       .max(2_500_000, "Fotoğraf çok büyük.")
-      .regex(/^data:image\/(jpeg|png|webp);base64,/, "Geçersiz fotoğraf.")
-      .optional(),
+      .regex(/^data:image\/(jpeg|png|webp);base64,/, "Geçersiz fotoğraf."),
     serviceIds: z.array(z.string().uuid()).min(1, "En az bir hizmet alanı seçin."),
     workingTypeIds: z.array(z.string().uuid()).default([]),
     kvkkAccepted: z.literal(true, {
