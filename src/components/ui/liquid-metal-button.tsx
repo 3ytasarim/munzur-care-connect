@@ -180,10 +180,33 @@ export function LiquidMetalButton({
               : "rotateX(0) rotateY(0) scale(1)",
         }}
       >
+        {/* animated liquid metal ring (outside only) */}
         <div
           ref={shaderRef}
           className="shader-container-exploded absolute inset-0 overflow-hidden rounded-full"
           style={{ borderRadius: "100px" }}
+        />
+        {/* brand color tint over the ring */}
+        <div
+          className="absolute inset-0 z-[10] rounded-full"
+          style={{
+            background:
+              "linear-gradient(120deg, var(--brand), var(--brand-accent), var(--brand))",
+            mixBlendMode: "color",
+            pointerEvents: "none",
+          }}
+        />
+        {/* inner surface: keeps the motion around the edge, not inside */}
+        <div
+          className="absolute z-[20] rounded-full bg-background"
+          style={{
+            inset: 2,
+            boxShadow: isHovered
+              ? "0 6px 18px -8px color-mix(in oklab, var(--brand) 60%, transparent)"
+              : "none",
+            transition: "box-shadow 0.3s ease",
+            pointerEvents: "none",
+          }}
         />
         <div
           className="absolute inset-0 z-[30] flex items-center justify-center gap-2"
@@ -192,13 +215,14 @@ export function LiquidMetalButton({
             transform: "translateZ(15px)",
           }}
         >
-          {viewMode === "icon" && <Sparkles className="size-5 text-white" />}
+          {viewMode === "icon" && <Sparkles className="size-5 text-brand" />}
           {viewMode === "text" && (
-            <span className="text-sm font-semibold text-white drop-shadow-md">
+            <span className="text-sm font-semibold text-foreground">
               {label}
             </span>
           )}
         </div>
+
         <button
           ref={buttonRef}
           type="button"
