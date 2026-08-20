@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BakicilarRouteImport } from './routes/bakicilar'
 import { Route as GirisRouteImport } from './routes/giris'
 import { Route as KayitRouteImport } from './routes/kayit'
@@ -18,6 +19,11 @@ import { Route as PanelRouteImport } from './routes/panel'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BakicilarRoute = BakicilarRouteImport.update({
@@ -43,6 +49,7 @@ const PanelRoute = PanelRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/bakicilar': typeof BakicilarRoute
   '/giris': typeof GirisRoute
   '/kayit': typeof KayitRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/bakicilar': typeof BakicilarRoute
   '/giris': typeof GirisRoute
   '/kayit': typeof KayitRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/bakicilar': typeof BakicilarRoute
   '/giris': typeof GirisRoute
   '/kayit': typeof KayitRoute
@@ -65,14 +74,16 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bakicilar' | '/giris' | '/kayit' | '/panel'
+  fullPaths: '/' | '/admin' | '/bakicilar' | '/giris' | '/kayit' | '/panel'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bakicilar' | '/giris' | '/kayit' | '/panel'
-  id: '__root__' | '/' | '/bakicilar' | '/giris' | '/kayit' | '/panel'
+  to: '/' | '/admin' | '/bakicilar' | '/giris' | '/kayit' | '/panel'
+  id:
+    '__root__' | '/' | '/admin' | '/bakicilar' | '/giris' | '/kayit' | '/panel'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   BakicilarRoute: typeof BakicilarRoute
   GirisRoute: typeof GirisRoute
   KayitRoute: typeof KayitRoute
@@ -86,6 +97,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bakicilar': {
@@ -121,6 +139,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   BakicilarRoute: BakicilarRoute,
   GirisRoute: GirisRoute,
   KayitRoute: KayitRoute,
