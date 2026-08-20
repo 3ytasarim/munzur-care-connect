@@ -34,11 +34,13 @@ export function SiteFooter() {
   return (
     <footer className="mt-24 border-t border-border bg-card">
       <div className="container-page grid gap-10 py-14 lg:grid-cols-4">
-        <div className="space-y-4">
-          <BrandMark />
-          <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-            Ailelerin güvenle bakım desteği bulabilmesi için titizlikle incelenen bakıcı adayları.
-          </p>
+        <div className="space-y-3">
+          <div className="flex flex-col">
+            <BrandMark />
+            <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">
+              Ailelerin güvenle bakım desteği bulabilmesi için titizlikle incelenen bakıcı adayları.
+            </p>
+          </div>
           {socials.length ? (
             <ul className="flex flex-wrap gap-2">
               {socials.map(({ href, label, Icon }) => (
