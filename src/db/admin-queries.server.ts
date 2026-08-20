@@ -7,6 +7,7 @@ import { getDb, safeDb } from "./client.server";
 import { caregiverProfiles, users } from "./schema.server";
 import { hashPassword, verifyPassword } from "@/lib/password.server";
 import { logAudit } from "@/lib/auth.server";
+import { candidateApprovedEmail, sendMail } from "@/lib/email.server";
 
 export type AdminCandidate = {
   id: string;
