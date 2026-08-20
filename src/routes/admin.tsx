@@ -5,6 +5,10 @@ import { useServerFn } from "@tanstack/react-start";
 import {
   BadgeCheck,
   Clock,
+  History,
+  LayoutList,
+  Settings2,
+  Users,
   KeyRound,
   Loader2,
   LogOut,
@@ -14,6 +18,9 @@ import {
   X,
 } from "lucide-react";
 
+import { AuditPanel } from "@/components/admin/audit-panel";
+import { SettingsPanel } from "@/components/admin/settings-panel";
+import { TaxonomyPanel } from "@/components/admin/taxonomy-panel";
 import { Button3D } from "@/components/ui/button-3d";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -51,6 +58,16 @@ const STATUS_LABELS: Record<string, string> = {
   REJECTED: "Reddedildi",
   SUSPENDED: "Askıda",
 };
+
+type TabId = "candidates" | "taxonomies" | "settings" | "audit" | "account";
+
+const TABS: { id: TabId; label: string; icon: typeof Clock }[] = [
+  { id: "candidates", label: "Aday onayı", icon: Users },
+  { id: "taxonomies", label: "Taksonomiler", icon: LayoutList },
+  { id: "settings", label: "Site ayarları", icon: Settings2 },
+  { id: "audit", label: "İşlem kayıtları", icon: History },
+  { id: "account", label: "Hesabım", icon: KeyRound },
+];
 
 const FILTERS = ["PENDING", "APPROVED", "REJECTED", "ALL"] as const;
 
@@ -169,6 +186,7 @@ function AdminLogin({ notAuthorized }: { notAuthorized: boolean }) {
 
 function AdminDashboard({ email, displayName }: { email: string; displayName: string }) {
   const [status, setStatus] = useState<(typeof FILTERS)[number]>("PENDING");
+  const [tab, setTab] = useState<TabId>("candidates");
   const queryClient = useQueryClient();
   const router = useRouter();
   const logout = useServerFn(logoutUser);
