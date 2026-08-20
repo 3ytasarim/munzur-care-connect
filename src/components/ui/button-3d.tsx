@@ -1,9 +1,10 @@
-import { motion } from "framer-motion";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { useState } from "react";
 
 import { cn } from "@/lib/utils";
 
-interface Button3DProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Button3DProps extends Omit<HTMLMotionProps<"button">, "children" | "variant" | "size"> {
+  children: React.ReactNode;
   variant?: "primary" | "secondary" | "accent" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
 }
