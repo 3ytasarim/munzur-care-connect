@@ -148,14 +148,16 @@ function Index() {
                 Hizmetleri İncele
               </Button3D>
             </div>
-            <StatsSection
-              className="mt-12 max-w-lg"
-              stats={[
+            <div className="mt-12 grid max-w-lg grid-cols-3 gap-3">
+              {[
                 { label: "Hizmet alanı", value: options.services.length },
                 { label: "Çalışma şekli", value: options.workingTypes.length },
                 { label: "Uzmanlık", value: options.skills.length },
-              ]}
-            />
+              ].map((s, i) => (
+                <StatCard key={s.label} value={s.value} label={s.label} delay={i * 120} />
+              ))}
+            </div>
+
 
           </div>
 
