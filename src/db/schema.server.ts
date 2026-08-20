@@ -666,3 +666,28 @@ export const auditLogs = pgTable(
     index("audit_logs_created_idx").on(t.createdAt),
   ],
 );
+
+/** Blog posts (admin-managed rich content). */
+export const blogPosts = pgTable(
+  "blog_posts",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    slug: varchar("slug", { length: 180 }).notNull(),
+    title: varchar("title", { length: 200 }).notNull(),
+    excerpt: text("excerpt"),
+    content: text("content").notNull().default(""),
+    coverImage: text("cover_image"),
+    category: varchar("category", { length: 120 }).notNull().default("Bakıcı Bulma Rehberi"),
+    tags: jsonb("tags").$type<string[]>().notNull().default(sql`'[]'::jsonb`),
+    active: boolean("active").notNull().default(true),
+    publishedAt: timestamp("published_at", { withTimezone: true }).notNull().defaultNow(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
+    authorId: uuid("author_id").references(() => users.id, { onDelete: "set null" }),
+  },
+  (t) => [
+    uniqueIndex("blog_posts_slug_unique").on(t.slug),
+    index("blog_posts_published_idx").on(t.publishedAt),
+  ],
+);

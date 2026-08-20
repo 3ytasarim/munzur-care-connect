@@ -9,6 +9,7 @@ import {
   LayoutList,
   Settings2,
   Users,
+  Newspaper,
   KeyRound,
   Loader2,
   LogOut,
@@ -19,6 +20,7 @@ import {
 } from "lucide-react";
 
 import { AuditPanel } from "@/components/admin/audit-panel";
+import { BlogPanel } from "@/components/admin/blog-panel";
 import { SettingsPanel } from "@/components/admin/settings-panel";
 import { TaxonomyPanel } from "@/components/admin/taxonomy-panel";
 import { Button3D } from "@/components/ui/button-3d";
@@ -59,10 +61,11 @@ const STATUS_LABELS: Record<string, string> = {
   SUSPENDED: "Askıda",
 };
 
-type TabId = "candidates" | "taxonomies" | "settings" | "audit" | "account";
+type TabId = "candidates" | "blog" | "taxonomies" | "settings" | "audit" | "account";
 
 const TABS: { id: TabId; label: string; icon: typeof Clock }[] = [
   { id: "candidates", label: "Aday onayı", icon: Users },
+  { id: "blog", label: "Blog", icon: Newspaper },
   { id: "taxonomies", label: "Taksonomiler", icon: LayoutList },
   { id: "settings", label: "Site ayarları", icon: Settings2 },
   { id: "audit", label: "İşlem kayıtları", icon: History },
@@ -393,6 +396,7 @@ function AdminDashboard({ email, displayName }: { email: string; displayName: st
         </>
       ) : null}
 
+      {tab === "blog" ? <BlogPanel /> : null}
       {tab === "taxonomies" ? <TaxonomyPanel /> : null}
       {tab === "settings" ? <SettingsPanel /> : null}
       {tab === "audit" ? <AuditPanel /> : null}
