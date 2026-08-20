@@ -12,7 +12,7 @@ import { getServiceImage } from "@/components/service-image";
 
 import { Button3D } from "@/components/ui/button-3d";
 import { InfoCard } from "@/components/ui/info-card";
-import StatCard from "@/components/ui/stat-card";
+import { StatCard } from "@/components/ui/stat-card";
 import FaqSection, { type FaqData } from "@/components/ui/habit-faq-scroller";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 import { listBlogPosts } from "@/lib/blog.functions";

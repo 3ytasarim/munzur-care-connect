@@ -10,7 +10,7 @@ interface StatCardProps {
   delay?: number;
 }
 
-export default function StatCard({
+function StatCard({
   value,
   label,
   className,
@@ -79,3 +79,6 @@ export default function StatCard({
     </div>
   );
 }
+
+export { StatCard };
+export default StatCard;
