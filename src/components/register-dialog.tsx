@@ -6,7 +6,7 @@ import { useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
 import { PhotoCapture } from "@/components/photo-capture";
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { BrandMark } from "@/components/brand-mark";
 import { RegisterDialog } from "@/components/register-dialog";
 import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { NavBar, type NavItem } from "@/components/ui/tubelight-navbar";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";

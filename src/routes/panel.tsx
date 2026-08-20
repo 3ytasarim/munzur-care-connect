@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { queryOptions } from "@tanstack/react-query";
 import { BadgeCheck, Clock, ShieldCheck } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 import { getCurrentUser, logoutUser } from "@/lib/auth.functions";
 
 const sessionQuery = queryOptions({

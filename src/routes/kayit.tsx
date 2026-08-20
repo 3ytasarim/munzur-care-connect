@@ -3,7 +3,7 @@ import { BadgeCheck, Clock, ShieldCheck, UserPlus } from "lucide-react";
 import { useState } from "react";
 
 import { RegisterDialog } from "@/components/register-dialog";
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 
 export const Route = createFileRoute("/kayit")({
   head: () => ({

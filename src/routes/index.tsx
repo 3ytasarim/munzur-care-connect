@@ -1,5 +1,5 @@
 import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, Search, ShieldCheck } from "lucide-react";
 
 import { CaregiverCard } from "@/components/caregiver-card";
@@ -9,7 +9,7 @@ import { getServiceImage } from "@/components/service-image";
 
 
 
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 
 const filterOptionsQuery = queryOptions({

@@ -1,7 +1,7 @@
 import { Camera, ImagePlus, RefreshCw, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 
 const MAX_EDGE = 720;
 const QUALITY = 0.82;
