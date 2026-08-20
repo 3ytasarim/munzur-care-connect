@@ -134,8 +134,12 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+const HIDE_CTA = ["/admin", "/giris", "/kayit", "/panel"];
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const showCta = !HIDE_CTA.some((p) => pathname.startsWith(p));
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -145,7 +149,7 @@ function RootComponent() {
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </div>
-        <CtaCallback />
+        {showCta ? <CtaCallback /> : null}
         <SiteFooter />
         <DynamicFavicon />
       </div>
