@@ -418,8 +418,10 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
           {error}
         </p>
       ) : null}
+      </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border bg-card px-6 py-4">
+
         <p className="text-sm text-muted-foreground">
           Zaten hesabınız var mı?{" "}
           <Link to="/giris" className="font-medium text-brand-strong hover:underline">
