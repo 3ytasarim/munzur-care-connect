@@ -260,18 +260,18 @@ export async function sendSmtpMail(input: {
         alternative,
       ];
       for (const att of attachments) {
+        parts.push(`--${relBoundary}`);
+        parts.push(`Content-Type: ${att.contentType}; name="${att.filename}"`);
+        parts.push("Content-Transfer-Encoding: base64");
+        if (att.cid) parts.push(`Content-ID: <${att.cid}>`);
         parts.push(
-          `--${relBoundary}`,
-          `Content-Type: ${att.contentType}; name="${att.filename}"`,
-          "Content-Transfer-Encoding: base64",
-          att.cid ? `Content-ID: <${att.cid}>` : "",
           `Content-Disposition: ${att.cid ? "inline" : "attachment"}; filename="${att.filename}"`,
-          "",
-          chunkBase64(att.base64),
         );
+        parts.push("");
+        parts.push(chunkBase64(att.base64));
       }
       parts.push(`--${relBoundary}--`, "");
-      body = parts.filter((p) => p !== "").join("\r\n");
+      body = parts.join("\r\n");
     } else {
       body = alternative;
     }
