@@ -34,7 +34,7 @@ export function BrandMark({ className, variant = "default" }: Props) {
   return (
     <span
       className={cn(
-        "font-display text-xl font-extrabold tracking-tight leading-none select-none bg-transparent",
+        "font-display text-base font-extrabold tracking-tight leading-none select-none bg-transparent md:text-xl",
         className,
       )}
     >
