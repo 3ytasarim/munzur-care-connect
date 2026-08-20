@@ -1,18 +1,19 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Phone, UserPlus } from "lucide-react";
+import { Home, Menu, Phone, Search, UserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { BrandMark } from "@/components/brand-mark";
 import { RegisterDialog } from "@/components/register-dialog";
 import { Button } from "@/components/ui/button";
+import { NavBar, type NavItem } from "@/components/ui/tubelight-navbar";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useSession } from "@/lib/session";
 import { useSiteSettings } from "@/lib/site-settings";
 
-const NAV = [
-  { to: "/", label: "Ana Sayfa" },
-  { to: "/bakicilar", label: "Bakıcı Ara" },
-] as const;
+const NAV: NavItem[] = [
+  { name: "Ana Sayfa", url: "/", icon: Home },
+  { name: "Bakıcı Ara", url: "/bakicilar", icon: Search },
+];
 
 export function SiteHeader() {
   const { contact } = useSiteSettings();
@@ -48,32 +49,22 @@ export function SiteHeader() {
       <header
         className={`sticky top-0 z-40 border-b transition-all duration-300 ${
           scrolled
-            ? "border-border bg-card/80 shadow-[0_10px_30px_-24px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+            ? "border-border bg-card/85 shadow-[0_10px_30px_-24px_rgba(0,0,0,0.5)] backdrop-blur-xl"
             : "border-transparent bg-card/60 backdrop-blur"
         }`}
       >
         <div
-          className={`container-page flex items-center justify-between gap-6 transition-all duration-300 ${
-            scrolled ? "h-14" : "h-18"
+          className={`container-page flex items-center justify-between gap-4 transition-all duration-300 ${
+            scrolled ? "h-16" : "h-20"
           }`}
         >
-          <Link to="/" className="flex items-center gap-2 transition-transform hover:scale-[1.02]">
+          <Link to="/" className="flex shrink-0 items-center gap-2 transition-transform hover:scale-[1.02]">
             <BrandMark />
           </Link>
 
-          <nav className="hidden items-center gap-1 md:flex">
-            {NAV.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                activeOptions={{ exact: item.to === "/" }}
-                className="group relative rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground data-[status=active]:text-brand-strong"
-              >
-                {item.label}
-                <span className="absolute inset-x-3 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-brand transition-transform duration-300 group-hover:scale-x-100 group-data-[status=active]:scale-x-100" />
-              </Link>
-            ))}
-          </nav>
+          <div className="hidden md:flex md:flex-1 md:justify-center">
+            <NavBar items={NAV} />
+          </div>
 
           <div className="flex items-center gap-2">
             {user ? (
@@ -104,16 +95,20 @@ export function SiteHeader() {
               <SheetContent side="right" className="w-72">
                 <SheetTitle className="sr-only">Menü</SheetTitle>
                 <div className="flex flex-col gap-1 p-6 pt-10">
-                  {NAV.map((item) => (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      onClick={() => setMenuOpen(false)}
-                      className="rounded-lg px-3 py-2.5 text-base font-medium text-foreground transition-colors hover:bg-brand-soft data-[status=active]:bg-brand-soft data-[status=active]:text-brand-strong"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                  {NAV.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.url}
+                        to={item.url}
+                        onClick={() => setMenuOpen(false)}
+                        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-base font-medium text-foreground transition-colors hover:bg-brand-soft data-[status=active]:bg-brand-soft data-[status=active]:text-brand-strong"
+                      >
+                        <Icon className="size-4 text-brand" aria-hidden />
+                        {item.name}
+                      </Link>
+                    );
+                  })}
                   <Link
                     to={user ? "/panel" : "/giris"}
                     onClick={() => setMenuOpen(false)}
