@@ -41,6 +41,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const navigate = useNavigate();
   const { data: options } = useSuspenseQuery(filterOptionsQuery);
   const featured = useQuery({
     queryKey: ["caregivers", "home-featured"],
