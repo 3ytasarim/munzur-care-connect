@@ -16,11 +16,11 @@ import { StatCard } from "@/components/ui/stat-card";
 import FaqSection, { type FaqData } from "@/components/ui/habit-faq-scroller";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 import { listBlogPosts } from "@/lib/blog.functions";
-import whatsappShareAsset from "@/assets/munzurdestek-whatsapp-share.jpg.asset.json";
+import whatsappShareImage from "@/assets/munzurdestek-whatsapp-share-v2.jpg";
 import heroMobileImage from "@/assets/hero-mobile-bakici.jpg";
 
 const SITE_ORIGIN = "https://id-preview--e5687aae-da5c-4ed7-bd40-2c5a18d70e10.lovable.app";
-const WHATSAPP_SHARE_IMAGE = `${SITE_ORIGIN}${whatsappShareAsset.url}`;
+const WHATSAPP_SHARE_IMAGE = `${SITE_ORIGIN}${whatsappShareImage}?v=2`;
 
 const WHY_CARDS = [
   {
