@@ -142,24 +142,73 @@ function CaregiverSearchPage() {
             ))}
           </FilterGroup>
 
-          <FilterGroup title="Şehir">
+          <FilterGroup title="İl / İlçe / Mahalle">
             {options.cities.length ? (
-              <select
-                value={filters.city ?? ""}
-                onChange={(e) =>
-                  setFilters((p) => ({ ...p, city: e.target.value || undefined, page: 1 }))
-                }
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-brand focus:outline-none"
-              >
-                <option value="">Tümü</option>
-                {options.cities.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
+              <div className="space-y-2">
+                <select
+                  value={filters.city ?? ""}
+                  onChange={(e) =>
+                    setFilters((p) => ({
+                      ...p,
+                      city: e.target.value || undefined,
+                      district: undefined,
+                      neighborhood: undefined,
+                      page: 1,
+                    }))
+                  }
+                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-brand focus:outline-none"
+                >
+                  <option value="">Tüm iller</option>
+                  {options.cities.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={filters.district ?? ""}
+                  disabled={!filters.city || districts.length === 0}
+                  onChange={(e) =>
+                    setFilters((p) => ({
+                      ...p,
+                      district: e.target.value || undefined,
+                      neighborhood: undefined,
+                      page: 1,
+                    }))
+                  }
+                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-brand focus:outline-none disabled:opacity-50"
+                >
+                  <option value="">Tüm ilçeler</option>
+                  {districts.map((d) => (
+                    <option key={d} value={d}>
+                      {d}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={filters.neighborhood ?? ""}
+                  disabled={!filters.district || neighborhoods.length === 0}
+                  onChange={(e) =>
+                    setFilters((p) => ({
+                      ...p,
+                      neighborhood: e.target.value || undefined,
+                      page: 1,
+                    }))
+                  }
+                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-brand focus:outline-none disabled:opacity-50"
+                >
+                  <option value="">Tüm mahalleler</option>
+                  {neighborhoods.map((n) => (
+                    <option key={n} value={n}>
+                      {n}
+                    </option>
+                  ))}
+                </select>
+              </div>
             ) : (
-              <p className="text-xs text-muted-foreground">Henüz şehir verisi yok.</p>
+              <p className="text-xs text-muted-foreground">Henüz konum verisi yok.</p>
             )}
           </FilterGroup>
 
