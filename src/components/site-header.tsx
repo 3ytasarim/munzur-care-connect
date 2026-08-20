@@ -71,9 +71,14 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-2">
             {user ? (
-              <Button asChild size="sm" variant="outline" className="hidden sm:inline-flex">
-                <Link to="/panel">Panelim</Link>
-              </Button>
+              <Button3D
+                size="sm"
+                variant="outline"
+                className="hidden sm:inline-flex"
+                onClick={() => navigate({ to: "/panel" })}
+              >
+                Panelim
+              </Button3D>
             ) : (
               <div className="hidden sm:inline-flex">
                 <LiquidMetalButton
@@ -120,8 +125,8 @@ export function SiteHeader() {
                   >
                     {user ? "Panelim" : "Giriş Yap"}
                   </Link>
-                  <Button
-                    className="mt-4"
+                  <Button3D
+                    className="mt-4 w-full"
                     onClick={() => {
                       setMenuOpen(false);
                       setRegisterOpen(true);
@@ -129,7 +134,7 @@ export function SiteHeader() {
                   >
                     <UserPlus className="size-4" aria-hidden />
                     Aday Ol
-                  </Button>
+                  </Button3D>
                   {contact.phone ? (
                     <a
                       href={`tel:${contact.phone.replace(/\s/g, "")}`}
