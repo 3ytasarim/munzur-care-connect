@@ -11,10 +11,45 @@ import { getServiceImage } from "@/components/service-image";
 
 
 import { Button3D } from "@/components/ui/button-3d";
+import { InfoCard } from "@/components/ui/info-card";
 import StatCard from "@/components/ui/stat-card";
 import FaqSection, { type FaqData } from "@/components/ui/habit-faq-scroller";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 import { listBlogPosts } from "@/lib/blog.functions";
+
+const WHY_CARDS = [
+  {
+    slug: "yasli-bakimi",
+    title: "İncelenmiş Adaylar",
+    text: "Her başvuru ekibimizce tek tek incelenir; belge ve referans kontrolü yapılmadan hiçbir profil yayına alınmaz.",
+  },
+  {
+    slug: "bebek-bakimi",
+    title: "Aday Kodu ile Takip",
+    text: "Her adaya MD-1001 gibi benzersiz bir kod verilir; görüşmelerinizi bu kodla hızlı ve karışıklıksız yürütürsünüz.",
+  },
+  {
+    slug: "hasta-bakimi",
+    title: "Doğru Eşleşme",
+    text: "Hizmet türü, çalışma şekli, şehir ve deneyim filtreleriyle ailenizin ihtiyacına en uygun adayı kolayca bulun.",
+  },
+  {
+    slug: "refakatci",
+    title: "Hızlı Geri Dönüş",
+    text: "Geri arama talebinizi bırakın; ekibimiz kısa sürede sizi arayarak uygun adayları birlikte değerlendirsin.",
+  },
+  {
+    slug: "ev-isleri",
+    title: "Geniş Hizmet Yelpazesi",
+    text: "Yaşlı, bebek, çocuk ve hasta bakımından ev yardımcılığı ve refakatçiliğe kadar tüm bakım ihtiyaçları tek yerde.",
+  },
+  {
+    slug: "cocuk-bakimi",
+    title: "Şeffaf Süreç",
+    text: "Adayın deneyimi, uzmanlıkları ve ücret beklentisi profilde açıkça görünür; sürpriz olmadan karar verirsiniz.",
+  },
+];
+
 
 const FAQ_DATA: FaqData = {
   mainTitle: "Sıkça Sorulan Sorular",
