@@ -1,13 +1,15 @@
 import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { useState } from "react";
 
 import { CaregiverCard } from "@/components/caregiver-card";
 import { Button3D } from "@/components/ui/button-3d";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import StatCard from "@/components/ui/stat-card";
 import { Hero } from "@/components/ui/tailwind-css-background-snippet";
+
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 import type { CaregiverSearchParams } from "@/lib/caregiver-search-schema";
 
@@ -84,28 +86,16 @@ function CaregiverSearchPage() {
               Tüm sonuçlar veritabanındaki onaylı ve yayında olan adaylardan gelir. Şehir, hizmet
               alanı, çalışma şekli ve deneyime göre filtreleyerek ailenize en uygun adayı bulun.
             </p>
-            <dl className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-10 grid max-w-lg grid-cols-3 gap-3">
               {[
-                { icon: Users, label: "Yayındaki aday", value: results.data?.total ?? "—" },
-                { icon: MapPin, label: "Şehir", value: options.cities.length || "—" },
-                { icon: Sparkles, label: "Hizmet alanı", value: options.services.length || "—" },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-center gap-3 rounded-2xl border border-border bg-card/80 px-4 py-3 shadow-card backdrop-blur transition-transform hover:-translate-y-0.5"
-                >
-                  <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-brand-strong">
-                    <item.icon className="size-4" aria-hidden />
-                  </span>
-                  <div>
-                    <dd className="font-display text-lg font-bold leading-none text-foreground">
-                      {item.value}
-                    </dd>
-                    <dt className="mt-1 text-xs text-muted-foreground">{item.label}</dt>
-                  </div>
-                </div>
+                { label: "Yayındaki aday", value: results.data?.total ?? "—" },
+                { label: "Şehir", value: options.cities.length || "—" },
+                { label: "Hizmet alanı", value: options.services.length || "—" },
+              ].map((s, i) => (
+                <StatCard key={s.label} value={String(s.value)} label={s.label} delay={i * 120} />
               ))}
-            </dl>
+            </div>
+
           </div>
         </div>
       </Hero>
