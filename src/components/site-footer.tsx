@@ -94,6 +94,16 @@ export function SiteFooter() {
           ) : null}
         </div>
 
+        <div className="space-y-2 text-sm">
+          <h3 className="text-sm font-semibold text-foreground">Keşfet</h3>
+          <Link to="/blog" className="block text-muted-foreground hover:text-brand-strong">
+            Blog
+          </Link>
+          <Link to="/bakicilar" className="block text-muted-foreground hover:text-brand-strong">
+            Bakıcı Ara
+          </Link>
+        </div>
+
         {mapSrc ? (
           <div className="overflow-hidden rounded-2xl border border-border">
             <iframe
