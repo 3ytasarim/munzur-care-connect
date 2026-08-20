@@ -40,6 +40,7 @@ type FormState = {
   passwordConfirm: string;
   city: string;
   district: string;
+  neighborhood: string;
   yearsOfExperience: string;
   about: string;
 };
@@ -53,6 +54,7 @@ const EMPTY: FormState = {
   passwordConfirm: "",
   city: "",
   district: "",
+  neighborhood: "",
   yearsOfExperience: "0",
   about: "",
 };
