@@ -1,10 +1,11 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Home, Menu, Phone, Search, UserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { BrandMark } from "@/components/brand-mark";
 import { RegisterDialog } from "@/components/register-dialog";
 import { Button } from "@/components/ui/button";
+import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { NavBar, type NavItem } from "@/components/ui/tubelight-navbar";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useSession } from "@/lib/session";
@@ -18,6 +19,7 @@ const NAV: NavItem[] = [
 export function SiteHeader() {
   const { contact } = useSiteSettings();
   const { user } = useSession();
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -72,19 +74,20 @@ export function SiteHeader() {
                 <Link to="/panel">Panelim</Link>
               </Button>
             ) : (
-              <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
-                <Link to="/giris">Giriş Yap</Link>
-              </Button>
+              <div className="hidden sm:inline-flex">
+                <LiquidMetalButton
+                  label="Giriş Yap"
+                  onClick={() => navigate({ to: "/giris" })}
+                />
+              </div>
             )}
 
-            <Button
-              size="sm"
-              className="hover-lift hidden sm:inline-flex"
-              onClick={() => setRegisterOpen(true)}
-            >
-              <UserPlus className="size-4" aria-hidden />
-              Aday Ol
-            </Button>
+            <div className="hidden sm:inline-flex">
+              <LiquidMetalButton
+                label="Aday Ol"
+                onClick={() => setRegisterOpen(true)}
+              />
+            </div>
 
             <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
               <SheetTrigger asChild>
