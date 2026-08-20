@@ -350,7 +350,6 @@ export async function listAuditLogs(limit = 60): Promise<AuditEntry[]> {
         action: auditLogs.action,
         entityType: auditLogs.entityType,
         entityId: auditLogs.entityId,
-        adminName: users.displayName,
         adminEmail: users.email,
         createdAt: auditLogs.createdAt,
       })
@@ -364,7 +363,7 @@ export async function listAuditLogs(limit = 60): Promise<AuditEntry[]> {
       action: r.action,
       entityType: r.entityType,
       entityId: r.entityId,
-      adminName: r.adminName ?? r.adminEmail ?? null,
+      adminName: r.adminEmail ?? null,
       createdAt: r.createdAt.toISOString(),
     }));
   });
