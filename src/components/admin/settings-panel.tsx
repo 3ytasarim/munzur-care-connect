@@ -138,8 +138,8 @@ export function SettingsPanel() {
               hint={f.hint}
               maxWidth={f.maxWidth}
               maxHeight={f.maxHeight}
-              minWidth={f.minWidth}
-              minHeight={f.minHeight}
+              {...(f.minWidth === undefined ? {} : { minWidth: f.minWidth })}
+              {...(f.minHeight === undefined ? {} : { minHeight: f.minHeight })}
               dark={f.dark ?? false}
               value={form.settings[f.key] ?? ""}
               onChange={(next) =>
