@@ -341,7 +341,8 @@
 
   .animate-fade-up,
   .animate-fade-soft,
-  .animate-float-slow {
+  .animate-float-slow,
+  .animate-star-drift {
     animation: none;
   }
 }
