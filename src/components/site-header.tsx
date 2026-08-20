@@ -35,21 +35,6 @@ export function SiteHeader() {
 
   return (
     <>
-      {contact.phone ? (
-        <div className="hidden bg-foreground text-background md:block">
-          <div className="container-page flex h-9 items-center justify-between text-xs">
-            <p className="opacity-80">Onaylı ve referans kontrolü yapılmış bakım adayları</p>
-            <a
-              href={`tel:${contact.phone.replace(/\s/g, "")}`}
-              className="inline-flex items-center gap-2 font-medium transition-opacity hover:opacity-80"
-            >
-              <Phone className="size-3.5" aria-hidden />
-              {contact.phone}
-            </a>
-          </div>
-        </div>
-      ) : null}
-
       <header
         className={`sticky top-0 z-40 border-b transition-all duration-300 ${
           scrolled
