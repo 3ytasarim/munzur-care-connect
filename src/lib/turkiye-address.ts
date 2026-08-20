@@ -23,12 +23,18 @@ export async function fetchDistricts(provinceId: number): Promise<District[]> {
 }
 
 export async function fetchNeighborhoods(districtId: number): Promise<Neighborhood[]> {
-  const res = await fetch(`${BASE}/neighborhoods?districtId=${districtId}&limit=1000&fields=name,id`);
+  // District detail is the authoritative endpoint for the selected district and
+  // avoids pagination/filter cache inconsistencies on the neighborhoods index.
+  const res = await fetch(`${BASE}/districts/${districtId}`);
   if (!res.ok) throw new Error("neighborhoods fetch failed");
-  const json = (await res.json()) as { data?: Neighborhood[]; status?: string };
-  if (!Array.isArray(json.data)) return [];
+  const json = (await res.json()) as {
+    data?: { neighborhoods?: Neighborhood[] };
+    status?: string;
+  };
+  const neighborhoods = json.data?.neighborhoods;
+  if (!Array.isArray(neighborhoods)) return [];
   const seen = new Set<string>();
-  return json.data
+  return neighborhoods
     .filter((n) => (seen.has(n.name) ? false : (seen.add(n.name), true)))
     .sort((a, b) => collator.compare(a.name, b.name));
 }

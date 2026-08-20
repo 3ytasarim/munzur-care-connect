@@ -159,10 +159,11 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
     staleTime: Infinity,
   });
   const neighborhoods = useQuery({
-    queryKey: ["tr-neighborhoods", districtId],
+    queryKey: ["tr-district-neighborhoods-v2", districtId],
     queryFn: () => fetchNeighborhoods(districtId as number),
     enabled: districtId != null,
-    staleTime: Infinity,
+    staleTime: 24 * 60 * 60 * 1000,
+    retry: 2,
   });
 
   const [step, setStep] = useState(0);
@@ -454,7 +455,11 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
                         ? "Önce ilçe seçin"
                         : neighborhoods.isLoading
                           ? "Yükleniyor..."
-                          : "Mahalle seçin"
+                          : neighborhoods.isError
+                            ? "Mahalleler yüklenemedi"
+                            : neighborhoods.data?.length
+                              ? "Mahalle seçin"
+                              : "Bu ilçede mahalle bulunamadı"
                     }
                   />
                 </SelectTrigger>
