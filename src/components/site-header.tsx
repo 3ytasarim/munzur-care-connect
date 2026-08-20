@@ -59,7 +59,7 @@ export function SiteHeader() {
             {user ? (
               <Button3D
                 size="sm"
-                variant="outline"
+                variant="primary"
                 className="hidden sm:inline-flex"
                 onClick={() => navigate({ to: "/panel" })}
               >
