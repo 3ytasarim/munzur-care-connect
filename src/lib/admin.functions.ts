@@ -148,6 +148,9 @@ export const adminSaveSettings = createServerFn({ method: "POST" })
           instagramUrl: z.string().default(""),
           facebookUrl: z.string().default(""),
           linkedinUrl: z.string().default(""),
+          youtubeUrl: z.string().default(""),
+          twitterUrl: z.string().default(""),
+          tiktokUrl: z.string().default(""),
         }),
         bank: z.object({
           bankName: z.string().default(""),

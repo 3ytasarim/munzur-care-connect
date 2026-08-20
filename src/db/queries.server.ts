@@ -44,6 +44,9 @@ export type PublicSettings = {
     instagramUrl: string;
     facebookUrl: string;
     linkedinUrl: string;
+    youtubeUrl: string;
+    twitterUrl: string;
+    tiktokUrl: string;
   };
 };
 
@@ -68,6 +71,9 @@ export async function loadPublicSettings(): Promise<PublicSettings> {
         instagramUrl: c?.instagramUrl ?? "",
         facebookUrl: c?.facebookUrl ?? "",
         linkedinUrl: c?.linkedinUrl ?? "",
+        youtubeUrl: c?.youtubeUrl ?? "",
+        twitterUrl: c?.twitterUrl ?? "",
+        tiktokUrl: c?.tiktokUrl ?? "",
       },
     };
   });

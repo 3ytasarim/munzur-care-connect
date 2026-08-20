@@ -643,6 +643,9 @@ export const contactSettings = pgTable("contact_settings", {
   instagramUrl: text("instagram_url"),
   facebookUrl: text("facebook_url"),
   linkedinUrl: text("linkedin_url"),
+  youtubeUrl: text("youtube_url"),
+  twitterUrl: text("twitter_url"),
+  tiktokUrl: text("tiktok_url"),
   active: boolean("active").notNull().default(true),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });

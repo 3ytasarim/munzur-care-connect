@@ -65,6 +65,9 @@ const CONTACT_FIELDS: { key: keyof Settings["contact"]; label: string }[] = [
   { key: "instagramUrl", label: "Instagram" },
   { key: "facebookUrl", label: "Facebook" },
   { key: "linkedinUrl", label: "LinkedIn" },
+  { key: "youtubeUrl", label: "YouTube" },
+  { key: "twitterUrl", label: "X (Twitter)" },
+  { key: "tiktokUrl", label: "TikTok" },
 ];
 
 const BANK_FIELDS: { key: keyof Settings["bank"]; label: string }[] = [
