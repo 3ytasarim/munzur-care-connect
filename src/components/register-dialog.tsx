@@ -460,7 +460,7 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
                 </SelectTrigger>
                 <SelectContent className="max-h-72">
                   {(neighborhoods.data ?? []).map((n) => (
-                    <SelectItem key={n.id} value={n.name}>
+                    <SelectItem key={`${n.id}-${n.name}`} value={n.name}>
                       {n.name}
                     </SelectItem>
                   ))}
