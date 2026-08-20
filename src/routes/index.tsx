@@ -248,6 +248,15 @@ function Index() {
         />
         <div className="container-page relative grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
           <div>
+            <div className="animate-fade-up mb-6 overflow-hidden rounded-3xl border border-border/60 shadow-soft lg:hidden">
+              <img
+                src={heroMobileImage}
+                alt="Yaşlı bir kadına eşlik eden güler yüzlü bakıcı"
+                width={1024}
+                height={768}
+                className="h-52 w-full object-cover sm:h-64"
+              />
+            </div>
             <span className="animate-fade-up inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1.5 text-xs font-semibold text-brand-strong">
               <ShieldCheck className="size-4" aria-hidden />
               Belge ve referans kontrolü yapılmış adaylar
