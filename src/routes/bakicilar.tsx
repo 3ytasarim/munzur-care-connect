@@ -1,13 +1,16 @@
 import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { MapPin, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { useState } from "react";
 
 import { CaregiverCard } from "@/components/caregiver-card";
 import { Button3D } from "@/components/ui/button-3d";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Hero } from "@/components/ui/tailwind-css-background-snippet";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 import type { CaregiverSearchParams } from "@/lib/caregiver-search-schema";
+
 
 const filterOptionsQuery = queryOptions({
   queryKey: ["filter-options"],
