@@ -29,6 +29,12 @@ const ROLE_LABELS: Record<string, string> = {
 };
 
 export const Route = createFileRoute("/panel")({
+  beforeLoad: async ({ context }) => {
+    const user = await context.queryClient.ensureQueryData(sessionQuery);
+    if (user && user.role !== "CAREGIVER") {
+      throw redirect({ to: "/admin" });
+    }
+  },
   loader: ({ context }) => context.queryClient.ensureQueryData(sessionQuery),
   head: () => ({
     meta: [
