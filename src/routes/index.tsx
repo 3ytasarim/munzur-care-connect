@@ -7,7 +7,7 @@ import { CaregiverCard } from "@/components/caregiver-card";
 import { Reveal } from "@/components/reveal";
 import { ServiceIcon } from "@/components/service-icon";
 import { getServiceImage } from "@/components/service-image";
-
+import { StarField } from "@/components/star-field";
 
 
 import { Button3D } from "@/components/ui/button-3d";
