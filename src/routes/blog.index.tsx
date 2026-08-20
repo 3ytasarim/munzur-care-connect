@@ -4,7 +4,7 @@ import { BookOpen } from "lucide-react";
 
 import { BlogCard } from "@/components/blog-card";
 import { Reveal } from "@/components/reveal";
-import StatCard from "@/components/ui/stat-card";
+import { StatCard } from "@/components/ui/stat-card";
 import { Hero } from "@/components/ui/tailwind-css-background-snippet";
 import { listBlogPosts } from "@/lib/blog.functions";
 

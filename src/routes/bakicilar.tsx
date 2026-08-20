@@ -7,7 +7,7 @@ import { CaregiverCard } from "@/components/caregiver-card";
 import { Button3D } from "@/components/ui/button-3d";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import StatCard from "@/components/ui/stat-card";
+import { StatCard } from "@/components/ui/stat-card";
 import { Hero } from "@/components/ui/tailwind-css-background-snippet";
 
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
