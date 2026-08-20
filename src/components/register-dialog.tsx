@@ -204,9 +204,8 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
       }
       await queryClient.invalidateQueries({ queryKey: ["session"] });
       await router.invalidate();
-      toast.success(`Kaydınız alındı. Aday kodunuz: ${result.candidateCode}`);
-      onDone?.();
-      navigate({ to: "/panel" });
+      toast.success("Başvurunuz alındı.");
+      setSubmittedCode(result.candidateCode);
     } catch {
       setError("Kayıt tamamlanamadı. Lütfen tekrar deneyin.");
     } finally {
@@ -219,7 +218,48 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
       ? "rounded-full border border-brand bg-brand-soft px-3 py-1.5 text-sm font-medium text-brand-strong transition-all"
       : "rounded-full border border-border px-3 py-1.5 text-sm text-muted-foreground transition-all hover:border-brand hover:text-foreground";
 
+  if (submittedCode) {
+    return (
+      <div className="animate-fade-up flex min-h-0 flex-1 flex-col items-center justify-center gap-5 px-6 py-10 text-center">
+        <span className="flex size-16 items-center justify-center rounded-full bg-brand-soft text-brand-strong">
+          <Check className="size-8" aria-hidden />
+        </span>
+        <div className="space-y-2">
+          <h3 className="font-display text-2xl font-bold text-foreground">
+            Göstermiş olduğunuz ilgi için teşekkür ederiz
+          </h3>
+          <p className="mx-auto max-w-md text-sm leading-relaxed text-muted-foreground">
+            Başvurunuz bize ulaştı. Ekibimiz gerekli incelemeleri tamamladıktan sonra profiliniz
+            panelde aktif hâle gelecek. Aktif olduğunuzda{" "}
+            <strong className="text-foreground">“Aktif Oldunuz”</strong> bilgilendirme e-postasını
+            kayıt sırasında verdiğiniz adrese göndereceğiz; o andan itibaren bakıcı listesinde
+            görüneceksiniz.
+          </p>
+        </div>
+        <p className="rounded-full border border-brand bg-brand-soft px-4 py-2 text-sm font-semibold text-brand-strong">
+          Aday kodunuz: {submittedCode}
+        </p>
+        <div className="flex flex-wrap justify-center gap-2">
+          <Button3D
+            type="button"
+            onClick={() => {
+              onDone?.();
+              navigate({ to: "/panel" });
+            }}
+          >
+            Panelime git
+            <ArrowRight className="size-4" aria-hidden />
+          </Button3D>
+          <Button3D type="button" variant="outline" onClick={() => onDone?.()}>
+            Kapat
+          </Button3D>
+        </div>
+      </div>
+    );
+  }
+
   return (
+
     <form className="flex min-h-0 flex-1 flex-col" onSubmit={onSubmit}>
       {/* Step indicator */}
       <ol className="flex items-center gap-2 border-b border-border bg-muted/40 px-6 py-4">
