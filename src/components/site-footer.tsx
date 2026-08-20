@@ -47,7 +47,7 @@ export function SiteFooter() {
       <div className="container-page grid gap-6 py-14 lg:grid-cols-[auto_auto_auto_1fr] lg:justify-items-start">
         <div className="space-y-3">
           <div className="flex flex-col items-start">
-            <BrandMark className="h-12" />
+            <BrandMark />
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
               Ailelerin güvenle bakım desteği bulabilmesi için titizlikle incelenen bakıcı adayları.
             </p>
