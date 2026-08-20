@@ -1,7 +1,7 @@
 import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowLeft, ArrowRight, Check, Loader2, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Loader2, ShieldCheck, Sparkles } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
@@ -73,28 +73,61 @@ export function RegisterDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
       {children ? <DialogTrigger asChild>{children}</DialogTrigger> : null}
-      <DialogContent className="max-h-[92vh] gap-0 overflow-y-auto p-0 sm:max-w-2xl">
-        <div className="relative overflow-hidden border-b border-border bg-brand-soft px-6 py-6">
-          <div
-            className="animate-float-slow pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-highlight/40 blur-2xl"
-            aria-hidden
-          />
-          <DialogHeader className="relative text-left">
-            <DialogTitle className="flex items-center gap-2 font-display text-2xl">
-              <Sparkles className="size-5 text-brand-strong" aria-hidden />
-              Aday Kaydı
-            </DialogTitle>
-            <DialogDescription>
-              Birkaç adımda başvurunuzu tamamlayın; ekibimiz inceledikten sonra profiliniz yayına
-              alınır.
-            </DialogDescription>
-          </DialogHeader>
+      <DialogContent className="max-h-[94vh] gap-0 overflow-hidden p-0 sm:max-w-3xl">
+        <div className="grid max-h-[94vh] md:grid-cols-[260px_1fr]">
+          {/* Brand rail */}
+          <aside className="relative hidden overflow-hidden bg-brand p-7 md:block">
+            <div
+              className="animate-float-slow pointer-events-none absolute -right-12 -top-12 size-44 rounded-full bg-highlight/40 blur-2xl"
+              aria-hidden
+            />
+            <div
+              className="animate-float-slow pointer-events-none absolute -bottom-16 -left-10 size-44 rounded-full bg-background/15 blur-2xl [animation-delay:-3s]"
+              aria-hidden
+            />
+            <div className="relative flex h-full flex-col">
+              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-background/15 px-2.5 py-1 text-xs font-semibold text-primary-foreground">
+                <Sparkles className="size-3.5" aria-hidden /> Ücretsiz kayıt
+              </span>
+              <h3 className="mt-5 font-display text-2xl font-bold leading-tight text-primary-foreground">
+                Aday havuzuna katılın
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-primary-foreground/85">
+                3 kısa adımda başvurun; ekibimiz inceledikten sonra profiliniz yayına alınır.
+              </p>
+              <ul className="mt-auto space-y-3 pt-8">
+                {[
+                  "Belge ve referans kontrolü",
+                  "Size özel aday kodu",
+                  "Ailelerle doğrudan iletişim",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-sm text-primary-foreground/90"
+                  >
+                    <ShieldCheck className="mt-0.5 size-4 shrink-0" aria-hidden />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+
+          <div className="flex max-h-[94vh] min-h-0 flex-col">
+            <DialogHeader className="border-b border-border px-6 py-5 text-left">
+              <DialogTitle className="font-display text-xl">Aday Kaydı</DialogTitle>
+              <DialogDescription>
+                Bilgileriniz yalnızca başvuru değerlendirmesi için kullanılır.
+              </DialogDescription>
+            </DialogHeader>
+            <RegisterForm onDone={() => setOpen(false)} />
+          </div>
         </div>
-        <RegisterForm onDone={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );
 }
+
 
 export function RegisterForm({ onDone }: { onDone?: () => void }) {
   const options = useQuery(filterOptionsQuery);
