@@ -26,6 +26,10 @@ async function fileToResizedDataUrl(file: File, maxW: number, maxH: number) {
     el.src = dataUrl;
   });
   const ratio = Math.min(maxW / img.width, maxH / img.height, 1);
+  // Preserve the original pixels when resizing is unnecessary. Passing a
+  // transparent logo through canvas again can soften its fine edges and text.
+  if (ratio === 1) return dataUrl;
+
   let w = Math.max(1, Math.round(img.width * ratio));
   let h = Math.max(1, Math.round(img.height * ratio));
 
@@ -63,6 +67,8 @@ export function ImageField({
   hint,
   maxWidth,
   maxHeight,
+  minWidth,
+  minHeight,
   value,
   onChange,
   dark,
@@ -71,6 +77,8 @@ export function ImageField({
   hint: string;
   maxWidth: number;
   maxHeight: number;
+  minWidth?: number;
+  minHeight?: number;
   value: string;
   onChange: (next: string) => void;
   dark?: boolean;
@@ -86,7 +94,20 @@ export function ImageField({
       return;
     }
     try {
-      onChange(await fileToResizedDataUrl(file, maxWidth, maxHeight));
+      const next = await fileToResizedDataUrl(file, maxWidth, maxHeight);
+      if (file.type !== "image/svg+xml" && (minWidth || minHeight)) {
+        const dimensions = await new Promise<{ width: number; height: number }>((resolve, reject) => {
+          const image = new Image();
+          image.onload = () => resolve({ width: image.naturalWidth, height: image.naturalHeight });
+          image.onerror = () => reject(new Error("image-error"));
+          image.src = next;
+        });
+        if ((minWidth && dimensions.width < minWidth) || (minHeight && dimensions.height < minHeight)) {
+          setError(`Bu görsel çok küçük (${dimensions.width} × ${dimensions.height} px). En az ${minWidth ?? "–"} × ${minHeight ?? "–"} px veya SVG yükleyin.`);
+          return;
+        }
+      }
+      onChange(next);
     } catch {
       setError("Görsel okunamadı.");
     }
