@@ -27,6 +27,10 @@ export function NavBar({ items, className }: NavBarProps) {
 
   const activeItem = items.find((item) => isActive(item.url)) ?? items[0];
 
+  if (!activeItem || items.length === 0) {
+    return null;
+  }
+
   return (
     <nav
       className={cn(
