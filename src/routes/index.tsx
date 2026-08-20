@@ -10,6 +10,7 @@ import { getServiceImage } from "@/components/service-image";
 
 
 import { Button3D } from "@/components/ui/button-3d";
+import StatsSection from "@/components/ui/stats";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 
 const filterOptionsQuery = queryOptions({
