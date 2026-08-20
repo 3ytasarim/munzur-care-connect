@@ -73,6 +73,7 @@
   --color-highlight: var(--highlight);
   --color-highlight-foreground: var(--highlight-foreground);
   --color-highlight-soft: var(--highlight-soft);
+  --color-highlight-strong: var(--highlight-strong);
   --color-success: var(--brand);
   --font-sans: var(--font-body);
   --font-display: var(--font-heading);
