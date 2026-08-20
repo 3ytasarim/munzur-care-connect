@@ -2,15 +2,29 @@
  * Server-only e-posta gönderimi (Gmail SMTP — uygulama şifresi ile).
  * GMAIL_USER / GMAIL_APP_PASSWORD tanımlı değilse gönderim atlanır.
  */
-import { sendSmtpMail } from "./smtp.server";
+import { sendSmtpMail, type MailAttachment } from "./smtp.server";
 
 type SendResult = { sent: boolean; reason?: string };
+
+export function dataUrlToAttachment(
+  dataUrl: string | null | undefined,
+  filename: string,
+  cid: string,
+): MailAttachment | null {
+  if (!dataUrl) return null;
+  const match = /^data:(image\/(?:jpeg|png|webp));base64,(.+)$/.exec(dataUrl.trim());
+  if (!match) return null;
+  const contentType = match[1]!;
+  const ext = contentType.split("/")[1]!.replace("jpeg", "jpg");
+  return { filename: `${filename}.${ext}`, contentType, base64: match[2]!, cid };
+}
 
 export async function sendMail(input: {
   to: string;
   subject: string;
   html: string;
   text?: string;
+  attachments?: MailAttachment[];
 }): Promise<SendResult> {
   const user = process.env["GMAIL_USER"];
   const password = (process.env["GMAIL_APP_PASSWORD"] ?? "").replace(/\s+/g, "");
@@ -29,6 +43,7 @@ export async function sendMail(input: {
       subject: input.subject,
       html: input.html,
       text: input.text,
+      attachments: input.attachments,
     });
     return { sent: true };
   } catch (error) {
