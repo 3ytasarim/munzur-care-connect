@@ -79,10 +79,10 @@ export async function listAllTaxonomies() {
 export async function upsertTaxonomyItem(input: {
   adminUserId: string;
   kind: TaxonomyKind;
-  id?: string;
+  id?: string | undefined;
   name: string;
-  slug?: string;
-  description?: string;
+  slug?: string | undefined;
+  description?: string | undefined;
   sortOrder: number;
   active: boolean;
 }) {
@@ -130,7 +130,7 @@ export async function upsertTaxonomyItem(input: {
     adminUserId: input.adminUserId,
     action: "TAXONOMY_CREATED",
     entityType: input.kind,
-    entityId: id,
+    entityId: id ?? null,
     newData: { name: input.name, slug },
   });
   return { ok: true as const, id };
@@ -291,7 +291,7 @@ export async function saveContactSettings(input: {
     adminUserId: input.adminUserId,
     action: "CONTACT_SETTINGS_UPDATED",
     entityType: "contact_settings",
-    entityId: row?.id,
+    entityId: row?.id ?? null,
     newData: input.contact,
   });
   return { ok: true as const };
@@ -325,7 +325,7 @@ export async function saveBankSettings(input: {
     adminUserId: input.adminUserId,
     action: "BANK_SETTINGS_UPDATED",
     entityType: "bank_settings",
-    entityId: row?.id,
+    entityId: row?.id ?? null,
     newData: { iban: input.bank.iban, bankName: input.bank.bankName },
   });
   return { ok: true as const };
