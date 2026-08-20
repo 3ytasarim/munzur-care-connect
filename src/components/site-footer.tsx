@@ -39,9 +39,8 @@ export function SiteFooter() {
   ].filter((s) => Boolean(s.href && s.href.trim()));
 
   const tel = (contact.phone || "").replace(/[^\d+]/g, "");
-  const mapSrc = contact.address
-    ? `https://www.google.com/maps?q=${encodeURIComponent(contact.address)}&hl=tr&z=15&output=embed`
-    : null;
+  const mapSrc =
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12074.359365325674!2d29.313417898995517!3d40.83697198399895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cadd104b2f3711%3A0x692843b240e3998c!2sTuzlaport!5e0!3m2!1str!2str!4v1787253000407!5m2!1str!2str";
 
   return (
     <footer className="mt-24 border-t border-border bg-card">
