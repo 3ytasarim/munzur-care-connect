@@ -271,7 +271,7 @@ function Index() {
             <div className="animate-fade-up mt-8 flex flex-row gap-3 [animation-delay:300ms]">
               <Button3D
                 size="md"
-                className="min-w-0 flex-1 sm:size-lg"
+                className="min-w-0 flex-1"
                 onClick={() => navigate({ to: "/bakicilar" })}
               >
                 <Search className="size-4 shrink-0" aria-hidden />
@@ -280,7 +280,7 @@ function Index() {
               <Button3D
                 size="md"
                 variant="outline"
-                className="min-w-0 flex-1 sm:size-lg"
+                className="min-w-0 flex-1"
                 onClick={() => navigate({ to: "/bakicilar", search: {} })}
               >
                 <span className="truncate">Hizmetleri İncele</span>
