@@ -24,7 +24,7 @@ export function BrandMark({ className, variant = "default" }: Props) {
         src={logo}
         alt={siteName}
         decoding="async"
-        className={cn("h-16 w-auto max-w-[240px] bg-transparent object-contain", className)}
+        className={cn("h-10 w-auto max-w-[180px] bg-transparent object-contain md:h-16 md:max-w-[240px]", className)}
       />
     );
   }
@@ -34,7 +34,7 @@ export function BrandMark({ className, variant = "default" }: Props) {
   return (
     <span
       className={cn(
-        "font-display text-xl font-extrabold tracking-tight leading-none select-none bg-transparent",
+        "font-display text-base font-extrabold tracking-tight leading-none select-none bg-transparent md:text-xl",
         className,
       )}
     >
