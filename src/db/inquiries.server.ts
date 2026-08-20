@@ -90,11 +90,11 @@ export async function setInquiryStatus(input: {
       .where(eq(customerInquiries.id, input.id));
   });
   await logAudit({
-    actorId: input.adminUserId,
+    adminUserId: input.adminUserId,
     action: "INQUIRY_STATUS",
-    entity: "customer_inquiries",
+    entityType: "customer_inquiries",
     entityId: input.id,
-    metadata: { status: input.status },
+    newData: { status: input.status },
   });
   return { ok: true };
 }
@@ -110,9 +110,9 @@ export async function deleteInquiry(input: {
       .where(eq(customerInquiries.id, input.id));
   });
   await logAudit({
-    actorId: input.adminUserId,
+    adminUserId: input.adminUserId,
     action: "INQUIRY_DELETE",
-    entity: "customer_inquiries",
+    entityType: "customer_inquiries",
     entityId: input.id,
   });
   return { ok: true };
