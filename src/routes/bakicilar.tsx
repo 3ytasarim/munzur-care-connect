@@ -1,13 +1,16 @@
 import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { MapPin, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { useState } from "react";
 
 import { CaregiverCard } from "@/components/caregiver-card";
 import { Button3D } from "@/components/ui/button-3d";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Hero } from "@/components/ui/tailwind-css-background-snippet";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 import type { CaregiverSearchParams } from "@/lib/caregiver-search-schema";
+
 
 const filterOptionsQuery = queryOptions({
   queryKey: ["filter-options"],
@@ -66,15 +69,49 @@ function CaregiverSearchPage() {
     (filters.minExperience ? 1 : 0);
 
   return (
-    <main className="container-page py-12">
-      <header className="max-w-2xl">
-        <h1 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-          Bakıcı <span className="text-brand">adaylarını</span> keşfedin
-        </h1>
-        <p className="mt-3 text-muted-foreground">
-          Tüm sonuçlar veritabanındaki onaylı ve yayında olan adaylardan gelir.
-        </p>
-      </header>
+    <main className="pb-12">
+      <Hero>
+        <div className="container-page py-16 sm:py-20">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand-soft px-3 py-1 text-xs font-semibold text-brand-strong">
+              <ShieldCheck className="size-3.5" aria-hidden />
+              Kimlik ve referans kontrolünden geçmiş adaylar
+            </span>
+            <h1 className="mt-5 font-display text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+              Bakıcı <span className="text-brand">adaylarını</span> keşfedin
+            </h1>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
+              Tüm sonuçlar veritabanındaki onaylı ve yayında olan adaylardan gelir. Şehir, hizmet
+              alanı, çalışma şekli ve deneyime göre filtreleyerek ailenize en uygun adayı bulun.
+            </p>
+            <dl className="mt-8 flex flex-wrap gap-3">
+              {[
+                { icon: Users, label: "Yayındaki aday", value: results.data?.total ?? "—" },
+                { icon: MapPin, label: "Şehir", value: options.cities.length || "—" },
+                { icon: Sparkles, label: "Hizmet alanı", value: options.services.length || "—" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-center gap-3 rounded-2xl border border-border bg-card/80 px-4 py-3 shadow-card backdrop-blur transition-transform hover:-translate-y-0.5"
+                >
+                  <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-brand-strong">
+                    <item.icon className="size-4" aria-hidden />
+                  </span>
+                  <div>
+                    <dd className="font-display text-lg font-bold leading-none text-foreground">
+                      {item.value}
+                    </dd>
+                    <dt className="mt-1 text-xs text-muted-foreground">{item.label}</dt>
+                  </div>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </Hero>
+
+      <div className="container-page">
+
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[280px_1fr]">
         <aside className="h-fit rounded-xl border border-border bg-card p-5 shadow-card">
@@ -194,6 +231,7 @@ function CaregiverSearchPage() {
             </>
           )}
         </section>
+        </div>
       </div>
     </main>
   );
