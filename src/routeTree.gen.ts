@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BakicilarRouteImport } from './routes/bakicilar'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as GirisRouteImport } from './routes/giris'
 import { Route as KayitRouteImport } from './routes/kayit'
 import { Route as PanelRouteImport } from './routes/panel'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,6 +32,11 @@ const AdminRoute = AdminRouteImport.update({
 const BakicilarRoute = BakicilarRouteImport.update({
   id: '/bakicilar',
   path: '/bakicilar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GirisRoute = GirisRouteImport.update({
@@ -46,14 +54,27 @@ const PanelRoute = PanelRouteImport.update({
   path: '/panel',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/bakicilar': typeof BakicilarRoute
+  '/blog': typeof BlogRouteWithChildren
   '/giris': typeof GirisRoute
   '/kayit': typeof KayitRoute
   '/panel': typeof PanelRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,29 +83,61 @@ export interface FileRoutesByTo {
   '/giris': typeof GirisRoute
   '/kayit': typeof KayitRoute
   '/panel': typeof PanelRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/bakicilar': typeof BakicilarRoute
+  '/blog': typeof BlogRouteWithChildren
   '/giris': typeof GirisRoute
   '/kayit': typeof KayitRoute
   '/panel': typeof PanelRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/bakicilar' | '/giris' | '/kayit' | '/panel'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/bakicilar'
+    | '/blog'
+    | '/giris'
+    | '/kayit'
+    | '/panel'
+    | '/blog/$slug'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/bakicilar' | '/giris' | '/kayit' | '/panel'
+  to:
+    | '/'
+    | '/admin'
+    | '/bakicilar'
+    | '/giris'
+    | '/kayit'
+    | '/panel'
+    | '/blog/$slug'
+    | '/blog'
   id:
-    '__root__' | '/' | '/admin' | '/bakicilar' | '/giris' | '/kayit' | '/panel'
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/bakicilar'
+    | '/blog'
+    | '/giris'
+    | '/kayit'
+    | '/panel'
+    | '/blog/$slug'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   BakicilarRoute: typeof BakicilarRoute
+  BlogRoute: typeof BlogRouteWithChildren
   GirisRoute: typeof GirisRoute
   KayitRoute: typeof KayitRoute
   PanelRoute: typeof PanelRoute
@@ -113,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BakicilarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/giris': {
       id: '/giris'
       path: '/giris'
@@ -134,13 +194,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PanelRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
   }
 }
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   BakicilarRoute: BakicilarRoute,
+  BlogRoute: BlogRouteWithChildren,
   GirisRoute: GirisRoute,
   KayitRoute: KayitRoute,
   PanelRoute: PanelRoute,

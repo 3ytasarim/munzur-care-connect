@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Home, Menu, Phone, Search, UserPlus } from "lucide-react";
+import { Home, Menu, Newspaper, Phone, Search, UserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { BrandMark } from "@/components/brand-mark";
@@ -15,6 +15,7 @@ import { useSiteSettings } from "@/lib/site-settings";
 const NAV: NavItem[] = [
   { name: "Ana Sayfa", url: "/", icon: Home },
   { name: "Bakıcı Ara", url: "/bakicilar", icon: Search },
+  { name: "Blog", url: "/blog", icon: Newspaper },
 ];
 
 export function SiteHeader() {

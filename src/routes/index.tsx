@@ -2,6 +2,7 @@ import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, Search, ShieldCheck } from "lucide-react";
 
+import { BlogCard } from "@/components/blog-card";
 import { CaregiverCard } from "@/components/caregiver-card";
 import { Reveal } from "@/components/reveal";
 import { ServiceIcon } from "@/components/service-icon";
@@ -13,6 +14,7 @@ import { Button3D } from "@/components/ui/button-3d";
 import StatCard from "@/components/ui/stat-card";
 import FaqSection, { type FaqData } from "@/components/ui/habit-faq-scroller";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
+import { listBlogPosts } from "@/lib/blog.functions";
 
 const FAQ_DATA: FaqData = {
   mainTitle: "Sıkça Sorulan Sorular",
@@ -357,6 +359,9 @@ function Index() {
         </div>
       </section>
 
+      {/* Blog */}
+      <BlogSection />
+
       {/* SSS */}
       <section className="relative overflow-hidden border-t border-border bg-secondary/30 py-20">
         <div className="pointer-events-none absolute -left-20 top-10 h-64 w-64 rounded-full bg-brand/10 blur-3xl" />
@@ -366,5 +371,36 @@ function Index() {
 
     </main>
 
+  );
+}
+
+function BlogSection() {
+  const posts = useQuery({ queryKey: ["blog-posts"], queryFn: () => listBlogPosts() });
+  const items = posts.data?.items ?? [];
+  if (!items.length) return null;
+
+  return (
+    <section className="container-page pb-20">
+      <Reveal className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-widest text-brand-strong">blog</p>
+          <h2 className="mt-1 font-display text-3xl font-bold text-foreground">Bakıcı bulma rehberi</h2>
+        </div>
+        <Link
+          to="/blog"
+          className="rounded-full border border-brand px-5 py-2 text-sm font-medium text-brand-strong transition-colors hover:bg-brand hover:text-brand-foreground"
+        >
+          Tüm yazılar
+        </Link>
+      </Reveal>
+
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {items.slice(0, 3).map((p, i) => (
+          <Reveal key={p.slug} delay={i * 90} className="h-full">
+            <BlogCard post={p} />
+          </Reveal>
+        ))}
+      </div>
+    </section>
   );
 }

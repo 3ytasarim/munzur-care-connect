@@ -325,3 +325,15 @@
     animation: none;
   }
 }
+
+@utility prose-blog {
+  & h2 { @apply mt-8 mb-3 font-display text-2xl font-bold text-foreground; }
+  & h3 { @apply mt-6 mb-2 font-display text-xl font-semibold text-foreground; }
+  & p { @apply my-4 leading-relaxed; }
+  & ul { @apply my-4 list-disc space-y-1 pl-6; }
+  & ol { @apply my-4 list-decimal space-y-1 pl-6; }
+  & a { @apply text-brand-strong underline underline-offset-2; }
+  & blockquote { @apply my-5 border-l-4 border-brand/50 bg-secondary/40 py-2 pl-4 italic; }
+  & img { @apply my-5 rounded-xl; }
+  & strong { @apply font-semibold text-foreground; }
+}
