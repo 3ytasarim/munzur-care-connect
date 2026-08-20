@@ -253,6 +253,19 @@
   animation: md-float 7s ease-in-out infinite;
 }
 
+@utility animate-step-line {
+  animation: md-step-line 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: top;
+}
+
+@utility animate-step-pop {
+  animation: md-step-pop 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-step-travel {
+  animation: md-step-travel 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @utility hover-lift {
   transition:
     transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
