@@ -285,6 +285,14 @@ function Index() {
         </div>
       </section>
 
+      {/* SSS */}
+      <section className="relative overflow-hidden border-t border-border bg-secondary/30 py-20">
+        <div className="pointer-events-none absolute -left-20 top-10 h-64 w-64 rounded-full bg-brand/10 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 bottom-0 h-64 w-64 rounded-full bg-accent/25 blur-3xl" />
+        <FaqSection data={FAQ_DATA} />
+      </section>
+
     </main>
+
   );
 }
