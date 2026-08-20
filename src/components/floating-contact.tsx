@@ -32,7 +32,7 @@ export function FloatingContact() {
         <a
           href={`tel:${tel}`}
           aria-label="Telefon ile ara"
-          className="animate-attention group flex items-center gap-2 rounded-l-xl bg-brand py-3 pl-3 pr-4 text-brand-foreground shadow-lg transition-all duration-300 hover:pr-5 hover:shadow-glow"
+          className="animate-attention group flex items-center gap-2 rounded-l-xl bg-highlight-strong py-3 pl-3 pr-4 text-highlight-foreground shadow-lg transition-all duration-300 hover:pr-5 hover:shadow-glow"
           style={{ animationDelay: "0s" }}
         >
           <Phone className="size-5 shrink-0" aria-hidden />
