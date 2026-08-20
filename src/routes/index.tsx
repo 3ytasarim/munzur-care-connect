@@ -105,42 +105,84 @@ function Index() {
               className="animate-float-slow absolute -left-6 -top-6 size-24 rounded-2xl bg-highlight/70"
               aria-hidden
             />
-            <div className="hover-lift relative rounded-2xl border border-border bg-background p-8 shadow-soft">
-              <h2 className="font-display text-lg font-semibold">Nasıl çalışır?</h2>
-              <ol className="mt-6 space-y-6">
-                {[
-                  {
-                    icon: Search,
-                    title: "Filtreleyin",
-                    text: "Hizmet, çalışma şekli, şehir ve deneyime göre arayın.",
-                  },
-                  {
-                    icon: BadgeCheck,
-                    title: "Profili inceleyin",
-                    text: "Yalnızca ekibimiz tarafından onaylanan adaylar yayınlanır.",
-                  },
-                  {
-                    icon: HeartHandshake,
-                    title: "İletişime geçin",
-                    text: "Aday kodu ile WhatsApp üzerinden hızlıca bilgi alın.",
-                  },
-                ].map((step, i) => (
-                  <li key={step.title} className="group flex gap-4">
-                    <span
-                      className="animate-fade-up flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand-strong transition-transform duration-300 group-hover:scale-110"
-                      style={{ animationDelay: `${400 + i * 120}ms` }}
-                    >
-                      <step.icon className="size-5" aria-hidden />
+            <div
+              className="animate-float-slow absolute -bottom-8 -right-6 size-32 rounded-full bg-brand/10 blur-2xl [animation-delay:800ms]"
+              aria-hidden
+            />
+
+            {/* gradient border shell */}
+            <div className="hover-lift group/card relative rounded-3xl bg-gradient-to-br from-brand/40 via-highlight/50 to-brand/20 p-px shadow-soft transition-shadow duration-500 hover:shadow-glow">
+              <div className="relative overflow-hidden rounded-3xl bg-background/85 p-8 backdrop-blur-xl">
+                <div
+                  className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-brand/10 blur-3xl transition-opacity duration-500 group-hover/card:opacity-100 opacity-60"
+                  aria-hidden
+                />
+
+                <div className="relative flex items-center justify-between gap-4">
+                  <div>
+                    <span className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-brand-strong">
+                      <span className="size-1.5 animate-pulse rounded-full bg-brand" aria-hidden />
+                      3 adım
                     </span>
-                    <div>
-                      <h3 className="text-sm font-semibold text-foreground">{step.title}</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">{step.text}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+                    <h2 className="font-display mt-3 text-xl font-bold text-foreground">
+                      Nasıl çalışır?
+                    </h2>
+                  </div>
+                </div>
+
+                <ol className="relative mt-7 space-y-1">
+                  {/* connecting line */}
+                  <span
+                    className="pointer-events-none absolute left-[27px] top-6 bottom-6 w-px bg-gradient-to-b from-brand/40 via-brand/20 to-transparent"
+                    aria-hidden
+                  />
+                  {[
+                    {
+                      icon: Search,
+                      title: "Filtreleyin",
+                      text: "Hizmet, çalışma şekli, şehir ve deneyime göre arayın.",
+                    },
+                    {
+                      icon: BadgeCheck,
+                      title: "Profili inceleyin",
+                      text: "Yalnızca ekibimiz tarafından onaylanan adaylar yayınlanır.",
+                    },
+                    {
+                      icon: HeartHandshake,
+                      title: "İletişime geçin",
+                      text: "Aday kodu ile WhatsApp üzerinden hızlıca bilgi alın.",
+                    },
+                  ].map((step, i) => (
+                    <li
+                      key={step.title}
+                      className="group animate-fade-up relative flex gap-4 rounded-2xl p-3 transition-colors duration-300 hover:bg-brand-soft/60"
+                      style={{ animationDelay: `${400 + i * 140}ms` }}
+                    >
+                      <span className="relative flex size-11 shrink-0 items-center justify-center rounded-2xl border border-brand/15 bg-brand-soft text-brand-strong shadow-sm transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-brand/40">
+                        <span
+                          className="absolute inset-0 rounded-2xl bg-brand/20 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100"
+                          aria-hidden
+                        />
+                        <step.icon className="relative size-5" aria-hidden />
+                        <span className="absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-brand-foreground shadow-sm">
+                          {i + 1}
+                        </span>
+                      </span>
+                      <div className="pt-0.5">
+                        <h3 className="text-sm font-semibold text-foreground transition-colors group-hover:text-brand-strong">
+                          {step.title}
+                        </h3>
+                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                          {step.text}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
           </div>
+
         </div>
       </section>
 
