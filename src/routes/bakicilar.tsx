@@ -228,8 +228,11 @@ function CaregiverSearchPage() {
             </>
           )}
         </section>
+        </section>
+      </div>
       </div>
     </main>
+
   );
 }
 
