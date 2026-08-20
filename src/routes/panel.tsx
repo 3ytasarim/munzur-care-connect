@@ -1,8 +1,8 @@
-import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { queryOptions } from "@tanstack/react-query";
-import { BadgeCheck, Clock, ShieldCheck } from "lucide-react";
+import { BadgeCheck, Clock } from "lucide-react";
 
 import { Button3D } from "@/components/ui/button-3d";
 import { getCurrentUser, logoutUser } from "@/lib/auth.functions";
@@ -29,6 +29,12 @@ const ROLE_LABELS: Record<string, string> = {
 };
 
 export const Route = createFileRoute("/panel")({
+  beforeLoad: async ({ context }) => {
+    const user = await context.queryClient.ensureQueryData(sessionQuery);
+    if (user && user.role !== "CAREGIVER") {
+      throw redirect({ to: "/admin" });
+    }
+  },
   loader: ({ context }) => context.queryClient.ensureQueryData(sessionQuery),
   head: () => ({
     meta: [
@@ -119,19 +125,6 @@ function PanelPage() {
                 </div>
               ) : null}
 
-              {user.role !== "CAREGIVER" ? (
-                <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                  <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                    <ShieldCheck className="size-4 text-brand" /> Yönetim
-                  </div>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Aday onayı, taksonomiler, site ayarları ve işlem kayıtları yönetim panelinde.
-                  </p>
-                  <Link to="/admin" className="mt-4 inline-block">
-                    <Button3D>Yönetim Paneline Git</Button3D>
-                  </Link>
-                </div>
-              ) : null}
 
             </div>
           </div>
