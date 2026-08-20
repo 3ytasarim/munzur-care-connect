@@ -63,11 +63,31 @@ function CaregiverSearchPage() {
     });
   }
 
+  const locations = options.locations ?? [];
+  const districts = Array.from(
+    new Set(
+      locations
+        .filter((l) => l.city === filters.city && l.district)
+        .map((l) => l.district as string),
+    ),
+  ).sort((a, b) => a.localeCompare(b, "tr"));
+  const neighborhoods = Array.from(
+    new Set(
+      locations
+        .filter(
+          (l) => l.city === filters.city && l.district === filters.district && l.neighborhood,
+        )
+        .map((l) => l.neighborhood as string),
+    ),
+  ).sort((a, b) => a.localeCompare(b, "tr"));
+
   const activeCount =
     (filters.serviceSlugs?.length ?? 0) +
     (filters.workingTypeSlugs?.length ?? 0) +
     (filters.skillSlugs?.length ?? 0) +
     (filters.city ? 1 : 0) +
+    (filters.district ? 1 : 0) +
+    (filters.neighborhood ? 1 : 0) +
     (filters.minExperience ? 1 : 0);
 
   return (
