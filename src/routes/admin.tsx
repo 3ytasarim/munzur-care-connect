@@ -200,7 +200,12 @@ function AdminDashboard({ email, displayName }: { email: string; displayName: st
   const list = useQuery({
     queryKey: ["admin-candidates", status],
     queryFn: () => adminListCandidates({ data: { status } }),
+    staleTime: 0,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
+    refetchInterval: 30_000,
   });
+
 
   const refresh = () => queryClient.invalidateQueries({ queryKey: ["admin-candidates"] });
 
