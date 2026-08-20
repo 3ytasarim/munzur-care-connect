@@ -74,19 +74,20 @@ export function SiteHeader() {
                 <Link to="/panel">Panelim</Link>
               </Button>
             ) : (
-              <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
-                <Link to="/giris">Giriş Yap</Link>
-              </Button>
+              <div className="hidden sm:inline-flex">
+                <LiquidMetalButton
+                  label="Giriş Yap"
+                  onClick={() => navigate({ to: "/giris" })}
+                />
+              </div>
             )}
 
-            <Button
-              size="sm"
-              className="hover-lift hidden sm:inline-flex"
-              onClick={() => setRegisterOpen(true)}
-            >
-              <UserPlus className="size-4" aria-hidden />
-              Aday Ol
-            </Button>
+            <div className="hidden sm:inline-flex">
+              <LiquidMetalButton
+                label="Aday Ol"
+                onClick={() => setRegisterOpen(true)}
+              />
+            </div>
 
             <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
               <SheetTrigger asChild>
