@@ -5,6 +5,7 @@ import { Loader2, Save } from "lucide-react";
 import { Button3D } from "@/components/ui/button-3d";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ImageField } from "@/components/admin/image-field";
 import { adminGetSettings, adminSaveSettings } from "@/lib/admin.functions";
 
 type Settings = Awaited<ReturnType<typeof adminGetSettings>>;
@@ -12,13 +13,48 @@ type Settings = Awaited<ReturnType<typeof adminGetSettings>>;
 const SETTING_FIELDS: { key: string; label: string; placeholder?: string }[] = [
   { key: "site_name", label: "Site adı" },
   { key: "company_name", label: "Firma adı" },
-  { key: "logo_url", label: "Logo URL", placeholder: "https://…" },
-  { key: "dark_logo_url", label: "Koyu tema logo URL" },
-  { key: "mobile_logo_url", label: "Mobil logo URL" },
-  { key: "favicon_url", label: "Favicon URL" },
   { key: "primary_color", label: "Ana renk", placeholder: "#57B614" },
   { key: "secondary_color", label: "İkincil renk", placeholder: "#FFDE58" },
   { key: "default_currency", label: "Para birimi" },
+];
+
+const LOGO_FIELDS: {
+  key: string;
+  label: string;
+  hint: string;
+  maxWidth: number;
+  maxHeight: number;
+  dark?: boolean;
+}[] = [
+  {
+    key: "logo_url",
+    label: "Logo (açık tema)",
+    hint: "Önerilen: 320 × 80 px yatay, şeffaf arka planlı PNG veya SVG.",
+    maxWidth: 320,
+    maxHeight: 80,
+  },
+  {
+    key: "dark_logo_url",
+    label: "Logo (koyu tema)",
+    hint: "Önerilen: 320 × 80 px, açık renkli/beyaz versiyon.",
+    maxWidth: 320,
+    maxHeight: 80,
+    dark: true,
+  },
+  {
+    key: "mobile_logo_url",
+    label: "Mobil / kare logo",
+    hint: "Önerilen: 120 × 120 px kare amblem.",
+    maxWidth: 120,
+    maxHeight: 120,
+  },
+  {
+    key: "favicon_url",
+    label: "Favicon",
+    hint: "Önerilen: 64 × 64 px kare PNG (sekme simgesi).",
+    maxWidth: 64,
+    maxHeight: 64,
+  },
 ];
 
 const CONTACT_FIELDS: { key: keyof Settings["contact"]; label: string }[] = [
@@ -77,6 +113,28 @@ export function SettingsPanel() {
       }}
       className="space-y-6"
     >
+      <Card
+        title="Logolar & favicon"
+        description="Görselleri bilgisayarınızdan yükleyin; otomatik olarak önerilen ebata küçültülür."
+      >
+        <div className="grid gap-4 sm:grid-cols-2">
+          {LOGO_FIELDS.map((f) => (
+            <ImageField
+              key={f.key}
+              label={f.label}
+              hint={f.hint}
+              maxWidth={f.maxWidth}
+              maxHeight={f.maxHeight}
+              dark={f.dark}
+              value={form.settings[f.key] ?? ""}
+              onChange={(next) =>
+                setForm({ ...form, settings: { ...form.settings, [f.key]: next } })
+              }
+            />
+          ))}
+        </div>
+      </Card>
+
       <Card title="Genel & marka" description="Logo ve site bilgileri kod değişmeden güncellenir.">
         <div className="grid gap-4 sm:grid-cols-2">
           {SETTING_FIELDS.map((f) => (
