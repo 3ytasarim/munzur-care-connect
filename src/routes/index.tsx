@@ -223,6 +223,7 @@ function Index() {
     <main>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border bg-card">
+        <StarField />
         <div
           className="animate-float-slow pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-brand/10 blur-3xl"
           aria-hidden
