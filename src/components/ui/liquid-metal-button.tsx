@@ -196,11 +196,13 @@ export function LiquidMetalButton({
             pointerEvents: "none",
           }}
         />
-        {/* inner surface: keeps the motion around the edge, not inside */}
+        {/* inner surface: soft yellow tint with subtle gradient */}
         <div
-          className="absolute z-[20] rounded-full bg-background"
+          className="absolute z-[20] rounded-full"
           style={{
             inset: 2,
+            background:
+              "linear-gradient(145deg, color-mix(in oklab, var(--highlight) 35%, var(--background)) 0%, var(--background) 100%)",
             boxShadow: isHovered
               ? "0 6px 18px -8px color-mix(in oklab, var(--brand) 60%, transparent)"
               : "none",
@@ -217,7 +219,7 @@ export function LiquidMetalButton({
         >
           {viewMode === "icon" && <Sparkles className="size-5 text-brand" />}
           {viewMode === "text" && (
-            <span className="text-sm font-semibold text-foreground">
+            <span className="text-sm font-semibold text-brand">
               {label}
             </span>
           )}
