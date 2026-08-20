@@ -1,5 +1,5 @@
 import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, Search, ShieldCheck } from "lucide-react";
 
 import { CaregiverCard } from "@/components/caregiver-card";
@@ -9,7 +9,7 @@ import { getServiceImage } from "@/components/service-image";
 
 
 
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
 
 const filterOptionsQuery = queryOptions({
@@ -41,6 +41,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const navigate = useNavigate();
   const { data: options } = useSuspenseQuery(filterOptionsQuery);
   const featured = useQuery({
     queryKey: ["caregivers", "home-featured"],
@@ -73,17 +74,17 @@ function Index() {
               olanla doğrudan iletişime geçin.
             </p>
             <div className="animate-fade-up mt-8 flex flex-wrap gap-3 [animation-delay:300ms]">
-              <Button asChild size="lg" className="hover-lift">
-                <Link to="/bakicilar">
-                  <Search className="size-4" aria-hidden />
-                  Bakıcı Ara
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="hover-lift">
-                <Link to="/bakicilar" search={{}}>
-                  Hizmetleri İncele
-                </Link>
-              </Button>
+              <Button3D size="lg" onClick={() => navigate({ to: "/bakicilar" })}>
+                <Search className="size-4" aria-hidden />
+                Bakıcı Ara
+              </Button3D>
+              <Button3D
+                size="lg"
+                variant="outline"
+                onClick={() => navigate({ to: "/bakicilar", search: {} })}
+              >
+                Hizmetleri İncele
+              </Button3D>
             </div>
             <dl className="animate-fade-up mt-12 grid max-w-md grid-cols-3 gap-6 [animation-delay:400ms]">
               {[
@@ -199,9 +200,9 @@ function Index() {
       <section className="container-page pb-20">
         <Reveal className="flex items-end justify-between gap-4">
           <h2 className="font-display text-3xl font-bold text-foreground">Öne çıkan adaylar</h2>
-          <Button asChild variant="outline">
-            <Link to="/bakicilar">Tümünü gör</Link>
-          </Button>
+          <Button3D variant="outline" onClick={() => navigate({ to: "/bakicilar" })}>
+            Tümünü gör
+          </Button3D>
         </Reveal>
 
         <div className="mt-8">

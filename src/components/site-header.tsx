@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { BrandMark } from "@/components/brand-mark";
 import { RegisterDialog } from "@/components/register-dialog";
 import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { NavBar, type NavItem } from "@/components/ui/tubelight-navbar";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -70,9 +71,14 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-2">
             {user ? (
-              <Button asChild size="sm" variant="outline" className="hidden sm:inline-flex">
-                <Link to="/panel">Panelim</Link>
-              </Button>
+              <Button3D
+                size="sm"
+                variant="outline"
+                className="hidden sm:inline-flex"
+                onClick={() => navigate({ to: "/panel" })}
+              >
+                Panelim
+              </Button3D>
             ) : (
               <div className="hidden sm:inline-flex">
                 <LiquidMetalButton
@@ -119,8 +125,8 @@ export function SiteHeader() {
                   >
                     {user ? "Panelim" : "Giriş Yap"}
                   </Link>
-                  <Button
-                    className="mt-4"
+                  <Button3D
+                    className="mt-4 w-full"
                     onClick={() => {
                       setMenuOpen(false);
                       setRegisterOpen(true);
@@ -128,7 +134,7 @@ export function SiteHeader() {
                   >
                     <UserPlus className="size-4" aria-hidden />
                     Aday Ol
-                  </Button>
+                  </Button3D>
                   {contact.phone ? (
                     <a
                       href={`tel:${contact.phone.replace(/\s/g, "")}`}

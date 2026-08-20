@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { queryOptions } from "@tanstack/react-query";
 import { BadgeCheck, Clock, ShieldCheck } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 import { getCurrentUser, logoutUser } from "@/lib/auth.functions";
 
 const sessionQuery = queryOptions({
@@ -68,12 +68,10 @@ function PanelPage() {
               Panelinizi görüntülemek için hesabınıza giriş yapın.
             </p>
             <div className="mt-6 flex justify-center gap-3">
-              <Button asChild>
-                <Link to="/giris">Giriş Yap</Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link to="/kayit">Aday Kaydı</Link>
-              </Button>
+              <Button3D onClick={() => navigate({ to: "/giris" })}>Giriş Yap</Button3D>
+              <Button3D variant="outline" onClick={() => navigate({ to: "/kayit" })}>
+                Aday Kaydı
+              </Button3D>
             </div>
           </div>
         ) : (
@@ -87,9 +85,9 @@ function PanelPage() {
                   {ROLE_LABELS[user.role] ?? user.role} · {user.email}
                 </p>
               </div>
-              <Button variant="outline" onClick={handleLogout}>
+              <Button3D variant="outline" onClick={handleLogout}>
                 Çıkış Yap
-              </Button>
+              </Button3D>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">

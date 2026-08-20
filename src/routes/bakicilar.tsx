@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
 import { CaregiverCard } from "@/components/caregiver-card";
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { findCaregivers, getFilterOptions } from "@/lib/caregivers.functions";
@@ -169,9 +169,9 @@ function CaregiverSearchPage() {
               <p className="text-sm text-muted-foreground">
                 Şu anda veriler yüklenemiyor. Lütfen tekrar deneyin.
               </p>
-              <Button className="mt-4" onClick={() => results.refetch()}>
+              <Button3D className="mt-4" onClick={() => results.refetch()}>
                 Tekrar dene
-              </Button>
+              </Button3D>
             </div>
           ) : results.data.items.length === 0 ? (
             <div className="rounded-xl border border-dashed border-border bg-card p-12 text-center">

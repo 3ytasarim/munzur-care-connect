@@ -1,7 +1,7 @@
 import { Camera, ImagePlus, RefreshCw, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 
 const MAX_EDGE = 720;
 const QUALITY = 0.82;
@@ -109,19 +109,24 @@ export function PhotoCapture({ value, onChange }: Props) {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          <Button type="button" variant="outline" size="sm" onClick={() => fileRef.current?.click()}>
+          <Button3D
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => fileRef.current?.click()}
+          >
             <ImagePlus className="size-4" aria-hidden />
             Galeriden seç
-          </Button>
-          <Button type="button" variant="outline" size="sm" onClick={startCamera}>
+          </Button3D>
+          <Button3D type="button" variant="outline" size="sm" onClick={startCamera}>
             <Camera className="size-4" aria-hidden />
             {cameraOn ? "Kamera açık" : "Kamerayla çek"}
-          </Button>
+          </Button3D>
           {value ? (
-            <Button type="button" variant="ghost" size="sm" onClick={() => onChange(null)}>
+            <Button3D type="button" variant="ghost" size="sm" onClick={() => onChange(null)}>
               <Trash2 className="size-4" aria-hidden />
               Kaldır
-            </Button>
+            </Button3D>
           ) : null}
         </div>
       </div>
@@ -130,18 +135,18 @@ export function PhotoCapture({ value, onChange }: Props) {
         <div className="animate-fade-up overflow-hidden rounded-2xl border border-border bg-foreground/95">
           <video ref={videoRef} playsInline muted className="aspect-video w-full object-cover" />
           <div className="flex items-center justify-center gap-2 p-3">
-            <Button type="button" size="sm" onClick={shoot}>
+            <Button3D type="button" size="sm" onClick={shoot}>
               <Camera className="size-4" aria-hidden />
               Çek
-            </Button>
-            <Button type="button" size="sm" variant="outline" onClick={startCamera}>
+            </Button3D>
+            <Button3D type="button" size="sm" variant="outline" onClick={startCamera}>
               <RefreshCw className="size-4" aria-hidden />
               Yenile
-            </Button>
-            <Button type="button" size="sm" variant="ghost" onClick={stopCamera}>
+            </Button3D>
+            <Button3D type="button" size="sm" variant="ghost" onClick={stopCamera}>
               <X className="size-4" aria-hidden />
               Kapat
-            </Button>
+            </Button3D>
           </div>
         </div>
       ) : null}

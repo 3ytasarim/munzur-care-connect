@@ -73,6 +73,7 @@
   --color-highlight: var(--highlight);
   --color-highlight-foreground: var(--highlight-foreground);
   --color-highlight-soft: var(--highlight-soft);
+  --color-highlight-strong: var(--highlight-strong);
   --color-success: var(--brand);
   --font-sans: var(--font-body);
   --font-display: var(--font-heading);
@@ -94,6 +95,7 @@
   --brand-soft: oklch(0.9675 0.0255 128.76);
   --highlight: oklch(0.9044 0.1533 95.24); /* #FFDE58 */
   --highlight-foreground: oklch(0.276 0.0233 248.68);
+  --highlight-strong: oklch(0.80 0.13 95);
   --highlight-soft: oklch(0.973 0.045 98);
 
   /* Surfaces */

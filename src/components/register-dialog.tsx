@@ -6,7 +6,7 @@ import { useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
 import { PhotoCapture } from "@/components/photo-capture";
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
@@ -430,21 +430,21 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
         </p>
         <div className="flex gap-2">
           {step > 0 ? (
-            <Button type="button" variant="outline" onClick={() => setStep((s) => s - 1)}>
+            <Button3D type="button" variant="outline" onClick={() => setStep((s) => s - 1)}>
               <ArrowLeft className="size-4" aria-hidden />
               Geri
-            </Button>
+            </Button3D>
           ) : null}
           {step < STEPS.length - 1 ? (
-            <Button type="button" onClick={next} className="hover-lift">
+            <Button3D type="button" onClick={next}>
               Devam
               <ArrowRight className="size-4" aria-hidden />
-            </Button>
+            </Button3D>
           ) : (
-            <Button type="submit" disabled={pending} className="hover-lift">
+            <Button3D type="submit" disabled={pending}>
               {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
               {pending ? "Kaydınız oluşturuluyor..." : "Kaydı Tamamla"}
-            </Button>
+            </Button3D>
           )}
         </div>
       </div>

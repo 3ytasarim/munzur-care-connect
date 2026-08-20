@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { loginUser } from "@/lib/auth.functions";
@@ -98,9 +98,9 @@ function LoginPage() {
               </p>
             ) : null}
 
-            <Button type="submit" className="w-full" disabled={pending}>
+            <Button3D type="submit" className="w-full" disabled={pending}>
               {pending ? "Giriş yapılıyor..." : "Giriş Yap"}
-            </Button>
+            </Button3D>
           </form>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">

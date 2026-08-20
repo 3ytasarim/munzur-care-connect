@@ -3,7 +3,7 @@ import { BadgeCheck, Clock, ShieldCheck, UserPlus } from "lucide-react";
 import { useState } from "react";
 
 import { RegisterDialog } from "@/components/register-dialog";
-import { Button } from "@/components/ui/button";
+import { Button3D } from "@/components/ui/button-3d";
 
 export const Route = createFileRoute("/kayit")({
   head: () => ({
@@ -43,10 +43,10 @@ function RegisterPage() {
           Formu doldurun, profiliniz ekibimiz tarafından incelendikten sonra yayına alınsın.
         </p>
         <div className="animate-fade-up mt-8 [animation-delay:200ms]">
-          <Button size="lg" className="hover-lift" onClick={() => setOpen(true)}>
+          <Button3D size="lg" onClick={() => setOpen(true)}>
             <UserPlus className="size-4" aria-hidden />
             Kayıt Formunu Aç
-          </Button>
+          </Button3D>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
           Hesabınız var mı?{" "}
