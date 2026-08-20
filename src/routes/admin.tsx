@@ -352,9 +352,15 @@ function AdminDashboard({ email, displayName }: { email: string; displayName: st
           ))}
         </div>
       )}
+        </>
+      ) : null}
 
-      <PasswordCard />
+      {tab === "taxonomies" ? <TaxonomyPanel /> : null}
+      {tab === "settings" ? <SettingsPanel /> : null}
+      {tab === "audit" ? <AuditPanel /> : null}
+      {tab === "account" ? <PasswordCard /> : null}
     </main>
+
   );
 }
 
