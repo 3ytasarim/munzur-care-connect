@@ -33,7 +33,7 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-24 border-t border-border bg-card">
-      <div className="container-page grid gap-3 py-14 lg:grid-cols-4">
+      <div className="container-page grid gap-6 py-14 lg:grid-cols-4">
         <div className="space-y-3">
           <div className="flex flex-col items-start">
             <BrandMark className="h-12" />
@@ -59,16 +59,6 @@ export function SiteFooter() {
               ))}
             </ul>
           ) : null}
-        </div>
-
-        <div className="space-y-2 text-sm">
-          <h3 className="text-sm font-semibold text-foreground">Keşfet</h3>
-          <Link to="/blog" className="block text-muted-foreground hover:text-brand-strong">
-            Blog
-          </Link>
-          <Link to="/bakicilar" className="block text-muted-foreground hover:text-brand-strong">
-            Bakıcı Ara
-          </Link>
         </div>
 
         <div className="space-y-3 text-sm">
