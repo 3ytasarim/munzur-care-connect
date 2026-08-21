@@ -228,6 +228,8 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
       workingTypeIds,
       kvkkAccepted: kvkk,
       photoDataUrl: photo ?? undefined,
+      idFrontDataUrl: idFront ?? undefined,
+      idBackDataUrl: idBack ?? undefined,
       neighborhood: values.neighborhood,
     });
     if (!parsed.success) {
