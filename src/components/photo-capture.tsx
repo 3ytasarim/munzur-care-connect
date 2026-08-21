@@ -29,6 +29,8 @@ function drawToDataUrl(
 type Props = {
   value: string | null;
   onChange: (dataUrl: string | null) => void;
+  /** Kamera dışındaki (galeri) seçeneği gizler. */
+  cameraOnly?: boolean;
 };
 
 /** Profile photo picker: gallery upload or live camera capture (mobile + desktop). */
