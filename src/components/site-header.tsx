@@ -144,6 +144,7 @@ export function SiteHeader() {
             </Sheet>
           </div>
         </div>
+      </div>
       </header>
 
       <RegisterDialog open={registerOpen} onOpenChange={setRegisterOpen} />
