@@ -549,18 +549,18 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
             <div className="space-y-1">
               <p className="text-sm font-medium text-foreground">Kimlik fotoğrafı</p>
               <p className="text-sm text-muted-foreground">
-                Kimliğinizin ön ve arka yüzünü çekin veya galerinizden seçin. Bu görseller yalnızca
+                Kimliğinizin ön ve arka yüzünü kamerayla çekin (zorunlu). Bu görseller yalnızca
                 doğrulama amacıyla kullanılır, sitede yayınlanmaz.
               </p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="space-y-2 rounded-xl border border-border p-4">
-                <p className="text-sm font-medium text-foreground">Kimlik ön yüz</p>
-                <PhotoCapture value={idFront} onChange={setIdFront} />
+                <p className="text-sm font-medium text-foreground">Kimlik ön yüz *</p>
+                <PhotoCapture value={idFront} onChange={setIdFront} cameraOnly />
               </div>
               <div className="space-y-2 rounded-xl border border-border p-4">
-                <p className="text-sm font-medium text-foreground">Kimlik arka yüz</p>
-                <PhotoCapture value={idBack} onChange={setIdBack} />
+                <p className="text-sm font-medium text-foreground">Kimlik arka yüz *</p>
+                <PhotoCapture value={idBack} onChange={setIdBack} cameraOnly />
               </div>
             </div>
           </div>
