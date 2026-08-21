@@ -29,10 +29,12 @@ function drawToDataUrl(
 type Props = {
   value: string | null;
   onChange: (dataUrl: string | null) => void;
+  /** Kamera dışındaki (galeri) seçeneği gizler. */
+  cameraOnly?: boolean;
 };
 
 /** Profile photo picker: gallery upload or live camera capture (mobile + desktop). */
-export function PhotoCapture({ value, onChange }: Props) {
+export function PhotoCapture({ value, onChange, cameraOnly = false }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -109,15 +111,17 @@ export function PhotoCapture({ value, onChange }: Props) {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          <Button3D
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => fileRef.current?.click()}
-          >
-            <ImagePlus className="size-4" aria-hidden />
-            Galeriden seç
-          </Button3D>
+          {cameraOnly ? null : (
+            <Button3D
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => fileRef.current?.click()}
+            >
+              <ImagePlus className="size-4" aria-hidden />
+              Galeriden seç
+            </Button3D>
+          )}
           <Button3D type="button" variant="outline" size="sm" onClick={startCamera}>
             <Camera className="size-4" aria-hidden />
             {cameraOn ? "Kamera açık" : "Kamerayla çek"}
