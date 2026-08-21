@@ -265,13 +265,13 @@ export async function searchCaregivers(
           primaryPhotoUrl: caregiverProfiles.primaryPhotoUrl,
           services: sql<string[]>`coalesce((select array_agg(sc.name order by sc.sort_order)
             from caregiver_services cs join service_categories sc on sc.id = cs.service_id
-            where cs.caregiver_id = ${caregiverProfiles.id}), '{}')`,
+            where cs.caregiver_id = caregiver_profiles.id), '{}')`,
           workingTypes: sql<string[]>`coalesce((select array_agg(wt.name order by wt.sort_order)
             from caregiver_working_types cwt join working_types wt on wt.id = cwt.working_type_id
-            where cwt.caregiver_id = ${caregiverProfiles.id}), '{}')`,
+            where cwt.caregiver_id = caregiver_profiles.id), '{}')`,
           skills: sql<string[]>`coalesce((select array_agg(sk.name order by sk.sort_order)
             from caregiver_skills csk join skills sk on sk.id = csk.skill_id
-            where csk.caregiver_id = ${caregiverProfiles.id}), '{}')`,
+            where csk.caregiver_id = caregiver_profiles.id), '{}')`,
         })
         .from(caregiverProfiles)
         .where(where)

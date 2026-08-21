@@ -171,6 +171,8 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
   const [serviceIds, setServiceIds] = useState<string[]>([]);
   const [workingTypeIds, setWorkingTypeIds] = useState<string[]>([]);
   const [photo, setPhoto] = useState<string | null>(null);
+  const [idFront, setIdFront] = useState<string | null>(null);
+  const [idBack, setIdBack] = useState<string | null>(null);
   const [kvkk, setKvkk] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -226,6 +228,8 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
       workingTypeIds,
       kvkkAccepted: kvkk,
       photoDataUrl: photo ?? undefined,
+      idFrontDataUrl: idFront ?? undefined,
+      idBackDataUrl: idBack ?? undefined,
       neighborhood: values.neighborhood,
     });
     if (!parsed.success) {
@@ -540,6 +544,27 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
             </p>
           </div>
           <PhotoCapture value={photo} onChange={setPhoto} />
+
+          <div className="space-y-3 border-t border-border pt-5">
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-foreground">Kimlik fotoğrafı</p>
+              <p className="text-sm text-muted-foreground">
+                Kimliğinizin ön ve arka yüzünü çekin veya galerinizden seçin. Bu görseller yalnızca
+                doğrulama amacıyla kullanılır, sitede yayınlanmaz.
+              </p>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div className="space-y-2 rounded-xl border border-border p-4">
+                <p className="text-sm font-medium text-foreground">Kimlik ön yüz</p>
+                <PhotoCapture value={idFront} onChange={setIdFront} />
+              </div>
+              <div className="space-y-2 rounded-xl border border-border p-4">
+                <p className="text-sm font-medium text-foreground">Kimlik arka yüz</p>
+                <PhotoCapture value={idBack} onChange={setIdBack} />
+              </div>
+            </div>
+          </div>
+
 
           <div className="flex items-start gap-3 rounded-xl border border-border bg-muted/40 p-4">
             <Checkbox

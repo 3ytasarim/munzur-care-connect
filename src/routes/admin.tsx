@@ -14,6 +14,7 @@ import {
   KeyRound,
   Loader2,
   LogOut,
+  Pencil,
   ShieldCheck,
   Star,
   Trash2,
@@ -21,6 +22,7 @@ import {
 } from "lucide-react";
 
 import { AuditPanel } from "@/components/admin/audit-panel";
+import { CandidateEditDialog } from "@/components/admin/candidate-edit-dialog";
 import { BlogPanel } from "@/components/admin/blog-panel";
 import { InquiryPanel } from "@/components/admin/inquiry-panel";
 import { SettingsPanel } from "@/components/admin/settings-panel";
@@ -29,6 +31,7 @@ import { Button3D } from "@/components/ui/button-3d";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { loginUser, logoutUser } from "@/lib/auth.functions";
+import type { AdminCandidate } from "@/db/admin-queries.server";
 import {
   adminChangePassword,
   adminDeleteCandidate,
@@ -193,6 +196,7 @@ function AdminLogin({ notAuthorized }: { notAuthorized: boolean }) {
 function AdminDashboard({ email, displayName }: { email: string; displayName: string }) {
   const [status, setStatus] = useState<(typeof FILTERS)[number]>("PENDING");
   const [tab, setTab] = useState<TabId>("candidates");
+  const [editing, setEditing] = useState<AdminCandidate | null>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
   const logout = useServerFn(logoutUser);
@@ -335,22 +339,47 @@ function AdminDashboard({ email, displayName }: { email: string; displayName: st
                   ) : null}
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  {[c.city, c.district].filter(Boolean).join(" / ") || "Şehir belirtilmemiş"} ·{" "}
-                  {c.yearsOfExperience} yıl deneyim
+                  {[c.city, c.district, c.neighborhood].filter(Boolean).join(" / ") ||
+                    "Şehir belirtilmemiş"}{" "}
+                  · {c.yearsOfExperience} yıl deneyim
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {c.email}
                   {c.phone ? ` · ${c.phone}` : ""}
                 </p>
                 {c.services.length ? (
-                  <p className="mt-2 text-sm text-foreground">{c.services.join(", ")}</p>
+                  <p className="mt-2 text-sm text-foreground">
+                    <span className="text-muted-foreground">Hizmet alanları: </span>
+                    {c.services.join(", ")}
+                  </p>
+                ) : null}
+                {c.workingTypes.length ? (
+                  <p className="mt-1 text-sm text-foreground">
+                    <span className="text-muted-foreground">Çalışma şekli: </span>
+                    {c.workingTypes.join(", ")}
+                  </p>
                 ) : null}
                 {c.about ? (
                   <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{c.about}</p>
                 ) : null}
+                {c.idFrontUrl || c.idBackUrl ? (
+                  <div className="mt-3 flex gap-2">
+                    {[c.idFrontUrl, c.idBackUrl].filter(Boolean).map((url, i) => (
+                      <img
+                        key={i}
+                        src={url as string}
+                        alt={i === 0 ? "Kimlik ön yüz" : "Kimlik arka yüz"}
+                        className="h-16 w-24 rounded-lg border border-border object-cover"
+                      />
+                    ))}
+                  </div>
+                ) : null}
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
+                <Button3D size="sm" variant="outline" onClick={() => setEditing(c)}>
+                  <Pencil className="mr-1.5 size-4" /> Düzenle
+                </Button3D>
                 {c.approvalStatus !== "APPROVED" ? (
                   <Button3D
                     size="sm"
@@ -402,6 +431,16 @@ function AdminDashboard({ email, displayName }: { email: string; displayName: st
         </div>
       )}
         </>
+      ) : null}
+
+      {editing ? (
+        <CandidateEditDialog
+          candidate={editing}
+          open
+          onOpenChange={(o) => {
+            if (!o) setEditing(null);
+          }}
+        />
       ) : null}
 
       {tab === "inquiries" ? <InquiryPanel /> : null}

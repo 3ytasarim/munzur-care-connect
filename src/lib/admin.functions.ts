@@ -8,6 +8,7 @@ import {
   setCandidateFeatured,
   setCandidateStatus,
   softDeleteCandidate,
+  updateCandidate,
 } from "@/db/admin-queries.server";
 import { getSessionUser, requireRole } from "@/lib/auth.server";
 
@@ -40,6 +41,29 @@ export const adminSetCandidateStatus = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const admin = await requireRole(["ADMIN", "SUPER_ADMIN"]);
     return setCandidateStatus({ adminUserId: admin.id, ...data });
+  });
+
+export const adminUpdateCandidate = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        candidateId: z.string().uuid(),
+        firstName: z.string().trim().min(2, "Ad en az 2 karakter.").max(80),
+        lastName: z.string().trim().min(2, "Soyad en az 2 karakter.").max(80),
+        phone: z.string().trim().max(32).default(""),
+        city: z.string().trim().max(80).default(""),
+        district: z.string().trim().max(80).default(""),
+        neighborhood: z.string().trim().max(120).default(""),
+        about: z.string().trim().max(2000).default(""),
+        yearsOfExperience: z.coerce.number().int().min(0).max(60).default(0),
+        serviceIds: z.array(z.string().uuid()).max(50).default([]),
+        workingTypeIds: z.array(z.string().uuid()).max(50).default([]),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    const admin = await requireRole(["ADMIN", "SUPER_ADMIN"]);
+    return updateCandidate({ adminUserId: admin.id, ...data });
   });
 
 export const adminSetFeatured = createServerFn({ method: "POST" })
