@@ -81,12 +81,21 @@ export function SiteHeader() {
               />
             </div>
 
-            <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-              <SheetTrigger asChild>
-                <Button size="icon" variant="outline" className="md:hidden" aria-label="Menü">
-                  <Menu className="size-5" aria-hidden />
-                </Button>
-              </SheetTrigger>
+            <div className="flex items-center gap-2 md:hidden">
+              <Button3D
+                size="sm"
+                variant="primary"
+                className="sm:hidden"
+                onClick={() => setRegisterOpen(true)}
+              >
+                Aday Ol
+              </Button3D>
+              <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button size="icon" variant="outline" aria-label="Menü">
+                    <Menu className="size-5" aria-hidden />
+                  </Button>
+                </SheetTrigger>
               <SheetContent side="right" className="w-72">
                 <SheetTitle className="sr-only">Menü</SheetTitle>
                 <div className="flex flex-col gap-1 p-6 pt-10">
@@ -135,6 +144,7 @@ export function SiteHeader() {
             </Sheet>
           </div>
         </div>
+      </div>
       </header>
 
       <RegisterDialog open={registerOpen} onOpenChange={setRegisterOpen} />
