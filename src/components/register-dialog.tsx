@@ -203,6 +203,8 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
     }
     if (index === 2) {
       if (!photo) return "Devam etmek için profil fotoğrafı ekleyin veya çekin.";
+      if (!idFront) return "Kimliğinizin ön yüzünü kamerayla çekin.";
+      if (!idBack) return "Kimliğinizin arka yüzünü kamerayla çekin.";
       if (!kvkk) return "Devam etmek için KVKK metnini onaylayın.";
     }
     return null;
@@ -549,18 +551,18 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
             <div className="space-y-1">
               <p className="text-sm font-medium text-foreground">Kimlik fotoğrafı</p>
               <p className="text-sm text-muted-foreground">
-                Kimliğinizin ön ve arka yüzünü çekin veya galerinizden seçin. Bu görseller yalnızca
+                Kimliğinizin ön ve arka yüzünü kamerayla çekin (zorunlu). Bu görseller yalnızca
                 doğrulama amacıyla kullanılır, sitede yayınlanmaz.
               </p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="space-y-2 rounded-xl border border-border p-4">
-                <p className="text-sm font-medium text-foreground">Kimlik ön yüz</p>
-                <PhotoCapture value={idFront} onChange={setIdFront} />
+                <p className="text-sm font-medium text-foreground">Kimlik ön yüz *</p>
+                <PhotoCapture value={idFront} onChange={setIdFront} cameraOnly />
               </div>
               <div className="space-y-2 rounded-xl border border-border p-4">
-                <p className="text-sm font-medium text-foreground">Kimlik arka yüz</p>
-                <PhotoCapture value={idBack} onChange={setIdBack} />
+                <p className="text-sm font-medium text-foreground">Kimlik arka yüz *</p>
+                <PhotoCapture value={idBack} onChange={setIdBack} cameraOnly />
               </div>
             </div>
           </div>
@@ -607,7 +609,7 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
               <ArrowRight className="size-4" aria-hidden />
             </Button3D>
           ) : (
-            <Button3D type="submit" disabled={pending || !photo || !kvkk}>
+            <Button3D type="submit" disabled={pending || !photo || !idFront || !idBack || !kvkk}>
               {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
               {pending ? "Kaydınız oluşturuluyor..." : "Kaydı Tamamla"}
             </Button3D>
