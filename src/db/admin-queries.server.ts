@@ -4,7 +4,12 @@
 import { and, desc, eq, isNull, sql } from "drizzle-orm";
 
 import { getDb, safeDb } from "./client.server";
-import { caregiverProfiles, users } from "./schema.server";
+import {
+  caregiverProfiles,
+  caregiverServices,
+  caregiverWorkingTypes,
+  users,
+} from "./schema.server";
 import { hashPassword, verifyPassword } from "@/lib/password.server";
 import { logAudit } from "@/lib/auth.server";
 import { candidateApprovedEmail, sendMail } from "@/lib/email.server";
@@ -13,19 +18,26 @@ export type AdminCandidate = {
   id: string;
   candidateCode: string;
   fullName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string | null;
   city: string | null;
   district: string | null;
+  neighborhood: string | null;
   about: string | null;
   yearsOfExperience: number;
   approvalStatus: string;
   publicVisibility: boolean;
   featured: boolean;
   primaryPhotoUrl: string | null;
+  idFrontUrl: string | null;
+  idBackUrl: string | null;
   createdAt: string;
   services: string[];
   workingTypes: string[];
+  serviceIds: string[];
+  workingTypeIds: string[];
 };
 
 export async function listCandidates(status?: string): Promise<AdminCandidate[]> {
@@ -45,12 +57,15 @@ export async function listCandidates(status?: string): Promise<AdminCandidate[]>
         phone: users.phone,
         city: caregiverProfiles.city,
         district: caregiverProfiles.district,
+        neighborhood: caregiverProfiles.neighborhood,
         about: caregiverProfiles.about,
         yearsOfExperience: caregiverProfiles.yearsOfExperience,
         approvalStatus: caregiverProfiles.approvalStatus,
         publicVisibility: caregiverProfiles.publicVisibility,
         featured: caregiverProfiles.featured,
         primaryPhotoUrl: caregiverProfiles.primaryPhotoUrl,
+        idFrontUrl: caregiverProfiles.idFrontUrl,
+        idBackUrl: caregiverProfiles.idBackUrl,
         createdAt: caregiverProfiles.createdAt,
         services: sql<string[]>`coalesce((select array_agg(sc.name order by sc.sort_order)
           from caregiver_services cs join service_categories sc on sc.id = cs.service_id
@@ -58,6 +73,10 @@ export async function listCandidates(status?: string): Promise<AdminCandidate[]>
         workingTypes: sql<string[]>`coalesce((select array_agg(wt.name order by wt.sort_order)
           from caregiver_working_types cwt join working_types wt on wt.id = cwt.working_type_id
           where cwt.caregiver_id = ${caregiverProfiles.id}), '{}')`,
+        serviceIds: sql<string[]>`coalesce((select array_agg(cs.service_id::text)
+          from caregiver_services cs where cs.caregiver_id = ${caregiverProfiles.id}), '{}')`,
+        workingTypeIds: sql<string[]>`coalesce((select array_agg(cwt.working_type_id::text)
+          from caregiver_working_types cwt where cwt.caregiver_id = ${caregiverProfiles.id}), '{}')`,
       })
       .from(caregiverProfiles)
       .innerJoin(users, eq(users.id, caregiverProfiles.userId))
@@ -69,21 +88,111 @@ export async function listCandidates(status?: string): Promise<AdminCandidate[]>
       id: r.id,
       candidateCode: r.candidateCode,
       fullName: `${r.firstName} ${r.lastName}`.trim(),
+      firstName: r.firstName,
+      lastName: r.lastName,
       email: r.email,
       phone: r.phone,
       city: r.city,
       district: r.district,
+      neighborhood: r.neighborhood,
       about: r.about,
       yearsOfExperience: r.yearsOfExperience,
       approvalStatus: r.approvalStatus,
       publicVisibility: r.publicVisibility,
       featured: r.featured,
       primaryPhotoUrl: r.primaryPhotoUrl,
+      idFrontUrl: r.idFrontUrl,
+      idBackUrl: r.idBackUrl,
       createdAt: r.createdAt.toISOString(),
       services: r.services ?? [],
       workingTypes: r.workingTypes ?? [],
+      serviceIds: r.serviceIds ?? [],
+      workingTypeIds: r.workingTypeIds ?? [],
     }));
   });
+}
+
+export type AdminCandidateUpdate = {
+  adminUserId: string;
+  candidateId: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  city: string;
+  district: string;
+  neighborhood: string;
+  about: string;
+  yearsOfExperience: number;
+  serviceIds: string[];
+  workingTypeIds: string[];
+};
+
+export async function updateCandidate(input: AdminCandidateUpdate) {
+  const db = getDb();
+
+  const [profile] = await db
+    .update(caregiverProfiles)
+    .set({
+      firstName: input.firstName,
+      lastName: input.lastName,
+      city: input.city || null,
+      district: input.district || null,
+      neighborhood: input.neighborhood || null,
+      about: input.about || null,
+      yearsOfExperience: input.yearsOfExperience,
+      updatedAt: new Date(),
+    })
+    .where(eq(caregiverProfiles.id, input.candidateId))
+    .returning({ id: caregiverProfiles.id, userId: caregiverProfiles.userId });
+
+  if (!profile) return { ok: false as const, message: "Aday bulunamadı." };
+
+  if (input.phone) {
+    await db
+      .update(users)
+      .set({ phone: input.phone, updatedAt: new Date() })
+      .where(eq(users.id, profile.userId));
+  }
+
+  await db.delete(caregiverServices).where(eq(caregiverServices.caregiverId, input.candidateId));
+  if (input.serviceIds.length) {
+    await db
+      .insert(caregiverServices)
+      .values(input.serviceIds.map((serviceId) => ({ caregiverId: input.candidateId, serviceId })))
+      .onConflictDoNothing();
+  }
+
+  await db
+    .delete(caregiverWorkingTypes)
+    .where(eq(caregiverWorkingTypes.caregiverId, input.candidateId));
+  if (input.workingTypeIds.length) {
+    await db
+      .insert(caregiverWorkingTypes)
+      .values(
+        input.workingTypeIds.map((workingTypeId) => ({
+          caregiverId: input.candidateId,
+          workingTypeId,
+        })),
+      )
+      .onConflictDoNothing();
+  }
+
+  await logAudit({
+    adminUserId: input.adminUserId,
+    action: "CANDIDATE_UPDATED",
+    entityType: "caregiver_profile",
+    entityId: input.candidateId,
+    newData: {
+      firstName: input.firstName,
+      lastName: input.lastName,
+      city: input.city,
+      district: input.district,
+      neighborhood: input.neighborhood,
+      yearsOfExperience: input.yearsOfExperience,
+    },
+  });
+
+  return { ok: true as const };
 }
 
 export async function getAdminStats() {
