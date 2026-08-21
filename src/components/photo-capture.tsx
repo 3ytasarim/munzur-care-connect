@@ -34,7 +34,7 @@ type Props = {
 };
 
 /** Profile photo picker: gallery upload or live camera capture (mobile + desktop). */
-export function PhotoCapture({ value, onChange }: Props) {
+export function PhotoCapture({ value, onChange, cameraOnly = false }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
