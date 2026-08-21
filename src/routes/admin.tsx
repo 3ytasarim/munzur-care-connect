@@ -14,6 +14,7 @@ import {
   KeyRound,
   Loader2,
   LogOut,
+  Pencil,
   ShieldCheck,
   Star,
   Trash2,
@@ -21,6 +22,7 @@ import {
 } from "lucide-react";
 
 import { AuditPanel } from "@/components/admin/audit-panel";
+import { CandidateEditDialog } from "@/components/admin/candidate-edit-dialog";
 import { BlogPanel } from "@/components/admin/blog-panel";
 import { InquiryPanel } from "@/components/admin/inquiry-panel";
 import { SettingsPanel } from "@/components/admin/settings-panel";
@@ -29,6 +31,7 @@ import { Button3D } from "@/components/ui/button-3d";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { loginUser, logoutUser } from "@/lib/auth.functions";
+import type { AdminCandidate } from "@/db/admin-queries.server";
 import {
   adminChangePassword,
   adminDeleteCandidate,
@@ -193,6 +196,7 @@ function AdminLogin({ notAuthorized }: { notAuthorized: boolean }) {
 function AdminDashboard({ email, displayName }: { email: string; displayName: string }) {
   const [status, setStatus] = useState<(typeof FILTERS)[number]>("PENDING");
   const [tab, setTab] = useState<TabId>("candidates");
+  const [editing, setEditing] = useState<AdminCandidate | null>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
   const logout = useServerFn(logoutUser);
@@ -427,6 +431,16 @@ function AdminDashboard({ email, displayName }: { email: string; displayName: st
         </div>
       )}
         </>
+      ) : null}
+
+      {editing ? (
+        <CandidateEditDialog
+          candidate={editing}
+          open
+          onOpenChange={(o) => {
+            if (!o) setEditing(null);
+          }}
+        />
       ) : null}
 
       {tab === "inquiries" ? <InquiryPanel /> : null}
