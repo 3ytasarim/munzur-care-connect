@@ -335,8 +335,9 @@ function AdminDashboard({ email, displayName }: { email: string; displayName: st
                   ) : null}
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  {[c.city, c.district].filter(Boolean).join(" / ") || "Şehir belirtilmemiş"} ·{" "}
-                  {c.yearsOfExperience} yıl deneyim
+                  {[c.city, c.district, c.neighborhood].filter(Boolean).join(" / ") ||
+                    "Şehir belirtilmemiş"}{" "}
+                  · {c.yearsOfExperience} yıl deneyim
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {c.email}
