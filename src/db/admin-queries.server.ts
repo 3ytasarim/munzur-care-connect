@@ -69,14 +69,14 @@ export async function listCandidates(status?: string): Promise<AdminCandidate[]>
         createdAt: caregiverProfiles.createdAt,
         services: sql<string[]>`coalesce((select array_agg(sc.name order by sc.sort_order)
           from caregiver_services cs join service_categories sc on sc.id = cs.service_id
-          where cs.caregiver_id = ${caregiverProfiles.id}), '{}')`,
+          where cs.caregiver_id = caregiver_profiles.id), '{}')`,
         workingTypes: sql<string[]>`coalesce((select array_agg(wt.name order by wt.sort_order)
           from caregiver_working_types cwt join working_types wt on wt.id = cwt.working_type_id
-          where cwt.caregiver_id = ${caregiverProfiles.id}), '{}')`,
+          where cwt.caregiver_id = caregiver_profiles.id), '{}')`,
         serviceIds: sql<string[]>`coalesce((select array_agg(cs.service_id::text)
-          from caregiver_services cs where cs.caregiver_id = ${caregiverProfiles.id}), '{}')`,
+          from caregiver_services cs where cs.caregiver_id = caregiver_profiles.id), '{}')`,
         workingTypeIds: sql<string[]>`coalesce((select array_agg(cwt.working_type_id::text)
-          from caregiver_working_types cwt where cwt.caregiver_id = ${caregiverProfiles.id}), '{}')`,
+          from caregiver_working_types cwt where cwt.caregiver_id = caregiver_profiles.id), '{}')`,
       })
       .from(caregiverProfiles)
       .innerJoin(users, eq(users.id, caregiverProfiles.userId))
