@@ -203,6 +203,8 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
     }
     if (index === 2) {
       if (!photo) return "Devam etmek için profil fotoğrafı ekleyin veya çekin.";
+      if (!idFront) return "Kimliğinizin ön yüzünü kamerayla çekin.";
+      if (!idBack) return "Kimliğinizin arka yüzünü kamerayla çekin.";
       if (!kvkk) return "Devam etmek için KVKK metnini onaylayın.";
     }
     return null;
