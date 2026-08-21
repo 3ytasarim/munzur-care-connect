@@ -1,4 +1,5 @@
 import { BadgeCheck, MapPin, Star, User } from "lucide-react";
+import { formatExperience } from "@/lib/utils";
 
 import { Button3D } from "@/components/ui/button-3d";
 import type { CaregiverCard as CaregiverCardData } from "@/db/queries.server";
@@ -59,7 +60,7 @@ export function CaregiverCard({ caregiver }: { caregiver: CaregiverCardData }) {
         ) : null}
 
         <p className="text-sm text-muted-foreground">
-          <span className="font-semibold text-foreground">{caregiver.yearsOfExperience}</span> yıl
+          <span className="font-semibold text-foreground">{formatExperience(caregiver.yearsOfExperience)}</span> yıl
           deneyim
         </p>
 

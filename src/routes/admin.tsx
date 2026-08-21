@@ -30,6 +30,7 @@ import { TaxonomyPanel } from "@/components/admin/taxonomy-panel";
 import { Button3D } from "@/components/ui/button-3d";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { formatExperience } from "@/lib/utils";
 import { loginUser, logoutUser } from "@/lib/auth.functions";
 import type { AdminCandidate } from "@/db/admin-queries.server";
 import {
@@ -341,7 +342,7 @@ function AdminDashboard({ email, displayName }: { email: string; displayName: st
                 <p className="mt-1 text-sm text-muted-foreground">
                   {[c.city, c.district, c.neighborhood].filter(Boolean).join(" / ") ||
                     "Şehir belirtilmemiş"}{" "}
-                  · {c.yearsOfExperience} yıl deneyim
+                  · {formatExperience(c.yearsOfExperience)} yıl deneyim
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {c.email}

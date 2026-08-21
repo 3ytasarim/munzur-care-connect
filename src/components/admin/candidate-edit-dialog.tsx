@@ -70,7 +70,7 @@ export function CandidateEditDialog({
         data: {
           candidateId: candidate.id,
           ...form,
-          yearsOfExperience: Number(form.yearsOfExperience || 0),
+          yearsOfExperience: Number(String(form.yearsOfExperience || "0").replace(",", ".")),
           serviceIds,
           workingTypeIds,
         },
