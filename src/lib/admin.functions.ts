@@ -8,6 +8,7 @@ import {
   setCandidateFeatured,
   setCandidateStatus,
   softDeleteCandidate,
+  updateCandidate,
 } from "@/db/admin-queries.server";
 import { getSessionUser, requireRole } from "@/lib/auth.server";
 
