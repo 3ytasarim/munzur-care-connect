@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
+import { experienceYears } from "@/lib/auth-schemas";
+
 import {
   changeOwnPassword,
   getAdminStats,
@@ -55,7 +57,7 @@ export const adminUpdateCandidate = createServerFn({ method: "POST" })
         district: z.string().trim().max(80).default(""),
         neighborhood: z.string().trim().max(120).default(""),
         about: z.string().trim().max(2000).default(""),
-        yearsOfExperience: z.coerce.number().int().min(0).max(60).default(0),
+        yearsOfExperience: experienceYears,
         serviceIds: z.array(z.string().uuid()).max(50).default([]),
         workingTypeIds: z.array(z.string().uuid()).max(50).default([]),
       })

@@ -41,7 +41,7 @@ export function CandidateEditDialog({
     district: candidate.district ?? "",
     neighborhood: candidate.neighborhood ?? "",
     about: candidate.about ?? "",
-    yearsOfExperience: String(candidate.yearsOfExperience),
+    yearsOfExperience: String(candidate.yearsOfExperience).replace(".", ","),
   });
   const [serviceIds, setServiceIds] = useState<string[]>(candidate.serviceIds);
   const [workingTypeIds, setWorkingTypeIds] = useState<string[]>(candidate.workingTypeIds);
@@ -57,7 +57,7 @@ export function CandidateEditDialog({
       district: candidate.district ?? "",
       neighborhood: candidate.neighborhood ?? "",
       about: candidate.about ?? "",
-      yearsOfExperience: String(candidate.yearsOfExperience),
+      yearsOfExperience: String(candidate.yearsOfExperience).replace(".", ","),
     });
     setServiceIds(candidate.serviceIds);
     setWorkingTypeIds(candidate.workingTypeIds);
@@ -70,7 +70,7 @@ export function CandidateEditDialog({
         data: {
           candidateId: candidate.id,
           ...form,
-          yearsOfExperience: Number(form.yearsOfExperience || 0),
+          yearsOfExperience: Number(String(form.yearsOfExperience || "0").replace(",", ".")),
           serviceIds,
           workingTypeIds,
         },
@@ -134,9 +134,9 @@ export function CandidateEditDialog({
             <Label htmlFor="edit-exp">Deneyim (yıl)</Label>
             <Input
               id="edit-exp"
-              type="number"
-              min={0}
-              max={60}
+              type="text"
+              inputMode="decimal"
+              placeholder="Örn. 1,5"
               value={form.yearsOfExperience}
               onChange={(e) => setForm((f) => ({ ...f, yearsOfExperience: e.target.value }))}
             />

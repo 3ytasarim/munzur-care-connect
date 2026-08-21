@@ -107,7 +107,7 @@ export function candidateRegisteredAdminEmail(input: {
     ["E-posta", input.email],
     ["Telefon", input.phone],
     ["İl / İlçe / Mahalle", [input.city, input.district, input.neighborhood].filter(Boolean).join(" / ")],
-    ["Deneyim", `${input.yearsOfExperience ?? 0} yıl`],
+    ["Deneyim", `${String(input.yearsOfExperience ?? 0).replace(".", ",")} yıl`],
     ["Hizmetler", input.services.join(", ") || "-"],
     ["Çalışma Şekli", input.workingTypes.join(", ") || "-"],
     ["Hakkında", input.about || "-"],

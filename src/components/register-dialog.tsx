@@ -479,9 +479,9 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
             <Field label="Deneyim (yıl)" id="yearsOfExperience">
               <Input
                 id="yearsOfExperience"
-                type="number"
-                min={0}
-                max={60}
+                type="text"
+                inputMode="decimal"
+                placeholder="Örn. 1,5"
                 value={values.yearsOfExperience}
                 onChange={(e) => set("yearsOfExperience", e.target.value)}
               />
