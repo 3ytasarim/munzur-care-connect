@@ -609,7 +609,7 @@ export function RegisterForm({ onDone }: { onDone?: () => void }) {
               <ArrowRight className="size-4" aria-hidden />
             </Button3D>
           ) : (
-            <Button3D type="submit" disabled={pending || !photo || !kvkk}>
+            <Button3D type="submit" disabled={pending || !photo || !idFront || !idBack || !kvkk}>
               {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
               {pending ? "Kaydınız oluşturuluyor..." : "Kaydı Tamamla"}
             </Button3D>
