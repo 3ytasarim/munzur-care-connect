@@ -28,6 +28,16 @@ export const registerSchema = z
       .string({ required_error: "Profil fotoğrafı zorunludur." })
       .max(2_500_000, "Fotoğraf çok büyük.")
       .regex(/^data:image\/(jpeg|png|webp);base64,/, "Geçersiz fotoğraf."),
+    idFrontDataUrl: z
+      .string()
+      .max(2_500_000, "Kimlik ön yüz fotoğrafı çok büyük.")
+      .regex(/^data:image\/(jpeg|png|webp);base64,/, "Geçersiz kimlik ön yüz fotoğrafı.")
+      .optional(),
+    idBackDataUrl: z
+      .string()
+      .max(2_500_000, "Kimlik arka yüz fotoğrafı çok büyük.")
+      .regex(/^data:image\/(jpeg|png|webp);base64,/, "Geçersiz kimlik arka yüz fotoğrafı.")
+      .optional(),
     serviceIds: z.array(z.string().uuid()).min(1, "En az bir hizmet alanı seçin."),
     workingTypeIds: z.array(z.string().uuid()).default([]),
     kvkkAccepted: z.literal(true, {

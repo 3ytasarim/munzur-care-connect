@@ -160,6 +160,8 @@ export const caregiverProfiles = pgTable(
     featured: boolean("featured").notNull().default(false),
     publicVisibility: boolean("public_visibility").notNull().default(false),
     primaryPhotoUrl: text("primary_photo_url"),
+    idFrontUrl: text("id_front_url"),
+    idBackUrl: text("id_back_url"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
     approvedAt: timestamp("approved_at", { withTimezone: true }),
