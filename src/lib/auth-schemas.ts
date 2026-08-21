@@ -1,5 +1,21 @@
 import { z } from "zod";
 
+export const experienceYears = z.preprocess(
+  (v) => {
+    if (typeof v === "string") {
+      const normalized = v.replace(",", ".").trim();
+      if (normalized === "") return 0;
+      return Number(normalized);
+    }
+    return v ?? 0;
+  },
+  z
+    .number({ invalid_type_error: "Deneyim yılını sayı olarak girin." })
+    .min(0, "Deneyim yılı 0'dan küçük olamaz.")
+    .max(60, "Deneyim yılı en fazla 60 olabilir.")
+    .transform((n) => Math.round(n * 10) / 10),
+);
+
 export const loginSchema = z.object({
   email: z.string().trim().toLowerCase().email("Geçerli bir e-posta adresi girin."),
   password: z.string().min(1, "Şifrenizi girin."),
@@ -22,7 +38,7 @@ export const registerSchema = z
     city: z.string().trim().min(2, "İl seçin.").max(80),
     district: z.string().trim().min(2, "İlçe seçin.").max(80),
     neighborhood: z.string().trim().min(2, "Mahalle seçin.").max(120),
-    yearsOfExperience: z.coerce.number().int().min(0).max(60).default(0),
+    yearsOfExperience: experienceYears,
     about: z.string().trim().max(2000).optional().default(""),
     photoDataUrl: z
       .string({ required_error: "Profil fotoğrafı zorunludur." })

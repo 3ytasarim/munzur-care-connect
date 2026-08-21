@@ -139,7 +139,9 @@ export const caregiverProfiles = pgTable(
     district: varchar("district", { length: 80 }),
     neighborhood: varchar("neighborhood", { length: 120 }),
     about: text("about"),
-    yearsOfExperience: integer("years_of_experience").notNull().default(0),
+    yearsOfExperience: numeric("years_of_experience", { precision: 4, scale: 1, mode: "number" })
+      .notNull()
+      .default(0),
     expectedSalary: numeric("expected_salary", { precision: 12, scale: 2 }),
     salaryCurrency: varchar("salary_currency", { length: 8 }).notNull().default("TRY"),
     salaryPeriod: salaryPeriodEnum("salary_period").notNull().default("MONTHLY"),
